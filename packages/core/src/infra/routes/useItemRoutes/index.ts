@@ -1,6 +1,7 @@
 import { IResponse } from '../../../server/models/IResponse'
 import { MissingParametersUseItemRouteError, NoSubRouteForUseItemRouteError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
+import { useEther } from './items/useEther'
 import { usePokeballBox } from './items/usePokeballBox'
 import { usePropCase } from './items/usePropCase'
 import { useRareCandy } from './items/useRareCandy'
@@ -15,6 +16,7 @@ const itemMap = new Map<string, any>([
   ['PROPCASE', usePropCase],
   ['PROP-CASE', usePropCase],
   ['RARE-CANDY', useRareCandy],
+  ['ETHER', useEther],
 ])
 
 export const useItemRoutes = async (data: TRouteParams): Promise<IResponse> => {
