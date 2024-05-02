@@ -27,11 +27,6 @@
       "packageName": "prisma-provider",
       "projectFolder": "packages/prisma-provider",
       "shouldPublish": true
-    },
-    {
-      "packageName": "image-provider",
-      "projectFolder": "packages/image-provider",
-      "shouldPublish": true
     }
   ]
 }
