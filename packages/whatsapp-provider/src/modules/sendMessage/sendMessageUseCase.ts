@@ -9,7 +9,6 @@ type Params = {
 }
 
 export const sendMessageUseCase = async ({ chatId, content, imageUrl, options }: Params): Promise<Message> => {
-  console.log({ chatId, content, imageUrl, options })
   const client = container.resolve<Client>('WhatsappClient')
   let media
   if (imageUrl) media = MessageMedia.fromFilePath(imageUrl)
