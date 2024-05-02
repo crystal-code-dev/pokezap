@@ -63,6 +63,8 @@ model Player {
   activeTournamentId   Int?
   defeatedTournament   Tournament?       @relation(fields: [defeatedTournamentId], references: [id], name: "defeated")
   defeatedTournamentId Int?
+  raidGameRoom         RaidGameRoom?     @relation(fields: [raidGameRoomId], references: [id])
+  raidGameRoomId       Int?
 }
 
 model Badge {
@@ -487,7 +489,6 @@ model GameRoom {
   level             Int
   levelLock         Int?
   invasorId         Int?             @unique
-  raidId            Int?             @unique
   region            String?
   experience        Int
   activeIncense     String?
@@ -503,9 +504,19 @@ model GameRoom {
   messages          Message[]
   upgrades          RoomUpgrades[]
   invasor           InvasionSession? @relation(fields: [invasorId], references: [id])
-  raid              Raid?            @relation(fields: [raidId], references: [id])
   tournament        Tournament[]
   Ranch             Ranch[]
+}
+
+model RaidGameRoom {
+  id           Int      @id @default(autoincrement())
+  phone        String   @unique
+  raidId       Int?     @unique
+  isInProgress Boolean  @default(false)
+  isFinished   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  players      Player[]
+  raid         Raid?    @relation(fields: [raidId], references: [id])
 }
 
 model RoomUpgrades {
@@ -560,16 +571,16 @@ model Raid {
   announcementText   String
 
   raidRooms        RaidRoom[]
-  lobbyPokemons    Pokemon[]  @relation(name: "raid-lobby-pokemons")
-  defeatedPokemons Pokemon[]  @relation(name: "raid-defeated-pokemons")
-  winnerPokemons   Pokemon[]  @relation(name: "raid-winner-pokemons")
-  gameRoom         GameRoom?
-  inInLobby        Boolean    @default(true)
-  isInProgress     Boolean    @default(false)
-  isFinished       Boolean    @default(false)
-  statusTrashed    Boolean    @default(false)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @default(now())
+  lobbyPokemons    Pokemon[]     @relation(name: "raid-lobby-pokemons")
+  defeatedPokemons Pokemon[]     @relation(name: "raid-defeated-pokemons")
+  winnerPokemons   Pokemon[]     @relation(name: "raid-winner-pokemons")
+  gameRoom         RaidGameRoom?
+  inInLobby        Boolean       @default(true)
+  isInProgress     Boolean       @default(false)
+  isFinished       Boolean       @default(false)
+  statusTrashed    Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now())
 }
 
 model RaidRoom {
