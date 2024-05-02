@@ -1,6 +1,7 @@
-import { Skill } from '@prisma/client'
+import prisma from '../../../../../../prisma-provider/src'
 import { checkIfSkillIsSupportSkill, checkIfSkillIsTankerSkill } from '../../../../server/helpers/getBestSkillSet'
 import { IResponse } from '../../../../server/models/IResponse'
+import { Skill } from '../../../../types/prisma'
 import { MissingParameterError, PokemonNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 

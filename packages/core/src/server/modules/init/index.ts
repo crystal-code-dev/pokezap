@@ -6,8 +6,6 @@ import { logger } from '../../helpers/logger'
 import { sendMessage } from '../../helpers/sendMessage'
 import { rocketInvasion } from '../../serverActions/cron/rocketInvasion'
 
-wildPokeSpawn()
-
 export const initProcess = async () => {
   cron.schedule(`*/20 * * * *`, () => {
     logger.info(`Natural wild pokemon spawn`)

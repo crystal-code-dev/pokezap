@@ -1,4 +1,5 @@
 import { iGenPokemonTeam } from '../../../../../../image-generator/src/iGenPokemonTeam'
+import prisma from '../../../../../../prisma-provider/src'
 import {
   PlayerDoestNotOwnThePokemonError,
   PlayerNotFoundError,

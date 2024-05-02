@@ -1,5 +1,6 @@
 import { iGenRocketInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
 
@@ -97,6 +98,8 @@ export const rocketInvasion = async () => {
 `,
       },
     })
+
+    if (!result) throw new UnexpectedError('rocket-invasion message sent returned no response')
 
     await prisma.message.create({
       data: {
