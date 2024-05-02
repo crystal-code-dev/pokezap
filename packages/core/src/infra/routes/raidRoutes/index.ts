@@ -3,6 +3,7 @@ import { MissingParameterError, SubRouteNotFoundError } from '../../errors/AppEr
 import { TRouteParams } from '../router'
 import { raidCancel } from './raidCancel'
 import { raidCreate } from './raidCreate'
+import { raidGroup } from './raidGroup'
 import { raidJoin } from './raidJoin'
 import { raidRoomSelect } from './raidRoomSelect'
 import { raidTeam } from './raidTeam'
@@ -12,6 +13,10 @@ const subRouteMap = new Map<string, any>([
   ['START', raidCreate],
   ['INICIAR', raidCreate],
   ['CREATE', raidCreate],
+
+  // RAID GROUP
+  ['GROUP', raidGroup],
+  ['GRUPO', raidGroup],
 
   // JOIN RAIND ROUTS
   ['JOIN', raidJoin],

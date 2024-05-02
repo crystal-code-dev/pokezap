@@ -70,6 +70,22 @@ export class RouteNotFoundError extends AppError {
   }
 }
 
+export class AlreadyInRaidGroupError extends AppError {
+  constructor() {
+    const message = `Você já esá em um grupo de raid.`
+
+    super(message)
+  }
+}
+
+export class CantStartRaidOutsideRaidGroupError extends AppError {
+  constructor() {
+    const message = `[d] Você deve primeiro criar um grupo de raid. \n\nComando: pz. raid group \n👍 - Criar`
+    const actions = ['pz. raid group']
+    super(message, 200, undefined, actions)
+  }
+}
+
 export class RouteForbiddenForDuelRaidError extends AppError {
   constructor() {
     const message = `Na rota atual, não é permitido duelos.`

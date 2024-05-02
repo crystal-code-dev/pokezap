@@ -6,14 +6,13 @@ import { generateMegaPokemon } from '../../../server/modules/pokemon/generate/ge
 import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
 import { RaidPokemonBaseDataSkills } from '../../../types'
 import {
+  CantStartRaidOutsideRaidGroupError,
   InvalidDifficultError,
   MissingParameterError,
   PlayerDoesNotHaveThePokemonInTheTeamError,
   PlayerNotFoundError,
   RaidDataNotFoundError,
   RaidNotFoundError,
-  RouteAlreadyHasARaidRunningError,
-  RouteDoesNotHaveUpgradeError,
   RouteNotFoundError,
   UnexpectedError,
 } from '../../errors/AppErrors'
@@ -87,7 +86,8 @@ export const raidDifficultyDataMap = new Map<string, TRaidDifficultData>([
 ])
 
 export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
-  const [, , , raidNameUppercase, difficultUppercase, confirm] = data.routeParams
+  const [, , , raidNameUppercase, difficultUppercase] = data.routeParams
+
   if (!raidNameUppercase || !difficultUppercase)
     throw new MissingParameterError('Nome da raid à ser criada e dificuldade')
   const difficult = difficultUppercase.toLowerCase()
@@ -124,23 +124,7 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   if (!gameRoom) throw new RouteNotFoundError(player.name, data.groupCode)
-  if (gameRoom.raid) throw new RouteAlreadyHasARaidRunningError(gameRoom.raid.name)
-  if (!gameRoom.upgrades.map(upg => upg.base.name).includes('bikeshop'))
-    throw new RouteDoesNotHaveUpgradeError('bikeshop')
-
-  const checkRaid = await prisma.raid.findFirst({
-    where: {
-      gameRoomId: gameRoom.id,
-      statusTrashed: false,
-    },
-  })
-
-  if (checkRaid) throw new RouteAlreadyHasARaidRunningError(checkRaid.name)
-
-  const announcementText = `RAID: ${raidName}!`
-
-  const raidDifficultData = raidDifficultyDataMap.get(difficult)
-  if (!raidDifficultData) throw new UnexpectedError('cant find raiddata in map')
+  if (gameRoom.mode !== 'raid') throw new CantStartRaidOutsideRaidGroupError()
 
   const [bossBaseData, enemiesBaseData, lootData] = await prisma.$transaction([
     prisma.basePokemon.findFirst({
@@ -163,6 +147,11 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
       },
     }),
   ])
+
+  const announcementText = `RAID: ${raidName}!`
+
+  const raidDifficultData = raidDifficultyDataMap.get(difficult)
+  if (!raidDifficultData) throw new UnexpectedError('cant find raiddata in map')
 
   const megaPokemon = await generateMegaPokemon({
     name: raidName.toLowerCase(),
