@@ -468,7 +468,8 @@ export class CatchFailedPokemonRanAwayError extends AppError {
 
 export class PlayerDoesNotResideOnTheRoute extends AppError {
   constructor(gameRoomId: number, playerName: string) {
-    const message = `*${playerName}* não reside na rota ${gameRoomId}, portanto não pode enfrentar os pokemons da rota.
+    const message = `*${playerName}* não está na rota ${gameRoomId}, portanto não pode enfrentar os pokemons da rota.
+    
     👍 - Entrar na rota`
     const statusCode = 300
     const actions = ['pz. rota entrar']

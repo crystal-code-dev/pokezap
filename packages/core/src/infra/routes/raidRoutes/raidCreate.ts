@@ -103,7 +103,7 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
