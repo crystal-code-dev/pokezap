@@ -51,9 +51,6 @@ importers:
       path: 0.12.7
       tslog: 4.9.2
 
-  ../../packages/image-provider:
-    specifiers: {}
-
   ../../packages/prisma-provider:
     specifiers:
       '@prisma/client': ~5.13.0
