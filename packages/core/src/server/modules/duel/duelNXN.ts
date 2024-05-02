@@ -459,17 +459,19 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
         const adratio = adRatio(currentSkillData.skill, attacker, target)
         const pwrWithADRatio = attacker.currentSkillPower * adratio * (1 + attacker.damageAmplifying)
         const pwrDividedByTargets = pwrWithADRatio / currentSkillData.targets.length
+        const randomFactor = 0.9 + Math.random() * 0.2
         if (!target.block) {
-          target.hp -= pwrDividedByTargets * (0.9 + Math.random() * 0.2) * (1 - target.damageResistance)
+          target.hp -= pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
           attacker.hp += pwrDividedByTargets * attacker.lifeSteal * (1 - target.damageResistance)
-          attacker.totalDamageDealt += pwrDividedByTargets * (0.9 + Math.random() * 0.2) * (1 - target.damageResistance)
+          attacker.totalDamageDealt += pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
+          target.totalDamageReceived += pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
         }
         if (attacker.crit) {
           if (!target.block) {
-            target.hp -= pwrDividedByTargets * (0.9 + Math.random() * 0.2) * 0.5 * (1 - target.damageResistance)
+            target.hp -= pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
             attacker.hp += pwrDividedByTargets * attacker.lifeSteal * 0.5 * (1 - target.damageResistance)
-            attacker.totalDamageDealt +=
-              pwrDividedByTargets * (0.9 + Math.random() * 0.2) * 0.5 * (1 - target.damageResistance)
+            attacker.totalDamageDealt += pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
+            target.totalDamageReceived += pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
           }
         }
         if (attacker.hp > attacker.maxHp) attacker.hp = attacker.maxHp
@@ -882,13 +884,19 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     })
     .filter((m: string) => m.length > 0)
     .join('\n')}
+    
+  ${[...leftTeamData]
+    .map(p => {
+      if (p.role === 'TANKER') return `*${p.name}* recebeu ${p.totalDamageReceived.toFixed(0)} de dano.`
+    })
+    .join('\n')}
   
   ${[...leftTeamData]
     .map(p => {
       const messages: string[] = []
       for (const key in p.buffData) {
         if (p.buffData[key] > 0) {
-          messages.push(`*${p.name}* aumentou a ${key} de seu time em ${p.buffData[key]}.`)
+          messages.push(`*${p.name}* aumentou ${key} em ${p.buffData[key].toFixed(0)}.`)
         }
       }
       return messages.join('\n')
@@ -896,8 +904,6 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     .filter((m: string) => m.length > 5)
     .join('\n')}
   `
-
-  console.log({ damageDealtMessage })
 
   return {
     message: `DUELO X2`,
