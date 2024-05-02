@@ -5,6 +5,7 @@ import { teamSet } from '../teamRoutes/teamSet'
 import { tradePoke1 } from '../tradeRoutes/tradePoke/tradePoke1'
 import { pokemonDropItem } from './dropItem/pokemonDropItem'
 import { pokemonEvolve } from './evolve/pokemonEvolve'
+import { pokemonExperience } from './experience/pokemonExperience'
 import { pokemonHoldItem } from './holdItem/pokemonHoldItem'
 import { pokemonInfo1 } from './info/pokemonInfo1'
 import { pokemonMegaEvolve } from './megaEvolve/pokemonMegaEvolve'
@@ -92,6 +93,11 @@ const subRouteMap = new Map<string, any>([
   // TRADE
   ['TRADE', tradePoke1],
   ['TROCAR', tradePoke1],
+
+  // EXP
+  ['EXP', pokemonExperience],
+  ['XP', pokemonExperience],
+  ['EXPERIENCE', pokemonExperience],
 ])
 
 export const pokemonRoutes = async (data: TRouteParams): Promise<IResponse> => {
