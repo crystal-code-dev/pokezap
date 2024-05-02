@@ -482,6 +482,7 @@ model InvasionSession {
 
 model GameRoom {
   id                Int              @id @default(autoincrement())
+  name              String           @default("room")
   mode              String
   phone             String           @unique
   level             Int
