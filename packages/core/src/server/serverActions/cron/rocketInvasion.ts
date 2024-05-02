@@ -24,6 +24,7 @@ export const rocketInvasion = async () => {
   })
 
   for (const gameRoom of gameRooms) {
+    if (gameRoom.mode !== 'route') continue
     const poke1 = await generateWildPokemon({
       level: Math.round(gameRoom.level * 1.2),
       savage: true,
