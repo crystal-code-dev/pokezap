@@ -45,15 +45,14 @@ export const raidGroup = async (data: TRouteParams): Promise<IResponse> => {
   if (!gameRoom.upgrades.map(upg => upg.base.name).includes('bikeshop'))
     throw new RouteDoesNotHaveUpgradeError('bikeshop')
 
+  const groupName = `PokeZap - RaidRoom ${Math.ceil(Math.random() * 100)}`
   const groupChat = await createGroupChat({
-    groupName: `PokeZap - RaidRoom ${Math.ceil(Math.random() * 100)}`,
+    groupName,
     playerPhone: player.phone,
     imageUrl: path.join(__dirname, '.././../../assets/sprites/misc/raid-room.jpg'),
   })
 
   if (!groupChat) throw new UnexpectedError('Não foi possível gerar o grupo de raid')
-
-  console.log({ groupChat })
 
   await prisma.gameRoom.create({
     data: {
@@ -61,6 +60,7 @@ export const raidGroup = async (data: TRouteParams): Promise<IResponse> => {
       mode: 'raid',
       experience: 0,
       phone: groupChat.group.groupMetadata.id._serialized,
+      name: groupName,
     },
   })
 
