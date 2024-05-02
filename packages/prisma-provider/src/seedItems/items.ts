@@ -1,4 +1,4 @@
-export const itemsData = [
+export const items = [
   {
     name: 'master-ball',
     id: 1,

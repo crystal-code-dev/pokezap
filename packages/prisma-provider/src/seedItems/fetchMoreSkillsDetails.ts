@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client'
-import { container } from 'tsyringe'
-import fetch from 'node-fetch'
+import prisma from '..'
+import axios from 'axios'
 
-export async function skillEnhanceSeed() {
-  const prisma = container.resolve<PrismaClient>('PrismaClient')
+export const fetchMoreSkillsDetails = async () => {
   const baseUrl = 'https://pokeapi.co/api/v2'
   const endpoint = '/move/'
 
@@ -11,9 +9,10 @@ export async function skillEnhanceSeed() {
   const limit = 920
   const url = `${baseUrl}${endpoint}?limit=${limit}`
 
-  fetch(url)
-    .then(response => response.json())
-    .then(async data => {
+  axios
+    .get(url)
+    .then(response => response.data())
+    .then(async (data: any) => {
       // Map each Pokemon to a new object with name and types properties
       const moveData = data.results.map((move: any) => ({
         name: move.name,
@@ -22,11 +21,11 @@ export async function skillEnhanceSeed() {
       // Fetch additional data for each Pokemon and add types to the objects
       const skillsData = await Promise.all(
         moveData.map((move: any) => {
-          console.log('fetching: ' + move.name)
           const url = `${baseUrl}${endpoint}${move.name}`
-          return fetch(url)
-            .then(response => response.json())
-            .then(data => {
+          return axios
+            .get(url)
+            .then(response => response.data())
+            .then((data: any) => {
               move.id = data.id
               move.type = data.type.name
               move.target = data.target.name
@@ -48,8 +47,6 @@ export async function skillEnhanceSeed() {
       )
 
       const prismaOperations: any[] = []
-
-      console.log('fetch done')
 
       skillsData.map(skill => {
         const operation = prisma.skill.update({
@@ -75,7 +72,5 @@ export async function skillEnhanceSeed() {
       })
 
       await Promise.all(prismaOperations)
-
-      console.log('done')
     })
 }

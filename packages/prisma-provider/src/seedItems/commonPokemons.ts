@@ -1,4 +1,4 @@
-export const pokemonData = [
+export const commonPokemons = [
   {
     name: 'bulbasaur',
     types: ['grass', 'poison'],
