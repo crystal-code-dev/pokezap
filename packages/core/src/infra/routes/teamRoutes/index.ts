@@ -1,6 +1,6 @@
-import { MissingParametersTradeRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
 import { IResponse } from '../../../server/models/IResponse'
 import { TRouteParams } from '../router'
+import { teamInfo } from './teamInfo'
 import { teamLoad } from './teamLoad'
 import { teamMainPoke } from './teamMainPoke'
 import { teamSave } from './teamSave'
@@ -20,7 +20,7 @@ const routesMap = new Map<string, any>([
 
 export const teamRoutes = async (data: TRouteParams): Promise<IResponse> => {
   const [, , subRouteName] = data.routeParams
-  if (!subRouteName) return await teamSet(data)
+  if (!subRouteName) return await teamInfo(data)
 
   const route = routesMap.get(subRouteName)
   if (!route) return await teamSet(data)

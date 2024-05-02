@@ -20,8 +20,7 @@ export const wildPokeSpawn = async (data?: TParams) => {
   })
 
   for (const gameRoom of gameRooms) {
-    if (gameRoom.phone !== '120363269482791516@g.us') continue
-    // if (gameRoom.mode !== 'route') continue
+    if (gameRoom.mode !== 'route') continue
     if (gameRoom.invasorId && Math.random() < 0.5) {
       sendMessage({
         chatId: gameRoom.phone,
