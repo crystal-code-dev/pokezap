@@ -45,10 +45,10 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
         not: null,
       },
       childrenId3: {
-        [value > 2 ? 'equals' : 'not']: null,
+        [value > 2 ? 'not' : 'equals']: null,
       },
       childrenId4: {
-        [value > 3 ? 'equals' : 'not']: null,
+        [value > 3 ? 'not' : 'equals']: null,
       },
       ownerId: player.id,
       isAdult: true,
