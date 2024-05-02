@@ -7,6 +7,7 @@ import {
   NoEnergyError,
   PlayerDoesNotHaveThePokemonInTheTeamError,
   PlayerNotFoundError,
+  PokemonDoesNotHaveOwnerError,
   PokemonNotFoundError,
   RaidAlreadyFinishedError,
   RaidAlreadyInProgressError,
@@ -55,7 +56,11 @@ export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
       id: raidId,
     },
     include: {
-      lobbyPokemons: true,
+      lobbyPokemons: {
+        include: {
+          baseData: true,
+        },
+      },
     },
   })
 
@@ -113,18 +118,24 @@ export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
       },
     })
 
-    await prisma.player.updateMany({
-      where: {
-        id: {
-          in: raid.lobbyPokemons.map(p => p.ownerId || 0),
-        },
-      },
-      data: {
-        energy: {
-          decrement: 1,
-        },
-      },
-    })
+    for (const pokemon of raid.lobbyPokemons) {
+      if (!pokemon.ownerId) throw new PokemonDoesNotHaveOwnerError(pokemon.id, pokemon.baseData.name)
+    }
+
+    await prisma.$transaction(
+      raid.lobbyPokemons.map(p =>
+        prisma.player.update({
+          where: {
+            id: p.ownerId!,
+          },
+          data: {
+            energy: {
+              decrement: 1,
+            },
+          },
+        })
+      )
+    )
 
     return await raidRoomSelect({
       ...data,

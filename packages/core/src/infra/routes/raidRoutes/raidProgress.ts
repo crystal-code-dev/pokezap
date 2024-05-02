@@ -211,6 +211,8 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
     }
   }
 
+  const soloRaidModifier = [...new Set(raid.lobbyPokemons.map(p => p.ownerId))].length === 1 ? 0.85 : 1
+
   // handle raid end win scenario
   if (currentRoom.isFinalRoom) {
     const raidLootData = raidsDataMap.get(currentRoom.enemyPokemons[0].baseData.name)
@@ -227,7 +229,7 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
         continue
       }
       for (const loot of raidLootData.loot) {
-        if (Math.random() < loot.dropRate * raidDifficultyData.dropRate) {
+        if (Math.random() < loot.dropRate * raidDifficultyData.dropRate * soloRaidModifier) {
           const amount = Math.floor(Math.random() * loot.amount[1] + loot.amount[0])
           lootMessages.push(`${player.name} obteve ${amount} *${loot.name}*`)
           prismaPromises.push(
