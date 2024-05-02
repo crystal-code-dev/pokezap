@@ -1,3 +1,4 @@
+import path from 'path'
 import prisma from '../../../../../prisma-provider/src'
 import { createGroupChat } from '../../../server/helpers/createGroupChat'
 import { IResponse } from '../../../server/models/IResponse'
@@ -47,6 +48,7 @@ export const raidGroup = async (data: TRouteParams): Promise<IResponse> => {
   const groupChat = await createGroupChat({
     groupName: `PokeZap - RaidRoom ${Math.ceil(Math.random() * 100)}`,
     playerPhone: player.phone,
+    imageUrl: path.join(__dirname, '.././../../assets/sprites/misc/raid-room.jpg'),
   })
 
   if (!groupChat) throw new UnexpectedError('Não foi possível gerar o grupo de raid')
