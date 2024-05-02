@@ -1,3 +1,4 @@
+import prisma from '../../../../../../prisma-provider/src'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { IResponse } from '../../../../server/models/IResponse'
 import { MissingParameterError, PokemonNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
@@ -9,7 +10,7 @@ export const pokemonSkills = async (data: TRouteParams): Promise<IResponse> => {
   if (!element) throw new MissingParameterError('Nome do pokemon ou elemento + nome do pokemon')
   if (!pokemonName) return await pokemonAvailabeSkills(data)
 
-  const type = await prismatype.findFirst({
+  const type = await prisma.type.findFirst({
     where: {
       name: element.toLowerCase(),
     },

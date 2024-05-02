@@ -1,3 +1,4 @@
+import prisma from '../../../../../prisma-provider/src'
 import { PlayerNotFoundError, RouteNotFoundError } from '../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../infra/routes/router'
 import { IResponse } from '../../../server/models/IResponse'

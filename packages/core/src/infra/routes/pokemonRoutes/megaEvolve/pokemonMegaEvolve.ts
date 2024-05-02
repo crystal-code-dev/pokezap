@@ -1,3 +1,4 @@
+import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
 import { IResponse } from '../../../../server/models/IResponse'
 import {

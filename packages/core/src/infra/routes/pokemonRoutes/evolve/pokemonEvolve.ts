@@ -1,4 +1,5 @@
 import { iGenPokemonAnalysis } from '../../../../../../image-generator/src/iGenPokemonAnalysis'
+import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
 import { IResponse } from '../../../../server/models/IResponse'
 import { checkEvolutionPermition } from '../../../../server/modules/pokemon/checkEvolutionPermition'
@@ -114,7 +115,9 @@ export const pokemonEvolve = async (data: TRouteParams): Promise<IResponse> => {
 
     if (!evolvedPoke) throw new PokemonNotFoundError(pokemon.id)
 
-    const imageUrl = await iGenPokemonAnalysis(evolvedPoke)
+    const imageUrl = await iGenPokemonAnalysis({
+      pokemon: evolvePoke,
+    })
     return {
       message: evolvePoke.message,
       imageUrl,
