@@ -37,7 +37,7 @@ export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> 
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
@@ -97,7 +97,7 @@ export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> 
   if (wildPokemon.battledBy.map(player => player.id).includes(player.id))
     throw new PokemonAlreadyBattledByPlayerError(wildPokemon.id, player.name)
 
-  if (!player.gameRooms.map(gameRoom => gameRoom.id).includes(wildPokemon.gameRoomId))
+  if (player.gameRoomId !== wildPokemon.gameRoomId)
     throw new PlayerDoesNotResideOnTheRoute(wildPokemon.gameRoomId, player.name)
 
   const route = await prisma.gameRoom.findFirst({

@@ -42,7 +42,10 @@ model Player {
   ownedPokemons        Pokemon[]
   ownedItems           Item[]
   ownedBadges          Badge[]
-  gameRooms            GameRoom[]
+  gameRoomId           Int?
+  gameRoom             GameRoom?         @relation(fields: [gameRoomId], references: [id])
+  travelBlockedUntil   DateTime          @default(now())
+  defeatedUntil        DateTime          @default(now())
   pokeTeams            PokeTeam[]
   teamPoke1            Pokemon?          @relation(name: "team-poke-1", fields: [teamPokeId1], references: [id])
   teamPoke2            Pokemon?          @relation(name: "team-poke-2", fields: [teamPokeId2], references: [id])

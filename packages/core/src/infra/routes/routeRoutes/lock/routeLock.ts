@@ -20,7 +20,7 @@ export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
       phone: data.playerPhone,
     },
     include: {
-      gameRooms: true,
+      gameRoom: true,
     },
   })
 
@@ -32,8 +32,7 @@ export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
 
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
   if (!route) throw new RouteNotFoundError(player.name, data.groupCode)
-  if (!player.gameRooms.map(g => g.id).includes(route.id))
-    throw new PlayerDoesNotResideOnTheRoute(route.id, player.name)
+  if (player.gameRoomId !== route.id) throw new PlayerDoesNotResideOnTheRoute(route.id, player.name)
 
   if (['REMOVE', 'REMOVER'].includes(levelLockString)) {
     await prisma.gameRoom.update({

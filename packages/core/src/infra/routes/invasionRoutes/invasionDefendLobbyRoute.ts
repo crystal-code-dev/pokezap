@@ -28,7 +28,7 @@ export const invasionDefendLobbyRoute = async (data: TRouteParams): Promise<IRes
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)

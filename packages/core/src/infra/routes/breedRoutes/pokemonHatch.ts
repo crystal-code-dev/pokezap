@@ -29,7 +29,7 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
           baseData: true,
         },
       },
-      gameRooms: {
+      gameRoom: {
         include: {
           upgrades: {
             include: {
@@ -42,8 +42,8 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
 
-  const isLabEnhanced = player.gameRooms.some(groom =>
-    groom.upgrades.some((upg: RoomUpgrades & { base: BaseRoomUpgrades }) => upg.base.name === 'lab')
+  const isLabEnhanced = player.gameRoom?.upgrades.some(
+    (upg: RoomUpgrades & { base: BaseRoomUpgrades }) => upg.base.name === 'lab'
   )
 
   console.log({ isLabEnhanced })
