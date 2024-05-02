@@ -1,6 +1,7 @@
 import { iGenTradePokemon } from '../../../../../../image-generator/src/iGenTradePokemon'
 import prisma from '../../../../../../prisma-provider/src'
 import {
+  CantTradeWithYourselfError,
   PlayerInRaidIsLockedError,
   PlayerNotFoundError,
   PokemonDoesNotBelongsToTheUserError,
@@ -78,6 +79,8 @@ export const tradePoke1 = async (data: TRouteParams): Promise<IResponse> => {
 
   const invitedPokemon = pokemons.find(poke => poke.id === invitedPokemonId)
   if (!invitedPokemon) throw new PokemonNotFoundError(invitedPokemonId)
+
+  if (creatorPokemon.ownerId === invitedPokemon.ownerId) throw new CantTradeWithYourselfError()
 
   if (creatorPokemon.ownerId !== requesterPlayer.id && !data.fromReact)
     throw new PokemonDoesNotBelongsToTheUserError(creatorPokemon.id, creatorPokemon.baseData.name, requesterPlayer.name)

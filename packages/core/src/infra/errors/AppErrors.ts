@@ -486,6 +486,14 @@ export class PlayerNotFoundError extends AppError {
   }
 }
 
+export class CantTradeWithYourselfError extends AppError {
+  constructor() {
+    const message = `Não é permitido trocar um pokemon consigo mesmo.`
+
+    super(message)
+  }
+}
+
 export class PlayerAlreadyExists extends AppError {
   constructor(name: string) {
     const message = `${name}, parece que você já tem um personagem cadastrado.`
