@@ -16,8 +16,10 @@ const userDemand = new UserDemandHandler()
 
 export const messageReactionProcess = async (msg: Reaction) => {
   try {
-    const permit = await verifyTargetChat(msg.msgId.remote)
-    if (!permit) return
+    if (msg.msgId.remote !== '120363269482791516@g.us' && msg.id.remote !== '120363269482791516@g.us') return
+
+    // const permit = await verifyTargetChat(msg.msgId.remote)
+    // if (!permit) return
 
     const zapClient = container.resolve<Client>('WhatsappClient')
 
