@@ -1,6 +1,4 @@
-import { iGenPokemonTeam } from '../../../../../image-generator/src/iGenPokemonTeam'
 import prisma from '../../../../../prisma-provider/src'
-import { getActiveClanBonus } from '../../../server/helpers/getActiveClanBonus'
 import { IResponse } from '../../../server/models/IResponse'
 import {
   PlayerDoestNotOwnThePokemonError,
@@ -59,27 +57,6 @@ export const teamSet = async (data: TRouteParams): Promise<IResponse> => {
 
   if (!player) throw new PlayerNotFoundError(data.playerName)
 
-  if (!id1) {
-    const imageUrl = await iGenPokemonTeam({
-      playerData: player,
-    })
-
-    return {
-      message: `Time Pokemon de ${player.name} 
-      Bonus de clã ativo: ${getActiveClanBonus([
-        player.teamPoke1,
-        player.teamPoke2,
-        player.teamPoke3,
-        player.teamPoke4,
-        player.teamPoke5,
-        player.teamPoke6,
-      ])}`,
-      status: 200,
-      data: null,
-      imageUrl: imageUrl,
-    }
-  }
-
   const stringNames = [id1, id2, id3, id4, id5, id6]
   const ids = [Number(id1), Number(id2 || 0), Number(id3 || 0), Number(id4 || 0), Number(id5 || 0), Number(id6 || 0)]
   const uniqueIds = [...new Set(ids)]
@@ -95,9 +72,16 @@ export const teamSet = async (data: TRouteParams): Promise<IResponse> => {
       const lowercaseName = name.toLowerCase()
       const pokemon = await prisma.pokemon.findFirst({
         where: {
-          baseData: {
-            name: lowercaseName,
-          },
+          OR: [
+            {
+              baseData: {
+                name: lowercaseName,
+              },
+            },
+            {
+              nickName: lowercaseName,
+            },
+          ],
           ownerId: player.id,
         },
       })
