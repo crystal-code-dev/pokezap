@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios'
 import ffmpeg from 'fluent-ffmpeg'
-import moment from 'moment'
 import { container } from 'tsyringe'
 import { Client, MessageMedia, Reaction } from 'whatsapp-web.js'
 import { reactions } from '../../../../common/constants/reactions'
@@ -14,12 +13,13 @@ import { verifyTargetChat } from '../helpers/verifyTargetChat'
 
 const userDemand = new UserDemandHandler()
 
-export const messageReactionProcess = async (msg: Reaction) => {
+export const messageReactionProcess = async (msg: Reaction, initDate: Date) => {
   try {
-    if (msg.msgId.remote !== '120363269482791516@g.us' && msg.id.remote !== '120363269482791516@g.us') return
+    const permit = await verifyTargetChat(msg.msgId.remote)
+    if (!permit) return
 
-    // const permit = await verifyTargetChat(msg.msgId.remote)
-    // if (!permit) return
+    const msgDate = new Date(msg.timestamp * 1000)
+    if (msgDate.getTime() < initDate.getTime()) return
 
     const zapClient = container.resolve<Client>('WhatsappClient')
 
@@ -29,18 +29,7 @@ export const messageReactionProcess = async (msg: Reaction) => {
       },
     })
 
-    console.log({ message })
-
     if (!message) return
-
-    const currentTimestamp: number = Math.floor(Date.now() / 1000)
-    const difference: number = moment
-      .duration(currentTimestamp - Math.floor(new Date(message.createdAt).getTime() / 1000), 'seconds')
-      .asMinutes()
-    if (difference >= 60) {
-      logger.info('ignoring old msg. difference: ' + difference.toFixed(2) + 'minutes')
-      return
-    }
 
     const player = await prisma.player.findFirst({
       where: {
@@ -57,8 +46,6 @@ export const messageReactionProcess = async (msg: Reaction) => {
     }
 
     const routeParams = getRequestedAction()
-
-    console.log({ routeParams, player })
 
     if (!routeParams) return
 

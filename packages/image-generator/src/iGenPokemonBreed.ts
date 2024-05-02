@@ -87,6 +87,18 @@ export const iGenPokemonBreed = async (data: TParams) => {
       ctx.drawImage(typeLabel2, typeLabel2X, typeLabel2Y, typeLabel2Width, typeLabel2Height)
     }
 
+    if (data.pokemon1.isGiant) {
+      const giantLabel = await loadOrSaveImageFromCache('./src/assets/sprites/UI/types/giant.png')
+      // Calculate the position of the sprite in the middle of the canvas
+      const giantLabelWidth = 80 // replace with the actual width of the giantLabel
+      const giantLabelHeight = 25 // replace with the actual height of the giantLabel
+      const giantLabelX = 0
+      const giantLabelY = 175
+      // Draw the giantLabel on the canvas
+      ctx.globalAlpha = 1
+      ctx.drawImage(giantLabel, giantLabelX, giantLabelY, giantLabelWidth, giantLabelHeight)
+    }
+
     // write pokemon name
 
     const name = data.pokemon1.baseData.name
@@ -180,6 +192,20 @@ export const iGenPokemonBreed = async (data: TParams) => {
       // Draw the typeLabel2 on the canvas
       ctx.globalAlpha = 1
       ctx.drawImage(typeLabel2, typeLabel2X, typeLabel2Y, typeLabel2Width, typeLabel2Height)
+    }
+
+    if (data.pokemon2.isGiant) {
+      const giantLabel = await loadOrSaveImageFromCache(
+        './src/assets/sprites/UI/types/' + data.pokemon2.baseData.type2Name + '.png'
+      )
+      // Calculate the position of the sprite in the middle of the canvas
+      const giantLabelWidth = 80 // replace with the actual width of the giantLabel
+      const giantLabelHeight = 25 // replace with the actual height of the giantLabel
+      const giantLabelX = 420
+      const giantLabelY = 175
+      // Draw the giantLabel on the canvas
+      ctx.globalAlpha = 1
+      ctx.drawImage(giantLabel, giantLabelX, giantLabelY, giantLabelWidth, giantLabelHeight)
     }
 
     // write pokemon name

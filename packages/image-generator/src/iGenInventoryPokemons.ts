@@ -93,6 +93,13 @@ export const iGenInventoryPokemons = async (data: TParams) => {
       }
     }
 
+    if (pokemons[i].isGiant) {
+      ctx.font = ' 7px Pokemon'
+      ctx.fillStyle = 'white'
+      ctx.textAlign = 'start'
+      ctx.fillText(`GIANT`, x - 3, y + 6)
+    }
+
     if (pokemons[i].isAdult) {
       ctx.font = ' 9px Pokemon'
       ctx.fillStyle = 'white'
