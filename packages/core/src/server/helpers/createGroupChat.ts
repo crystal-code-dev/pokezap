@@ -3,6 +3,7 @@ import axios from 'axios'
 type Params = {
   playerPhone: string
   groupName: string
+  imageUrl?: string
 }
 
 type Response = {
