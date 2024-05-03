@@ -1,5 +1,5 @@
-import { BasePokemon } from '@prisma/client'
-
+import prisma from '../../../../../../prisma-provider/src'
+import { BasePokemon } from '../../../../types/prisma'
 import { talentNameMap } from '../../../constants/talentNameMap'
 import { getRandomBetween2 } from '../../../helpers/getRandomBetween2'
 import { generateGeneralStats } from '../generateGeneralStats'
@@ -14,7 +14,7 @@ type TParams = {
   gameRoomId?: number
 }
 
-export const generateBossPokemon = async (data: TParams) => {
+export const generateBossPokemon = async (data: TParams): Promise<any> => {
   const { baseData, level, shinyChance, savage, gameRoomId } = data
 
   const isShiny = Math.random() < shinyChance

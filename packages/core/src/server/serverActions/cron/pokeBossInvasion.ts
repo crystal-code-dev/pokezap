@@ -1,5 +1,6 @@
 import { iGenPokeBossInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { bossInvasionLootMap } from '../../../server/constants/bossInvasionLootMap'
 import { bossPokemonNames } from '../../../server/constants/bossPokemonNames'
 import { generateBossPokemon } from '../../../server/modules/pokemon/generate/generateBossPokemon'
@@ -85,6 +86,8 @@ export const pokeBossInvasion = async () => {
 `,
       },
     })
+
+    if (!result) throw new UnexpectedError('Provider respose not found')
 
     await prisma.message.create({
       data: {
