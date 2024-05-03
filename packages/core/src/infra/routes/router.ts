@@ -31,6 +31,7 @@ import { shopRoutes } from './shopRoutes'
 import { teamRoutes } from './teamRoutes'
 import { tournamentRoutes } from './tournamentRoutes'
 import { tradeRoutes } from './tradeRoutes'
+import { travelRoutes } from './travelRoutes'
 import { useItemRoutes } from './useItemRoutes'
 import { playerRoutes } from './userRoutes'
 import { register } from './userRoutes/newUser'
@@ -167,6 +168,13 @@ const routeMap = new Map<string, TRouteType>([
   ['USEITEN', useItemRoutes],
   ['USE-ITEN', useItemRoutes],
   ['USE', useItemRoutes],
+
+  // TRAVEL ROUTES
+  ['TRAVEL', travelRoutes],
+  ['VIAJAR', travelRoutes],
+  ['VIAGEM', travelRoutes],
+  ['MAPA', travelRoutes],
+  ['MAP', travelRoutes],
 
   /// //////////// EXPRESS ROUTES ////////////////////
 
