@@ -25,7 +25,7 @@ export const routeEnter = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   return {
-    message: `*${player.name}* acaba de se tornar residente da *ROTA ${updatedRoute.id}!*`,
+    message: `*${player.name}* acaba de se chegar em *ROTA ${updatedRoute.inGameName}!*`,
     status: 200,
     data: null,
   }
