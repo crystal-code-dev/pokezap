@@ -1,80 +1,26 @@
 import cron from 'node-cron'
-import prisma from '../../../../../prisma-provider/src'
 import { pokeBossInvasion } from '../../../server/serverActions/cron/pokeBossInvasion'
 import { wildPokeSpawn } from '../../../server/serverActions/cron/wildPokeSpawn'
-import { logger } from '../../helpers/logger'
-import { sendMessage } from '../../helpers/sendMessage'
+import { energyResetJob } from '../../serverActions/cron/energyResetJob'
+import { fishingSpotBossJob, fishingSpotSpawnJob } from '../../serverActions/cron/gameAreaJobs'
+import { pokemonCenterJob } from '../../serverActions/cron/pokemonCenterJob'
 import { rocketInvasion } from '../../serverActions/cron/rocketInvasion'
 
 export const initProcess = async () => {
-  cron.schedule(`*/20 * * * *`, () => {
-    logger.info(`Natural wild pokemon spawn`)
-
-    wildPokeSpawn()
+  cron.schedule(`10,30,50 * * * *`, () => wildPokeSpawn())
+  cron.schedule('*/2 * * * *', () => {
+    fishingSpotSpawnJob()
   })
-
   cron.schedule('*/4 * * * *', () => {
-    logger.info('Running incense cron')
     wildPokeSpawn({
       needIncense: true,
     })
   })
-
-  cron.schedule('0 0 */4 * * *', async () => {
-    logger.info('Running cp cron')
-    const gameRooms = await prisma.gameRoom.findMany({
-      where: {
-        mode: 'route',
-        upgrades: {
-          some: {
-            base: {
-              name: 'pokemon-center',
-            },
-          },
-        },
-      },
-      include: {
-        players: true,
-      },
-    })
-
-    for (const gameRoom of gameRooms) {
-      await prisma.player.updateMany({
-        where: {
-          id: {
-            in: gameRoom.players.map(player => player.id),
-          },
-        },
-        data: {
-          energy: {
-            increment: 2,
-          },
-        },
-      })
-
-      try {
-        await sendMessage({
-          chatId: gameRoom.phone,
-          content: `🔋💞 Centro pokemon da rota *#${gameRoom.id}* acaba de fornecer 2 energia extra! 🔋💞`,
-        })
-      } catch (e: any) {}
-    }
+  cron.schedule('*/20 * * * *', () => {
+    fishingSpotBossJob()
   })
-
-  cron.schedule('0 0 */12 * * *', async () => {
-    logger.info('Running energy reset cron')
-    await prisma.player.updateMany({
-      data: {
-        energy: 10,
-      },
-    })
-  })
-
-  cron.schedule(`0 0 */5 * * *`, async () => {
-    pokeBossInvasion()
-  })
-
-  cron.schedule(`0 0 */3 * * *`, async () => {
-    rocketInvasion()
-  })
+  cron.schedule('1 0,6,12,18 * * *', () => pokemonCenterJob())
+  cron.schedule('0 0,12 * * *', () => energyResetJob())
+  cron.schedule(`0 0,6,12,18 * * *`, () => pokeBossInvasion())
+  cron.schedule(`0 2,6,10,14,18,22 * * *`, () => rocketInvasion())
 }

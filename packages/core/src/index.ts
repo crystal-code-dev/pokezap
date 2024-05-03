@@ -6,7 +6,6 @@ import router from './infra/router'
 import { initProcess } from './server/modules/init'
 
 process.on('uncaughtException', error => {
-  console.log(error)
   logger.error(error)
 })
 

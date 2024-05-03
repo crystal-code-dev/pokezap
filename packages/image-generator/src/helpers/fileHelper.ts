@@ -11,7 +11,6 @@ export const saveFileOnDisk = async (canvas2d: TCanvas2D): Promise<string> => {
     const stream = canvas2d.createStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })
@@ -25,7 +24,6 @@ export const removeFileFromDisk = (filepath: string, timestamp = 15000) => {
       if (error) {
         logger.error(`Failed to delete file: ${error}`)
       } else {
-        logger.info('File deleted successfully.')
       }
     })
   }, timestamp)
