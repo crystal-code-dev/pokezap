@@ -1,1 +1,1 @@
-for gitignore
+for git
