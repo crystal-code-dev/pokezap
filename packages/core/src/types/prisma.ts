@@ -29,4 +29,4 @@ export {
   Talent,
   Tournament,
   Type,
-} from '@prisma/client'
+} from '../../../prisma-provider/node_modules/@prisma/client'

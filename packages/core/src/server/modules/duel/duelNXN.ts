@@ -27,7 +27,9 @@ import {
   enemyName,
 } from '../../../types'
 import { Skill } from '../../../types/prisma'
+import { talentDefenseBonusMap } from '../../constants/talentDefenseBonusMap'
 import { getBestSkillSet } from '../../helpers/getBestSkillSet'
+import { getPokemonPurity } from '../pokemon/getPokemonPurity'
 import { DuelPokemonExtra, getTeamBonuses } from './getTeamBonuses'
 
 type TParams = {
@@ -233,6 +235,9 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     if (poke.role === 'TANKER') roleBonuses.defense = 0.1
     if (poke.role === 'DAMAGE') roleBonuses.damage = 0.1
     if (poke.role === 'SUPPORT') roleBonuses.support = 0.1
+
+    roleBonuses.defense += talentDefenseBonusMap.get(getPokemonPurity(poke) ?? 0) ?? 0
+
     leftTeamData.push({
       name: poke.baseData.name,
       id: poke.id,
@@ -290,6 +295,9 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     if ('role' in poke && poke.role === 'TANKER') roleBonuses.defense = 0.1
     if ('role' in poke && poke.role === 'DAMAGE') roleBonuses.damage = 0.1
     if ('role' in poke && poke.role === 'SUPPORT') roleBonuses.support = 0.1
+
+    roleBonuses.defense += talentDefenseBonusMap.get(getPokemonPurity(poke) ?? 0) ?? 0
+
     rightTeamData.push({
       name: poke.baseData.name,
       pokemonBaseData: poke,
@@ -588,7 +596,7 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
 
       if (currentSkillData.skill.category === 'heal') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.04
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
         const healingPower =
           currentSkillData.skill.healing +
           (4 * (pokemon.spAtk / 200)) ** 4.15 *
@@ -603,7 +611,7 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
 
       if (currentSkillData.skill.category === 'net-good-stats') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.06
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
 
         const nameFixMap = new Map<string, string>([
           ['attack', 'atk'],

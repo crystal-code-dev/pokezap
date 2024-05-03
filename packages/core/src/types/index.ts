@@ -1,4 +1,4 @@
-import { BaseItem, BasePokemon, HeldItem, Pokemon, RaidPokemon, Skill } from '@prisma/client'
+import { BaseItem, BasePokemon, HeldItem, Pokemon, RaidPokemon, Skill } from './prisma'
 
 export type enemyName = string
 export type attackPower = number
