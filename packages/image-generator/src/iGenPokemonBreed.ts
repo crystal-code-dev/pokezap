@@ -195,9 +195,7 @@ export const iGenPokemonBreed = async (data: TParams) => {
     }
 
     if (data.pokemon2.isGiant) {
-      const giantLabel = await loadOrSaveImageFromCache(
-        './src/assets/sprites/UI/types/' + data.pokemon2.baseData.type2Name + '.png'
-      )
+      const giantLabel = await loadOrSaveImageFromCache('./src/assets/sprites/UI/types/giant.png')
       // Calculate the position of the sprite in the middle of the canvas
       const giantLabelWidth = 80 // replace with the actual width of the giantLabel
       const giantLabelHeight = 25 // replace with the actual height of the giantLabel
