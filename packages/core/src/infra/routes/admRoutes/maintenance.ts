@@ -14,17 +14,13 @@ export const maintenance = async (data: TRouteParams): Promise<IResponse> => {
         contains: '@g.us',
       },
     },
-    select: {
-      name: true,
-      phone: true,
-    },
   })
 
   const promises = []
 
   if (maintenanceOn) {
     for (const gameRoom of gameRooms) {
-      const newName = '[🛠-OFF]' + gameRoom.name
+      const newName = '[🛠 OFF] ' + gameRoom.name
       promises.push(
         groupChatNameUpdate({
           chatId: gameRoom.phone,
@@ -34,7 +30,7 @@ export const maintenance = async (data: TRouteParams): Promise<IResponse> => {
     }
   } else {
     for (const gameRoom of gameRooms) {
-      const newName = gameRoom.name.replace('[🛠-OFF]', '').replace('[🛠-OFF]', '').replace('[🛠-OFF]', '')
+      const newName = gameRoom.name
 
       promises.push(
         groupChatNameUpdate({

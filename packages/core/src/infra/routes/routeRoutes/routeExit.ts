@@ -33,7 +33,7 @@ export const routeExit = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   return {
-    message: `*${player.name}* deixou de ser residente da *ROTA ${updatedRoute.id}*.`,
+    message: `*${player.name}* saiu da *ROTA ${updatedRoute.id}*.`,
     status: 200,
     data: null,
   }
