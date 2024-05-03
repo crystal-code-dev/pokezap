@@ -527,6 +527,22 @@ export class SkillNotFoundError extends AppError {
   }
 }
 
+export class TravelDestinationNotFoundError extends AppError {
+  constructor(destination: string) {
+    const message = `🤔 Não existe nenhum local acessível chamado "*${destination}*"`
+
+    super(message)
+  }
+}
+
+export class TravelDestinationDisabledError extends AppError {
+  constructor(destination: string) {
+    const message = `🤔 Parece que *${destination}* está inacessível no momento. O que será que pode ter acontecido?`
+
+    super(message)
+  }
+}
+
 export class OfferNotFoundError extends AppError {
   constructor(id: string) {
     const message = `ERRO: Oferta não encontrado com o código ${id}`
