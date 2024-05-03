@@ -53,7 +53,7 @@ export const pokemonSkills = async (data: TRouteParams): Promise<IResponse> => {
   for (const skill of skills) {
     const skillLevel = skillMap.get(skill.name)
     const skillDisplay = `*${skill.name}* -PWR:${skill.attackPower === 0 ? 'status' : skill.attackPower} -LVL:${
-      skillLevel === '999' ? '[TM]' : skillLevel
+      skillLevel === '999' ? '💿' : skillLevel
     }`
     skillDisplays.push(skillDisplay)
   }

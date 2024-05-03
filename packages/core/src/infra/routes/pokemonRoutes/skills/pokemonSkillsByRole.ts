@@ -45,7 +45,9 @@ export const pokemonSkillsByRole = async (data: TRouteParams): Promise<IResponse
   for (const skill of skills) {
     if (!checkFunction(skill)) continue
     const skillLevel = skillMap.get(skill.name)
-    const skillDisplay = `*${skill.name}* -PWR:${skill.attackPower} -LVL:${skillLevel}-CLASSE:${skill.class}`
+    const skillDisplay = `*${skill.name}* -PWR:${skill.attackPower === 0 ? 'status' : skill.attackPower} -LVL:${
+      skillLevel === '999' ? '💿' : skillLevel
+    }`
     skillDisplays.push(skillDisplay)
   }
 

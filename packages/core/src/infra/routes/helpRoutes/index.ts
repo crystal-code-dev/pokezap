@@ -237,10 +237,34 @@ const talentsText = `
 Em PokeZap, cada pokemon possui 9 talentos que podem ser vistos no canto inferior esquerdo.
 Os talento servem para:
 
-*1. Aumentar o dano dos poderes exponencialmente*
-*2. Aumentar a defesa*
+*1. Aumentar poder ofensivo*
+📋 De acordo com a contagem de talentos iguais ao tipo do ataque:
+   (Exemplo: contagem de talentos fogo ao usar flamethrower)
+1 - ⚔ 2.5% 
+2 - ⚔ 5%
+3 - ⚔ 8% 
+4 - ⚔ 12% 
+5 - ⚔ 16% 
+6 - ⚔ 22%
+7 - ⚔ 30% 
+8 - ⚔ 45%
+9 - ⚔ 65%
+
+*2. Aumentar poder defensivo*
+📋 De acordo com a contagem de talentos iguais ao tipo do pokemon:
+   (Exemplo: contagem de talentos poison+grass de um venusaur)
+1 - 🛡 2%
+2 - 🛡 4%
+3 - 🛡 7%
+4 - 🛡 10%
+5 - 🛡 14%
+6 - 🛡 18%
+7 - 🛡 24%
+8 - 🛡 32%
+9 - 🛡 42%
+
 *3. Permitir o uso de golpes TM que não seja da tipagem do pokemon* 
-⚙ - Um charizard do tipo fogo/voador, pode usar o golpe THUNDER-PUNCH (tm) se:
+📋 Um charizard do tipo fogo/voador, pode usar o golpe THUNDER-PUNCH 💿 se:
     Possuir 3 TMs
     Ter 2 talentos do tipo elétrico (mesma tipagem do golpe tm)
 
