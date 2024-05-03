@@ -90,9 +90,9 @@ export const pokemonAvailabeSkills = async (data: TRouteParams): Promise<IRespon
     if (skillLevel === 999 && pokemon.TMs < 3) continue
     const permit = verifyTalentPermission(pokemon, skill)
     if (!permit.permit) continue
-    const skillDisplay = `${skillLevel === 999 ? '[tm] ' : ''}*${skill.name}* - PODER: *${
-      skill.attackPower
-    }* - TIPO: *${skill.typeName}*`
+    const skillDisplay = `${skillLevel === 999 ? '💿 ' : ''}*${skill.name}* - PODER: *${skill.attackPower}* - TIPO: *${
+      skill.typeName
+    }*`
     skillDisplays.push(skillDisplay)
   }
 
