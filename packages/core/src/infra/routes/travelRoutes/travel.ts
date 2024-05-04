@@ -1,5 +1,10 @@
+import prisma from '../../../../../prisma-provider/src'
 import { IResponse } from '../../../server/models/IResponse'
-import { TravelDestinationDisabledError, TravelDestinationNotFoundError } from '../../errors/AppErrors'
+import {
+  PlayerNotFoundError,
+  TravelDestinationDisabledError,
+  TravelDestinationNotFoundError,
+} from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
 type TravelDestination = {
@@ -22,7 +27,7 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
       id: 1,
       name: 'fishing-spot',
       groupPhone: '',
-      inviteCode: 'KTqXS5md84SKt5BBehndTn',
+      inviteCode: 'LI1s8wie8U9FtbBHZM7qjJ',
       requires: null,
     },
   ],
@@ -41,6 +46,23 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
 
 export const travel = async (data: TRouteParams): Promise<IResponse> => {
   const [, , destinationString] = data.routeParams
+
+  if (['HOME', 'ROTA', 'VOLTAR', 'CASA'].includes(destinationString)) {
+    const player = await prisma.player.findFirst({
+      where: {
+        phone: data.playerPhone,
+      },
+    })
+    if (!player) throw new PlayerNotFoundError(data.playerPhone)
+
+    return {
+      message: `🗺 Mapa de Kanto 🗺
+🚲 Para retornar à sua rota natal:
+
+https://chat.whatsapp.com/${player.homeInviteCode}`,
+      status: 200,
+    }
+  }
 
   const destination = travelDestinationsMap.get(destinationString)
   if (!destination) throw new TravelDestinationNotFoundError(destinationString)

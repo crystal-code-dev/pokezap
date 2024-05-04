@@ -15,6 +15,5 @@ export const requestServer = async (inputData: RequestServerParams): Promise<Ser
   if (!response) throw new Error('Sem resposta do servidor.')
 
   const data = await response.data
-  console.log({ data })
   return data as ServerResponse
 }

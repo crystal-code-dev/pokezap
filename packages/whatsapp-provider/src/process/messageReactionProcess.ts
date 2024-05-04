@@ -72,8 +72,6 @@ export const messageReactionProcess = async (msg: Reaction, initDate: Date) => {
       fromReact: true,
     })
 
-    logger.info({ response })
-
     if (!response) return
 
     if (!response.imageUrl) {

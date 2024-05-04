@@ -42,6 +42,7 @@ model Player {
   ownedPokemons        Pokemon[]
   ownedItems           Item[]
   ownedBadges          Badge[]
+  homeInviteCode       String            @default("K0BZCDfndyK1yjw9D7C9aV")
   gameRoomId           Int?
   gameRoom             GameRoom?         @relation(fields: [gameRoomId], references: [id])
   travelBlockedUntil   DateTime          @default(now())

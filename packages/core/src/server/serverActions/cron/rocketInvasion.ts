@@ -46,7 +46,7 @@ export const rocketInvasion = async () => {
     const cashReward = Math.round(100 + gameRoom.level * 5 + gameRoom.level ** 1.3)
 
     const lootData = [
-      { itemName: 'tm-case', dropChance: 0.05 },
+      { itemName: 'tm-case', dropChance: 0.025 },
       { itemName: 'pokeball-box', dropChance: 0.05 },
       { itemName: 'rare-candy', dropChance: 0.05 },
       { itemName: 'prop-case', dropChance: 0.05 },

@@ -12,6 +12,7 @@ import { pokemonHatch } from './breedRoutes/pokemonHatch'
 import { casinoRoutes } from './casinoRoutes'
 import { catchRoutes } from './catchRoutes'
 import { duelRoutes } from './duelRoutes'
+import { eventRoutes } from './eventRoutes'
 import { helpRoutes } from './helpRoutes'
 import { invasionRoutes } from './invasionRoutes'
 import { inventoryRoutes } from './inventoryRoutes'
@@ -175,6 +176,9 @@ const routeMap = new Map<string, TRouteType>([
   ['VIAGEM', travelRoutes],
   ['MAPA', travelRoutes],
   ['MAP', travelRoutes],
+
+  // EVENT ROUTES
+  ['EVENT', eventRoutes],
 
   /// //////////// EXPRESS ROUTES ////////////////////
 
