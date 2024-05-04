@@ -83,3 +83,5 @@ packages/image-generator/src/images/*.jpg
 packages/image-generator/src/images/*.jpeg
 
 dist
+
+packages/**/dist

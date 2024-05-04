@@ -16,7 +16,8 @@
     "@prisma/client": "~5.13.0",
     "node-fetch": "~3.3.2",
     "axios": "~1.6.8",
-    "eslint": "8.48.0"
+    "eslint": "8.48.0",
+    "@types/node": "~20.12.8"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",

@@ -1,4 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { PlayerNotFoundError, RouteAlreadyRegisteredError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
@@ -22,7 +23,7 @@ export const routeStart = async (data: TRouteParams): Promise<RouteResponse> => 
     data: {
       level: 1,
       experience: 0,
-      mode: 'private',
+      gameArea: GameAreaName.PRIVATE,
       phone: data.groupCode,
       incenseCharges: 0,
       players: {

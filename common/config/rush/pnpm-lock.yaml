@@ -58,12 +58,14 @@ importers:
   ../../packages/prisma-provider:
     specifiers:
       '@prisma/client': ~5.13.0
+      '@types/node': ~20.12.8
       axios: ~1.6.8
       eslint: 8.48.0
       node-fetch: ~3.3.2
       prisma: ~5.13.0
     dependencies:
       '@prisma/client': 5.13.0_prisma@5.13.0
+      '@types/node': 20.12.8
       axios: 1.6.8
       eslint: 8.48.0
       node-fetch: 3.3.2
@@ -339,7 +341,7 @@ packages:
   /@types/fluent-ffmpeg/2.1.24:
     resolution: {integrity: sha512-g5oQO8Jgi2kFS3tTub7wLvfLztr1s8tdXmRd8PiL/hLMLzTIAyMR2sANkTggM/rdEDAg3d63nYRRVepwBiCw5A==}
     dependencies:
-      '@types/node': 20.12.7
+      '@types/node': 20.12.8
     dev: false
 
   /@types/gifencoder/2.0.3:
@@ -370,6 +372,12 @@ packages:
 
   /@types/node/20.12.7:
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
+    dependencies:
+      undici-types: 5.26.5
+    dev: false
+
+  /@types/node/20.12.8:
+    resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -413,7 +421,7 @@ packages:
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
     requiresBuild: true
     dependencies:
-      '@types/node': 20.12.7
+      '@types/node': 20.12.8
     dev: false
     optional: true
 
