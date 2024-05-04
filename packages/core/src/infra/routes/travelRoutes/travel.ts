@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   PlayerNotFoundError,
   TravelDestinationDisabledError,
@@ -27,7 +27,7 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
       id: 1,
       name: 'fishing-spot',
       groupPhone: '',
-      inviteCode: 'LI1s8wie8U9FtbBHZM7qjJ',
+      inviteCode: 'F2fHcVRuJHvJyWYEhjbiw7',
       requires: null,
     },
   ],
@@ -44,7 +44,7 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
   ],
 ])
 
-export const travel = async (data: TRouteParams): Promise<IResponse> => {
+export const travel = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , destinationString] = data.routeParams
 
   if (['HOME', 'ROTA', 'VOLTAR', 'CASA'].includes(destinationString)) {

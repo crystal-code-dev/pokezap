@@ -1,7 +1,7 @@
 import { iGenRaidNextRoom } from '../../../../../image-generator/src/iGenRaidNextRoom'
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   MissingParameterError,
   PlayerDoesNotBelongToRaidTeamError,
@@ -19,7 +19,7 @@ import {
 import { TRouteParams } from '../router'
 import { raidProgress } from './raidProgress'
 
-export const raidRoomSelect = async (data: TRouteParams): Promise<IResponse> => {
+export const raidRoomSelect = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , selectType, raidIdString, roomIdString, confirm] = data.routeParams
   if (!data.fromReact) throw new UnexpectedError('Rota não permitida.')
   if (!raidIdString) throw new MissingParameterError('Id da raid')

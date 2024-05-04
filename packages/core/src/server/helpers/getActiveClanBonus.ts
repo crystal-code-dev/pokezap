@@ -1,4 +1,4 @@
-import { PokemonBaseData } from '../modules/duel/duelNXN'
+import { PokemonBaseData } from '../../../../prisma-provider/src/types'
 
 export const getActiveClanBonus = (team: (PokemonBaseData | null)[]): string => {
   if (team.length < 6) return 'Nenhum'

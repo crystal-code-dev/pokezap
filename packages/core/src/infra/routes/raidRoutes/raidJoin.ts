@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   InvasionNotFoundError,
   MissingParametersBattleRouteError,
@@ -16,7 +16,7 @@ import {
 import { TRouteParams } from '../router'
 import { raidRoomSelect } from './raidRoomSelect'
 
-export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
+export const raidJoin = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , raidIdString] = data.routeParams
   if (!raidIdString) throw new MissingParametersBattleRouteError()
 

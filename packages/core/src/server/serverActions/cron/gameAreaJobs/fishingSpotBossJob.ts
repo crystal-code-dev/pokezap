@@ -1,4 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { gameAreasData } from '../../../constants/gameAreasData'
 import { verifySpawnTime } from '../../../modules/gameArea/verifySpawnTime'
 import { specialBossInvasion } from '../specialBossInvasion'
@@ -6,11 +7,11 @@ import { specialBossInvasion } from '../specialBossInvasion'
 export const fishingSpotBossJob = async () => {
   const date = new Date()
   const hours = date.getHours()
-  const verify = verifySpawnTime(gameAreasData.fishingSpot.spawnTime, hours)
+  const verify = verifySpawnTime(gameAreasData[GameAreaName.FISHINGSPOT].spawnTime, hours)
   if (!verify) return
   const fishingSpotGameRooms = await prisma.gameRoom.findMany({
     where: {
-      mode: 'fishing-spot',
+      gameArea: GameAreaName.FISHINGSPOT,
     },
     include: {
       players: {

@@ -1,4 +1,5 @@
-import { IResponse } from '../../../server/models/IResponse'
+import prisma from '../../../../../prisma-provider/src'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   MissingParameterError,
   OfferAlreadyFinishedError,
@@ -10,7 +11,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const marketAccept = async (data: TRouteParams): Promise<IResponse> => {
+export const marketAccept = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , offerIdString] = data.routeParams
   if (!offerIdString) throw new MissingParameterError('id da offer')
 

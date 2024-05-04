@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules  ./src/index.ts",
     "build": "tsc",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "format": "eslint --fix"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +22,10 @@
     "tslog": "~4.9.2",
     "axios": "~1.6.8",
     "node-cron": "~3.0.3",
-    "@types/node-cron": "~3.0.11"
-  }
+    "@types/node-cron": "~3.0.11",
+    "eslint": "8.48.0"
+  },
+  "files": [
+    "/dist"
+  ]
 }

@@ -1,9 +1,8 @@
 import prisma from '../../../../prisma-provider/src'
-import { PrismaClient } from '../../../../prisma-provider/src/types'
+import { BaseItem, Item, Player, PokemonBaseData, PrismaClient } from '../../../../prisma-provider/src/types'
 import { AppError, RouteNotFoundError, RouteNotProvidedError } from '../../infra/errors/AppErrors'
-import { IResponse } from '../../server/models/IResponse'
-import { PokemonBaseData } from '../../types'
-import { BaseItem, Item, Player } from '../../types/prisma'
+import { RouteResponse } from '../../server/models/RouteResponse'
+
 import { logger } from '../logger'
 import { admRoutes } from './admRoutes'
 import { battleRoutes } from './battleRoutes'
@@ -53,7 +52,7 @@ export type TRouteParams = {
   }
   prismaClient: PrismaClient
 }
-export type TRouteType = (data: TRouteParams) => Promise<IResponse>
+export type TRouteType = (data: TRouteParams) => Promise<RouteResponse>
 
 const routeMap = new Map<string, TRouteType>([
   // NEW USER ROUTES
@@ -249,7 +248,7 @@ const routeMap = new Map<string, TRouteType>([
   ],
 ])
 
-export const router = async (data: TRouteParams): Promise<IResponse> => {
+export const router = async (data: TRouteParams): Promise<RouteResponse> => {
   try {
     const [, routeName] = data.routeParams
     if (!routeName) throw new RouteNotProvidedError()

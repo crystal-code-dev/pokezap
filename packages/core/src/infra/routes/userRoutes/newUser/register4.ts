@@ -1,10 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { spawnTutorialPokemon } from '../../../../server/modules/pokemon/spawnTutorialPokemon'
 import { PlayerNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const register4 = async (data: TRouteParams): Promise<IResponse> => {
+export const register4 = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,

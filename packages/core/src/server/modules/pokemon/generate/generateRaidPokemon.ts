@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { RaidPokemonBaseDataSkills } from '../../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../../infra/errors/AppErrors'
-import { RaidPokemonBaseDataSkills } from '../../../../types'
 import { talentNameMap } from '../../../constants/talentNameMap'
 import { getRandomBetween2 } from '../../../helpers/getRandomBetween2'
 import { generateGeneralStats } from '../generateGeneralStats'

@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParametersUseItemRouteError, NoSubRouteForUseItemRouteError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { useEther } from './items/useEther'
@@ -19,7 +19,7 @@ const itemMap = new Map<string, any>([
   ['ETHER', useEther],
 ])
 
-export const useItemRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const useItemRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , itemName] = data.routeParams
   if (!itemName) throw new MissingParametersUseItemRouteError()
 

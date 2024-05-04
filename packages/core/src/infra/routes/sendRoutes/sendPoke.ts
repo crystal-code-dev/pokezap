@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   CantProceedWithPokemonInTeamError,
   MissingParameterError,
@@ -13,7 +13,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const sendPoke = async (data: TRouteParams): Promise<IResponse> => {
+export const sendPoke = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString, targetPlayerIdString] = data.routeParams
 
   if (!pokemonIdString) throw new MissingParameterError('id do pokemon à ser trocado')

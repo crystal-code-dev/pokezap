@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { raidsDataMap } from '../../../server/constants/raidsDataMap'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { duelNXN } from '../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import {
@@ -16,7 +16,7 @@ import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 import { raidDifficultyDataMap } from './raidCreate'
 
-export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
+export const raidProgress = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , raidIdString, roomIdString] = data.routeParams
   if (!data.fromReact) throw new UnexpectedError('Rota não permitida.')
   if (!raidIdString) throw new MissingParameterError('raid id')

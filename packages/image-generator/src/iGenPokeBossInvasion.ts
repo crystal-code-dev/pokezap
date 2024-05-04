@@ -1,5 +1,5 @@
 import { talentIdMap } from '../../../common/constants/talentIdMap'
-import { BasePokemon, InvasionSession, Pokemon } from '../../../common/types/prisma'
+import { BasePokemon, InvasionSession, Pokemon } from '../../prisma-provider/src/types'
 import { createCanvas2d, drawBackground, getTalent } from './helpers/canvasHelper'
 import { removeFileFromDisk, saveFileOnDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'

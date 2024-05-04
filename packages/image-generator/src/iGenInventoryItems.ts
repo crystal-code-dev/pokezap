@@ -2,7 +2,7 @@ import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
 
-import { BaseItem, BasePokemon, HeldItem, Item, Player, Pokemon } from '../../../common/types/prisma'
+import { BaseItem, BasePokemon, HeldItem, Item, Player, Pokemon } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
 import { logger } from './helpers/logger'

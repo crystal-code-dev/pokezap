@@ -17,20 +17,21 @@ import { findKeyByValue } from '../../helpers/findKeyByValue'
 import prisma from '../../../../../prisma-provider/src'
 import {
   DuelNxNRoundData,
+  DuelPokemonExtra,
   PokemonBaseData,
   PokemonBaseDataSkillsHeld,
   RaidPokemonBaseData,
   RaidPokemonBaseDataSkillsHeld,
   RoundPokemonData,
+  Skill,
   TDuelNXNResponse,
   attackPower,
   enemyName,
-} from '../../../types'
-import { Skill } from '../../../types/prisma'
+} from '../../../../../prisma-provider/src/types'
 import { talentDefenseBonusMap } from '../../constants/talentDefenseBonusMap'
 import { getBestSkillSet } from '../../helpers/getBestSkillSet'
 import { getPokemonPurity } from '../pokemon/getPokemonPurity'
-import { DuelPokemonExtra, getTeamBonuses } from './getTeamBonuses'
+import { getTeamBonuses } from './getTeamBonuses'
 
 type TParams = {
   leftTeam: PokemonBaseDataSkillsHeld[]
@@ -350,8 +351,8 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
   let duelFinished = false
   const isDraw = false
   let roundCount = 1
-  let winnerTeam: any[] | null = null
-  let loserTeam: any[] | null = null
+  let winnerTeam: RoundPokemonData[] = []
+  let loserTeam: RoundPokemonData[] = []
   let winnerSide: 'right' | 'left' | undefined
 
   duelMap.set(1, {
@@ -845,7 +846,8 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     }
   }
 
-  if (!winnerTeam || !loserTeam) throw new UnexpectedError('Time vencedor/perdedor do duelo não foi determinado')
+  if (winnerTeam.length <= 0 || loserTeam.length <= 0)
+    throw new UnexpectedError('Time vencedor/perdedor do duelo não foi determinado')
   if (!winnerSide || !['right', 'left'].includes(winnerSide)) {
     throw new UnexpectedError('Índice do time vencedor/perdedor do duelo não foi determinado')
   }

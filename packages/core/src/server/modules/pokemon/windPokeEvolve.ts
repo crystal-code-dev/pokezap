@@ -1,5 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
-import { PokemonBaseData } from '../../../types'
+import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
+
 import { bossPokemonNames } from '../../constants/bossPokemonNames'
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'
@@ -27,12 +28,12 @@ export const windPokeEvolve = async (
 
   if (currentPosition === -1) return poke
 
-  let evoData: any = null
+  let evoData
 
   if (currentPosition === 0) evoData = evData
   if (currentPosition === 1) evoData = evData.evolves_to[0]
 
-  if (evoData === null) return poke
+  if (!evoData) return poke
 
   const evoTrigger = evoData?.evolution_details[0]?.trigger
 

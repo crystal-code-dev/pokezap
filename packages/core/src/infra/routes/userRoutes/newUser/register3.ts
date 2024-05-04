@@ -1,12 +1,12 @@
 import { iGenPlayerAnalysis } from '../../../../../../image-generator/src/iGenPlayerAnalysis'
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { generateGeneralStats } from '../../../../server/modules/pokemon/generateGeneralStats'
 import { generateHpStat } from '../../../../server/modules/pokemon/generateHpStat'
 import { GenderDoesNotExistError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const register3 = async (data: TRouteParams): Promise<IResponse> => {
+export const register3 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , genderPre, spriteId] = data.routeParams
   const gender = genderPre.toUpperCase()
   if (gender !== 'MENINO' && gender !== 'MENINA') throw new GenderDoesNotExistError(gender)

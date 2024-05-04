@@ -1,5 +1,6 @@
 import { iGenPokeBossInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { bossInvasionLootMap } from '../../../server/constants/bossInvasionLootMap'
 import { bossPokemonNames } from '../../../server/constants/bossPokemonNames'
@@ -17,7 +18,7 @@ export const pokeBossInvasion = async () => {
 
   const gameRooms = await prisma.gameRoom.findMany({
     where: {
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
     },
     include: {
       players: true,

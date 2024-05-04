@@ -1,4 +1,4 @@
-export type IResponse = {
+export type RouteResponse = {
   status: number
   message: string
   data?: any

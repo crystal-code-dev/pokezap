@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { megaPokemonNames } from '../../../server/constants/megaPokemonNames'
 import { getPokemonRequestData } from '../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { generateGeneralStats } from '../../../server/modules/pokemon/generateGeneralStats'
 import { generateHpStat } from '../../../server/modules/pokemon/generateHpStat'
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const megaEvolve = async (data: TRouteParams): Promise<IResponse> => {
+export const megaEvolve = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

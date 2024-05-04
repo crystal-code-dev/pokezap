@@ -1,9 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { PlayerNotFoundError, SendEmptyMessageError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const routeEnter = async (data: TRouteParams): Promise<IResponse> => {
+export const routeEnter = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,
@@ -19,7 +20,7 @@ export const routeEnter = async (data: TRouteParams): Promise<IResponse> => {
     },
   })
 
-  if (!gameRoom || gameRoom.mode === 'raid') throw new SendEmptyMessageError()
+  if (!gameRoom || gameRoom.gameArea === GameAreaName.RAIDROOM) throw new SendEmptyMessageError()
 
   await prisma.player.update({
     where: {

@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { BasePokemon, GymPokemon, Skill } from '../../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../../infra/errors/AppErrors'
-import { BasePokemon, GymPokemon, Skill } from '../../../../types/prisma'
 import { talentNameMap } from '../../../constants/talentNameMap'
 import { generateGeneralStats } from '../generateGeneralStats'
 import { generateHpStat } from '../generateHpStat'

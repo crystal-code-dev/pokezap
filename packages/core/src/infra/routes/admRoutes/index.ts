@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParametersMarketRouteError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { announce } from './announce'
@@ -11,7 +11,7 @@ const subRouteMap = new Map<string, any>([
   ['ANNOUNCE', announce],
 ])
 
-export const admRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const admRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!['5516988675837@c.us', '5516981453197@c.us'].includes(data.playerPhone))
     return {

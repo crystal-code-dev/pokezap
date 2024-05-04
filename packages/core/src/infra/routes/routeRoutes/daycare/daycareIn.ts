@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   CantProceedWithPokemonInTeamError,
   DaycareIsFullError,
@@ -18,7 +18,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const daycareIn = async (data: TRouteParams): Promise<IResponse> => {
+export const daycareIn = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

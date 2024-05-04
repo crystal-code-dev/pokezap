@@ -1,9 +1,9 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { PlayerDoesNotHaveItemError, PlayerNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const register6 = async (data: TRouteParams): Promise<IResponse> => {
+export const register6 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   const wildPokemonId = Number(pokemonIdString)
 

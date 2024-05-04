@@ -1,7 +1,7 @@
 import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
-import { BaseRoomUpgrades, GameRoom, RoomUpgrades } from '../../../common/types/prisma'
+import { BaseRoomUpgrades, GameRoom, RoomUpgrades } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
 import { logger } from './helpers/logger'

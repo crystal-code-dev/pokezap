@@ -8,10 +8,10 @@ import {
   TypeMissmatchError,
 } from '../../../../infra/errors/AppErrors'
 import { getActiveClanBonus } from '../../../../server/helpers/getActiveClanBonus'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { TRouteParams } from '../../router'
 
-export const pokemonTeam = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonTeam = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , id1, id2, id3, id4, id5, id6] = data.routeParams
 
   const player = await prisma.player.findFirst({

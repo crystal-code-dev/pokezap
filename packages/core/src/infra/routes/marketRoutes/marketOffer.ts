@@ -1,5 +1,6 @@
+import prisma from '../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   MissingParametersPokemonInformationError,
   PlayerNotFoundError,
@@ -8,7 +9,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const marketOffer = async (data: TRouteParams): Promise<IResponse> => {
+export const marketOffer = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString, cashOffer] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

@@ -1,5 +1,5 @@
 import { MissingParametersSendRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { sendCash } from './sendCash'
 import { sendItem } from './sendItem'
@@ -25,7 +25,7 @@ const routesMap = new Map<string, any>([
   ['MOEDAS', sendCash],
 ])
 
-export const sendRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const sendRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRouteName] = data.routeParams
   if (!subRouteName) throw new MissingParametersSendRouteError()
 

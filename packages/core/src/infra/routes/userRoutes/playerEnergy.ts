@@ -1,9 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { PlayerNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const playerEnergy = async (data: TRouteParams): Promise<IResponse> => {
+export const playerEnergy = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findUnique({
     where: {
       phone: data.playerPhone,

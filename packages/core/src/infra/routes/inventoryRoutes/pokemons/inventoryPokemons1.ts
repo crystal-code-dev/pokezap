@@ -1,12 +1,13 @@
 /* eslint-disable array-callback-return */
+
 import { iGenInventoryPokemons } from '../../../../../../image-generator/src/iGenInventoryPokemons'
 import prisma from '../../../../../../prisma-provider/src'
 import { PlayerNotFoundError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { talentIdMap } from '../../../../server/constants/talentIdMap'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const inventoryPokemons1 = async (data: TRouteParams): Promise<IResponse> => {
+export const inventoryPokemons1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pageOrFilter, ...filteredOptions] = data.routeParams
 
   const player = await prisma.player.findFirst({

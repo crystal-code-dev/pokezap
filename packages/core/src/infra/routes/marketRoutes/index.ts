@@ -1,9 +1,9 @@
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParametersMarketRouteError, SubRouteNotFoundError } from '../../errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
 import { TRouteParams } from '../router'
+import { marketAccept } from './marketAccept'
 import { marketAnnounce } from './marketAnnounce'
 import { marketOffers } from './marketOffers'
-import { marketAccept } from './marketAccept'
 
 const subRouteMap = new Map<string, any>([
   ['ANNOUNCE', marketAnnounce],
@@ -20,7 +20,7 @@ const subRouteMap = new Map<string, any>([
   ['ACEPT', marketAccept],
 ])
 
-export const marketRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const marketRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersMarketRouteError()
 

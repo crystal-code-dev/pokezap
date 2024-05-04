@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { duelNXN } from '../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import { handleRouteExperienceGain } from '../../../server/modules/route/handleRouteExperienceGain'
@@ -23,7 +23,7 @@ import {
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 
-export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> => {
+export const battleWildPokemon = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , wildPokemonIdString, fast] = data.routeParams
   if (!data.fromReact) throw new SendEmptyMessageError()
   if (!wildPokemonIdString) throw new MissingParametersBattleRouteError()

@@ -1,7 +1,7 @@
 import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
-import { BaseItem } from '../../../common/types/prisma'
+import { BaseItem } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
 import { logger } from './helpers/logger'

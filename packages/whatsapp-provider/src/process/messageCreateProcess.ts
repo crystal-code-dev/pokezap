@@ -3,7 +3,7 @@ import { container } from 'tsyringe'
 import { Client, Message, MessageMedia } from 'whatsapp-web.js'
 
 import { AxiosError } from 'axios'
-import { ServerResponse } from '../../../../common/types/ServerResponse'
+import { ServerResponse } from '../../../core/src/types/ServerResponse'
 import prisma from '../../../prisma-provider/src'
 import { UserDemandHandler } from '../constants/UserDemandHandler'
 import { deleteSentMessage } from '../helpers/deleteSentMessage'
@@ -101,7 +101,7 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
               console.log('Conversão concluída!')
               resolve(outputPath)
             })
-            .on('error', err => {
+            .on('error', (err: any) => {
               console.log('Ocorreu um erro durante a conversão:', err)
             })
             .run()

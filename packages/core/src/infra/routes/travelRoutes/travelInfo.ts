@@ -1,8 +1,8 @@
 import path from 'path'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
-export const travelInfo = async (data: TRouteParams): Promise<IResponse> => {
+export const travelInfo = async (data: TRouteParams): Promise<RouteResponse> => {
   const imageUrl = path.join(__dirname, '../../../assets/sprites/maps/kanto.png')
   return {
     message: `🗺 Mapa de Kanto 🗺 - [d]

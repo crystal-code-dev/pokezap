@@ -1,11 +1,11 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { TRouteParams } from '../../../../infra/routes/router'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { MissingParameterError, PokemonNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
 import { pokemonAvailabeSkills } from './pokemonAvailabeSkills'
 import { pokemonSkillsByRole } from './pokemonSkillsByRole'
 
-export const pokemonSkills = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonSkills = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , element, pokemonName] = data.routeParams
   if (!element) throw new MissingParameterError('Nome do pokemon ou elemento + nome do pokemon')
   if (!pokemonName) return await pokemonAvailabeSkills(data)

@@ -1,7 +1,7 @@
 import { iGenPokemonAnalysis } from '../../../../../../image-generator/src/iGenPokemonAnalysis'
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { checkEvolutionPermition } from '../../../../server/modules/pokemon/checkEvolutionPermition'
 import {
   getRegionalEvolutionData,
@@ -17,7 +17,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokemonEvolve = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonEvolve = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString, targetPokemonNameUppercase] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 
@@ -88,7 +88,9 @@ export const pokemonEvolve = async (data: TRouteParams): Promise<IResponse> => {
         status: 300,
       }
 
-    const imageUrl = await iGenPokemonAnalysis(evolutionData.pokemon)
+    const imageUrl = await iGenPokemonAnalysis({
+      pokemon: evolutionData.pokemon,
+    })
     return {
       message: `*${pokemon.baseData.name}* evoluiu para *${evolutionData.pokemon.baseData.name}*!`,
       imageUrl,
@@ -116,7 +118,7 @@ export const pokemonEvolve = async (data: TRouteParams): Promise<IResponse> => {
     if (!evolvedPoke) throw new PokemonNotFoundError(pokemon.id)
 
     const imageUrl = await iGenPokemonAnalysis({
-      pokemon: evolvePoke,
+      pokemon: evolvedPoke,
     })
     return {
       message: evolvePoke.message,

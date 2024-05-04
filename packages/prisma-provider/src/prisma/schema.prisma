@@ -488,7 +488,7 @@ model GameRoom {
   id                Int              @id @default(autoincrement())
   name              String           @default("room")
   inGameName        String           @default("room")
-  mode              String
+  gameArea          GameAreaName     @default(ROUTE)
   phone             String           @unique
   level             Int
   levelLock         Int?
@@ -700,4 +700,12 @@ model BerryTree {
   createdAt       DateTime         @default(now())
 
   ranchSlot RanchSlot @relation(fields: [ranchSlotId], references: [id])
+}
+
+enum GameAreaName {
+  FISHINGSPOT
+  RAIDROOM
+  ROUTE
+  DUELROOM
+  PRIVATE
 }

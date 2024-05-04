@@ -1,5 +1,5 @@
 import { MissingParametersRouteRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { daycareRoutes } from './daycare'
 import { routeEnter } from './enter/routeEnter'
@@ -14,7 +14,7 @@ import { routeStart } from './start/routeStart'
 import { routeUpgrade } from './upgrade/routeUpgrade'
 import { routeVerify } from './verify/routeVerify'
 
-const routesMap = new Map<string, (data: TRouteParams) => Promise<IResponse>>([
+const routesMap = new Map<string, (data: TRouteParams) => Promise<RouteResponse>>([
   // ROUTE ENTER ROUTES
   ['ENTRAR', routeEnter],
   ['ENTER', routeEnter],
@@ -69,7 +69,7 @@ const routesMap = new Map<string, (data: TRouteParams) => Promise<IResponse>>([
   ['VIAGEM', shipRoute],
 ])
 
-export const routeRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const routeRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersRouteRouteError()
 

@@ -1,6 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
 const text = `🎣🐟 *EVENTO DE PESCARIA* 🎣🐟
@@ -16,13 +17,13 @@ Utilize "pz. travel" e vá para fishing-spot capturar o máximo que puder!
 🕐 Os cardumes aparecem entre: 8h - 9h, 12h - 13h, 16h - 17h, 20h - 21h
 `
 
-export const announce = async (data: TRouteParams): Promise<IResponse> => {
+export const announce = async (data: TRouteParams): Promise<RouteResponse> => {
   const gameRooms = await prisma.gameRoom.findMany({
     where: {
       phone: {
         contains: '@g.us',
       },
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
     },
   })
 

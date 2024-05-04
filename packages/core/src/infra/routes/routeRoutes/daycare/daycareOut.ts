@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { handleLevelSet } from '../../../../server/modules/pokemon/handleLevelSet'
 import {
   MissingParametersPokemonInformationError,
@@ -16,7 +16,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const daycareOut = async (data: TRouteParams): Promise<IResponse> => {
+export const daycareOut = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

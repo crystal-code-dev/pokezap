@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { BasePokemon } from '../../../../types/prisma'
+import { BasePokemon } from '../../../../../../prisma-provider/src/types'
 import { talentNameMap } from '../../../constants/talentNameMap'
 import { getRandomBetween2 } from '../../../helpers/getRandomBetween2'
 import { generateGeneralStats } from '../generateGeneralStats'

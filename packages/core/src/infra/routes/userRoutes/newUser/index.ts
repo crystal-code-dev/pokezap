@@ -1,5 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { PlayerAlreadyExists } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 import { register1 } from './register1'
@@ -20,7 +21,7 @@ const subRouteMap = new Map<string, any>([
   ['6', register6],
 ])
 
-export const register = async (data: TRouteParams): Promise<IResponse> => {
+export const register = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
 
   const route = subRouteMap.get(subRoute ?? '????')
@@ -44,7 +45,7 @@ export const register = async (data: TRouteParams): Promise<IResponse> => {
         level: 1,
         experience: 0,
         phone: data.playerPhone,
-        mode: 'private',
+        gameArea: GameAreaName.PRIVATE,
       },
     })
 

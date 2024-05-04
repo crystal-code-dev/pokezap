@@ -1,9 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParameterError, SkillNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const helpSkill = async (data: TRouteParams): Promise<IResponse> => {
+export const helpSkill = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , skillNameUppercase] = data.routeParams
   if (!skillNameUppercase) throw new MissingParameterError('Nome da skill')
 

@@ -1,10 +1,11 @@
 import { iGenRaidCreate } from '../../../../../image-generator/src/iGenRaidCreate'
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName, RaidPokemonBaseDataSkills } from '../../../../../prisma-provider/src/types'
 import { raidsDataMap } from '../../../server/constants/raidsDataMap'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { generateMegaPokemon } from '../../../server/modules/pokemon/generate/generateMegaPokemon'
 import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
-import { RaidPokemonBaseDataSkills } from '../../../types'
+
 import {
   CantStartRaidOutsideRaidGroupError,
   InvalidDifficultError,
@@ -85,7 +86,7 @@ export const raidDifficultyDataMap = new Map<string, TRaidDifficultData>([
   ],
 ])
 
-export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
+export const raidCreate = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , raidNameUppercase, difficultUppercase] = data.routeParams
 
   if (!raidNameUppercase || !difficultUppercase)
@@ -124,7 +125,7 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   if (!gameRoom) throw new RouteNotFoundError(player.name, data.groupCode)
-  if (gameRoom.mode !== 'raid') throw new CantStartRaidOutsideRaidGroupError()
+  if (gameRoom.gameArea !== GameAreaName.RAIDROOM) throw new CantStartRaidOutsideRaidGroupError()
 
   const [bossBaseData, enemiesBaseData, lootData] = await prisma.$transaction([
     prisma.basePokemon.findFirst({
@@ -147,6 +148,8 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
       },
     }),
   ])
+
+  if (!bossBaseData) throw new UnexpectedError('no bossbasedata found')
 
   const announcementText = `RAID: ${raidName}!`
 
