@@ -1,7 +1,8 @@
 import { iGenWildPokemon } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { GameRoom } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
-import { GameRoom } from '../../../types/prisma'
+
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
 

@@ -1,4 +1,4 @@
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { MissingParameterError, SubRouteNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 import { daycareIn } from './daycareIn'
@@ -20,7 +20,7 @@ const subRouteMap = new Map<string, any>([
   ['INFO', daycareInfo],
 ])
 
-export const daycareRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const daycareRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParameterError('Ação')
 

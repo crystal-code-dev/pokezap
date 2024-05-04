@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   InsufficientFundsError,
   InvasionNotFoundError,
@@ -9,7 +9,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeForfeit = async (data: TRouteParams): Promise<IResponse> => {
+export const routeForfeit = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , confirm] = data.routeParams
 
   const player = await prisma.player.findFirst({

@@ -1,5 +1,5 @@
 import { MissingParametersInventoryRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { inventoryItems1 } from './items/inventoryItems1'
 import { inventoryPokemons1 } from './pokemons/inventoryPokemons1'
@@ -20,7 +20,7 @@ const subRouteMap = new Map<string, any>([
   ['P', inventoryPokemons1],
 ])
 
-export const inventoryRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const inventoryRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersInventoryRouteError()
 

@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { teamInfo } from './teamInfo'
 import { teamLoad } from './teamLoad'
@@ -18,7 +18,7 @@ const routesMap = new Map<string, any>([
   ['POKE-PRINCIPAL', teamMainPoke],
 ])
 
-export const teamRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const teamRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRouteName] = data.routeParams
   if (!subRouteName) return await teamInfo(data)
 

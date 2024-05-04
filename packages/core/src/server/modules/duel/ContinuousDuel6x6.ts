@@ -1,26 +1,27 @@
 import { talentPowerBonusMap } from '../../../../../../common/constants/talentPowerBonusMap'
 import { iGenDuelX6Rounds } from '../../../../../image-generator/src/iGenDuelX6Rounds'
 import prisma from '../../../../../prisma-provider/src'
-import { UnexpectedError } from '../../../infra/errors/AppErrors'
-import { logger } from '../../../infra/logger'
 import {
   DuelNxNRoundData,
+  DuelPokemonExtra,
   PokemonBaseData,
   PokemonBaseDataSkillsHeld,
   RaidPokemonBaseData,
   RaidPokemonBaseDataSkillsHeld,
   RoundPokemonData,
+  Skill,
   TDuelNXNResponse,
   attackPower,
   enemyName,
-} from '../../../types'
-import { Skill } from '../../../types/prisma'
+} from '../../../../../prisma-provider/src/types'
+import { UnexpectedError } from '../../../infra/errors/AppErrors'
+import { logger } from '../../../infra/logger'
 import { defEffectivenessMap } from '../../constants/defEffectivenessMap'
 import { plateTypeMap } from '../../constants/plateTypeMap'
 import { talentIdMap } from '../../constants/talentIdMap'
 import { findKeyByValue } from '../../helpers/findKeyByValue'
 import { getBestSkillSet } from '../../helpers/getBestSkillSet'
-import { DuelPokemonExtra, getTeamBonuses } from './getTeamBonuses'
+import { getTeamBonuses } from './getTeamBonuses'
 
 type TParams = {
   leftTeam: PokemonBaseDataSkillsHeld[]

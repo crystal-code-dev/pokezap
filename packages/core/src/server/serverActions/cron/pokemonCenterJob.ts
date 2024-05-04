@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { GameAreaName } from '../../../types/prisma'
+import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { sendMessage } from '../../helpers/sendMessage'
 
 export const pokemonCenterJob = async () => {

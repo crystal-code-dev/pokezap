@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   CantSellPokemonInTeamError,
   MissingParameterError,
@@ -16,7 +16,7 @@ enum FilterTypes {
   'EGGS',
 }
 
-export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> => {
+export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , filterType, valueString] = data.routeParams
 
   if (!['EGG', 'EGGS'].includes(filterType)) throw new UnexpectedError('Apenas permitido o filtro "egg"')

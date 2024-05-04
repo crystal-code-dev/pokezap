@@ -3,13 +3,13 @@ import fs from 'fs'
 import path from 'path'
 import { talentIdMap } from '../../../common/constants/talentIdMap'
 
-import { PokemonBaseData, PokemonBaseDataSkillsHeld } from '../../../common/types'
+import { PokemonBaseData, PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
 import { logger } from './helpers/logger'
 
 type TParams = {
-  pokemon: PokemonBaseDataSkillsHeld
+  pokemon: PokemonBaseData | PokemonBaseDataSkillsHeld
   parent1?: PokemonBaseData
   parent2?: PokemonBaseData
 }
@@ -240,7 +240,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     }
   }
 
-  if (pokemon.heldItem) {
+  if ('heldItem' in pokemon && pokemon.heldItem) {
     const heldItemImage = await loadOrSaveImageFromCache(pokemon.heldItem.baseItem.spriteUrl)
     ctx.drawImage(heldItemImage, 145, 425, 45, 45)
   }

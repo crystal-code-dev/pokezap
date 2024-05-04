@@ -1,7 +1,7 @@
 import { iGenRocketInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
-import { GameAreaName } from '../../../types/prisma'
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
 

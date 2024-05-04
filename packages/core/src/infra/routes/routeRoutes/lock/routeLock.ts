@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   MissingParameterError,
   PlayerDoesNotResideOnTheRoute,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
+export const routeLock = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , levelLockString] = data.routeParams
 
   if (!levelLockString) throw new MissingParameterError('Nível de trava')

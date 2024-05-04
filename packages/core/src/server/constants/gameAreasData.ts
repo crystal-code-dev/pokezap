@@ -1,4 +1,4 @@
-import { GameAreaName } from '../../types/prisma'
+import { GameAreaName } from '../../../../prisma-provider/src/types'
 
 type GameArea = {
   inviteCode: string
@@ -18,7 +18,7 @@ export const gameAreasData: Record<WildGameAreaNames, GameArea> = {
       [16, 17],
       [20, 21],
     ],
-    catchModifier: 0.1,
+    catchModifier: 0.25,
   },
   [GameAreaName.ROUTE]: {
     inviteCode: '120363277796230795@g.us',

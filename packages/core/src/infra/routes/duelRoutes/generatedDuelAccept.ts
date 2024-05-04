@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { BasePokemon, Player, Pokemon, Skill } from '../../../../../prisma-provider/src/types'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
-import { BasePokemon, Player, Pokemon, Skill } from '../../../types/prisma'
 import {
   NoDuelLoserFoundError,
   NoDuelWinnerFoundError,
@@ -110,7 +110,7 @@ const include = {
   },
 }
 
-export const generatedDuelAccept = async (data: TRouteParams): Promise<IResponse> => {
+export const generatedDuelAccept = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , sessionIdString, fast] = data.routeParams
   const sessionId = Number(sessionIdString)
   if (typeof sessionId !== 'number') throw new TypeMissmatchError(sessionIdString, 'number')

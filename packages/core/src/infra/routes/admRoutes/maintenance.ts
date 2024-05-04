@@ -1,9 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
 import { groupChatNameUpdate } from '../../../server/helpers/groupChatNameUpdate'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
-export const maintenance = async (data: TRouteParams): Promise<IResponse> => {
+export const maintenance = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , onOff] = data.routeParams
 
   const maintenanceOn = onOff === 'ON'

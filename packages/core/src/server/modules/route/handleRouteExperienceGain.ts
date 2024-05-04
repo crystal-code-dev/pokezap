@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
+import { BasePokemon, GameRoom, Player, Pokemon } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { logger } from '../../../infra/logger'
-import { BasePokemon, GameRoom, Player, Pokemon } from '../../../types/prisma'
 
 type TParams = {
   pokemon: Pokemon

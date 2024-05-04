@@ -1,7 +1,7 @@
 import { iGenPokeBossInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { GameRoom } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
-import { GameRoom } from '../../../types/prisma'
 import { LootData } from '../../constants/bossInvasionLootMap'
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateBossPokemon } from '../../modules/pokemon/generate/generateBossPokemon'

@@ -1,10 +1,10 @@
 import { iGenPlayerAnalysis } from '../../../../../../image-generator/src'
 import prisma from '../../../../../../prisma-provider/src'
 import { PlayerNotFoundError, TypeMissmatchError } from '../../../../infra/errors/AppErrors'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { TRouteParams } from '../../router'
 
-export const playerInfo1 = async (data: TRouteParams): Promise<IResponse> => {
+export const playerInfo1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , playerId] = data.routeParams
 
   if (!playerId) {

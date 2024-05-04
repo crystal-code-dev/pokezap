@@ -1,10 +1,10 @@
 import { iGenRanking } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { PlayerNotFoundError, UnexpectedError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const catchRanking = async (data: TRouteParams): Promise<IResponse> => {
+export const catchRanking = async (data: TRouteParams): Promise<RouteResponse> => {
   const players = await prisma.player.findMany()
   if (!players) throw new UnexpectedError('ELO RANKING')
 

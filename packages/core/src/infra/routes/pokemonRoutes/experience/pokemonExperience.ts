@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   MissingParametersPokemonInformationError,
   PlayerNotFoundError,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokemonExperience = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonExperience = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

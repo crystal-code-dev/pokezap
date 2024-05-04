@@ -7,10 +7,10 @@ import {
   PlayerNotFoundError,
   TypeMissmatchError,
 } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
-export const duelX1Route = async (data: TRouteParams): Promise<IResponse> => {
+export const duelX1Route = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , challengedPlayerIdString] = data.routeParams
   const challengedPlayerId = Number(challengedPlayerIdString)
   if (typeof challengedPlayerId !== 'number') throw new TypeMissmatchError(challengedPlayerIdString, 'number')

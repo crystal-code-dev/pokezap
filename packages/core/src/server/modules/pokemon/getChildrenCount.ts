@@ -1,4 +1,4 @@
-import { Pokemon } from '../../../types/prisma'
+import { Pokemon } from '../../../../../prisma-provider/src/types'
 
 export const getChildrenCount = (poke: Pokemon): number => {
   if (!poke.childrenId1) return 0

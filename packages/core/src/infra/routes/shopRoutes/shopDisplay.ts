@@ -1,10 +1,10 @@
 import { iGenShop } from '../../../../../image-generator/src/iGenShop'
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { NoItemsFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const shopDisplay = async (data: TRouteParams): Promise<IResponse> => {
+export const shopDisplay = async (data: TRouteParams): Promise<RouteResponse> => {
   const items = await prisma.baseItem.findMany({
     where: {
       OR: [

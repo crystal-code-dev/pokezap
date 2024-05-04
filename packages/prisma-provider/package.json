@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "prisma db seed --preview-feature",
-    "build": "tsc"
+    "build": "tsc",
+    "format": "eslint --fix"
   },
   "author": "",
   "license": "ISC",
@@ -14,10 +15,14 @@
     "prisma": "~5.13.0",
     "@prisma/client": "~5.13.0",
     "node-fetch": "~3.3.2",
-    "axios": "~1.6.8"
+    "axios": "~1.6.8",
+    "eslint": "8.48.0"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma",
     "seed": "ts-node src/seed.ts"
-  }
+  },
+  "files": [
+    "/dist"
+  ]
 }

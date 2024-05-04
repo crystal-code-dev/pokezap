@@ -2,7 +2,7 @@ import { iGenWildPokemon } from '../../../../../../image-generator/src/iGenWildP
 import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   MissingParametersPokemonInformationError,
   PlayerNotFoundError,
@@ -15,7 +15,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokeranchRoute = async (data: TRouteParams): Promise<IResponse> => {
+export const pokeranchRoute = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

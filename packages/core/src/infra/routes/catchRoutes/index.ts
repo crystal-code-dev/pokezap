@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { gameAreasData } from '../../../server/constants/gameAreasData'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   CatchFailedPokemonRanAwayError,
   InvalidPokeBallName,
@@ -58,7 +58,7 @@ const ballNameMap = new Map<string, string>([
   ['MASTER-BALL', 'master-ball'],
 ])
 
-export const catchRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const catchRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , givenBallName, givenId] = data.routeParams
   const pokemonId = Number(givenId)
   if (!pokemonId || isNaN(pokemonId) || !givenBallName) throw new MissingParametersCatchRouteError()

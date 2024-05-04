@@ -1,11 +1,11 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { Skill } from '../../../../../../prisma-provider/src/types'
 import { checkIfSkillIsSupportSkill, checkIfSkillIsTankerSkill } from '../../../../server/helpers/getBestSkillSet'
-import { IResponse } from '../../../../server/models/IResponse'
-import { Skill } from '../../../../types/prisma'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { MissingParameterError, PokemonNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokemonSkillsByRole = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonSkillsByRole = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , elementUppercase, pokemonName] = data.routeParams
   if (!elementUppercase) throw new MissingParameterError('função')
   if (!pokemonName) throw new MissingParameterError('nome do pokemon')

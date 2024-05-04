@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParameterError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { raidCancel } from './raidCancel'
@@ -34,7 +34,7 @@ const subRouteMap = new Map<string, any>([
   ['TIME', raidTeam],
 ])
 
-export const raidRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const raidRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParameterError('Ação')
 

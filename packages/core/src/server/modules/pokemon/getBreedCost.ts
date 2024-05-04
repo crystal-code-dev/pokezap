@@ -1,7 +1,7 @@
-import { Pokemon } from '../../../types/prisma'
+import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { getChildrenCount } from './getChildrenCount'
 
-export const getBreedCost = (childrenAmount: number, pokemon1: Pokemon, pokemon2: Pokemon) => {
+export const getBreedCost = (childrenAmount: number, pokemon1: PokemonBaseData, pokemon2: PokemonBaseData) => {
   const poke1ChildrenCount = getChildrenCount(pokemon1)
   if (childrenAmount > 4 - poke1ChildrenCount)
     return {
@@ -20,7 +20,7 @@ export const getBreedCost = (childrenAmount: number, pokemon1: Pokemon, pokemon2
       error: true,
     }
 
-  const getBreedingCosts = (poke: any, childrenCount: number) => {
+  const getBreedingCosts = (poke: PokemonBaseData, childrenCount: number) => {
     let finalCost = 0
     let updatedChildrenCount = childrenCount + 1
 

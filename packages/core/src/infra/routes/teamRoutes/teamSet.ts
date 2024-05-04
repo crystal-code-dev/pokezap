@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   PlayerDoestNotOwnThePokemonError,
   PlayerNotFoundError,
@@ -9,7 +9,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const teamSet = async (data: TRouteParams): Promise<IResponse> => {
+export const teamSet = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , id1, id2, id3, id4, id5, id6] = data.routeParams
 
   const player = await prisma.player.findFirst({

@@ -1,5 +1,5 @@
 import { MissingParametersPokemonRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { teamSet } from '../teamRoutes/teamSet'
 import { tradePoke1 } from '../tradeRoutes/tradePoke/tradePoke1'
@@ -100,7 +100,7 @@ const subRouteMap = new Map<string, any>([
   ['EXPERIENCE', pokemonExperience],
 ])
 
-export const pokemonRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersPokemonRouteError()
 

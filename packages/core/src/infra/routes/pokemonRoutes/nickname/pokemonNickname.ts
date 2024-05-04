@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   InvalidNicknameError,
   MissingParameterError,
@@ -12,7 +12,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokemonNickname = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonNickname = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString, nickNameUppercase, remove] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
   if (!nickNameUppercase) throw new MissingParameterError('Nome desejado')

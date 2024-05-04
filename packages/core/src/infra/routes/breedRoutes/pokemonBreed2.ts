@@ -10,13 +10,13 @@ import {
   UnexpectedError,
 } from '../../../infra/errors/AppErrors'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { breed } from '../../../server/modules/pokemon/breed'
 import { getBreedCost } from '../../../server/modules/pokemon/getBreedCost'
 import { getChildrenCount } from '../../../server/modules/pokemon/getChildrenCount'
 import { TRouteParams } from '../router'
 
-export const pokemonBreed2 = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonBreed2 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , pokemonId1String, pokemonId2String, desiredChildrenAmountString] = data.routeParams
   const desiredChildrenAmount = Number(desiredChildrenAmountString)
   if (!pokemonId1String || !pokemonId2String) throw new MissingParametersBreedRouteError()

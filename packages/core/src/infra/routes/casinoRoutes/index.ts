@@ -1,9 +1,5 @@
-import {
-  MissingParameterError,
-  MissingParametersInventoryRouteError,
-  SubRouteNotFoundError,
-} from '../../errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
+import { MissingParameterError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { cassinoTrade } from './casinoTrade'
 
@@ -13,7 +9,7 @@ const subRouteMap = new Map<string, any>([
   ['JOGAR', cassinoTrade],
 ])
 
-export const casinoRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const casinoRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParameterError('Ação')
 

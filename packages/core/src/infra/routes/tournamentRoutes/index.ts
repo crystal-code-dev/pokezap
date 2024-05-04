@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { tournamentCreate } from './tournamentCreate'
@@ -23,7 +23,7 @@ const subRouteMap = new Map<string, any>([
   ['START', tournamentStart],
 ])
 
-export const tournamentRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const tournamentRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute)
     return {

@@ -4,7 +4,7 @@ import {
   RouteNotFoundError,
   SubRouteNotFoundError,
 } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { duelAccept } from './duelAccept'
 import { duelAcceptX2 } from './duelAcceptX2'
@@ -34,7 +34,7 @@ const subRouteMap = new Map<string, any>([
   ['RANDOM', duelRandom],
 ])
 
-export const duelRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const duelRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const gameRoom = await prisma.gameRoom.findFirst({
     where: {
       phone: data.groupCode,

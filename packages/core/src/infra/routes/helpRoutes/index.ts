@@ -1,4 +1,4 @@
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParametersHelpRouteError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { pokemonSkills } from '../pokemonRoutes/skills/pokemonSkills'
 import { TRouteParams } from '../router'
@@ -337,7 +337,7 @@ const helpTextMap = new Map<string, any>([
   ['PROPCASE', propCase],
   ['PROP-CASE', propCase],
 ])
-const subRouteMap = new Map<string, (data: TRouteParams) => Promise<IResponse>>([
+const subRouteMap = new Map<string, (data: TRouteParams) => Promise<RouteResponse>>([
   // SKILL ROUTES
   ['SKILL', helpSkill],
   ['MOVE', helpSkill],
@@ -348,7 +348,7 @@ const subRouteMap = new Map<string, (data: TRouteParams) => Promise<IResponse>>(
   ['MOVES', pokemonSkills],
 ])
 
-export const helpRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const helpRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersHelpRouteError()
 

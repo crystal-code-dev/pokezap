@@ -12,14 +12,14 @@ import {
   TypeMissmatchError,
   UnexpectedError,
 } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { duelNXN } from '../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 import { DuelPlayer, DuelPokemon } from './generatedDuelAccept'
 
-export const duelAccept = async (data: TRouteParams): Promise<IResponse> => {
+export const duelAccept = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , sessionIdString, fast] = data.routeParams
   const sessionId = Number(sessionIdString)
   if (typeof sessionId !== 'number') throw new TypeMissmatchError(sessionIdString, 'number')

@@ -1,5 +1,12 @@
-import { Pokemon, RaidPokemon, Skill } from '@prisma/client'
-import { PokemonBaseData, RaidPokemonBaseData, attackPower, enemyName } from '../../types'
+import {
+  Pokemon,
+  PokemonBaseData,
+  RaidPokemon,
+  RaidPokemonBaseData,
+  Skill,
+  attackPower,
+  enemyName,
+} from '../../../../prisma-provider/src/types'
 import { typeEffectivenessMap } from '../constants/atkEffectivenessMap'
 
 export function getBestSkillSet(

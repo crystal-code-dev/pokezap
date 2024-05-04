@@ -1,19 +1,4 @@
-import { BasePokemon, Pokemon } from '@prisma/client'
-
-export type DuelPokemonExtra = Pokemon & {
-  baseData: BasePokemon
-  manaBonus?: number | undefined
-  lifeSteal?: number | undefined
-  critChance?: number | undefined
-  blockChance?: number | undefined
-  crescentBonuses?: {
-    block?: number
-    damage?: number
-  }
-  statusCleanseChance?: number
-  healingBonus?: number
-  buffBonus?: number
-}
+import { BasePokemon, DuelPokemonExtra, Pokemon } from '../../../../../prisma-provider/src/types'
 
 type TParams = {
   poke: DuelPokemonExtra

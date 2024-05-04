@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemon } from '../../../../server/helpers/getPokemon'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   ItemNotFoundError,
   MissingParameterError,
@@ -11,7 +11,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const useTM = async (data: TRouteParams): Promise<IResponse> => {
+export const useTM = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParameterError('Nome/Id do Pokemon')
 

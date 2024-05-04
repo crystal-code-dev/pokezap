@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ServerResponse } from '../../../../common/types/ServerResponse'
+import { ServerResponse } from '../../../core/src/types/ServerResponse'
 
 type RequestServerParams = {
   playerPhone: string

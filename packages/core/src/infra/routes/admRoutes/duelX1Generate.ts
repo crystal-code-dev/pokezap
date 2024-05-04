@@ -1,5 +1,6 @@
 import { iGenDuelX2 } from '../../../../../image-generator/src/iGenDuelX2'
-import { IResponse } from '../../../server/models/IResponse'
+import prisma from '../../../../../prisma-provider/src'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   CantDuelItselfError,
   PlayerDoesNotHaveThePokemonInTheTeamError,
@@ -65,7 +66,7 @@ const include = {
   },
 }
 
-export const duelX1Generate = async (data: TRouteParams): Promise<IResponse> => {
+export const duelX1Generate = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , player1IdString, player2IdString] = data.routeParams
   const player1Id = Number(player1IdString)
   const player2Id = Number(player2IdString)

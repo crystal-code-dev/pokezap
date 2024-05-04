@@ -76,7 +76,7 @@ export const checkEvolutionPermition = async (
   if (currentPosition === -1)
     throw new UnexpectedError('Não foi possível localizar a posição do pokemon na cadeia evolutiva.')
 
-  let evoData: any = null
+  let evoData
 
   if (currentPosition === 0) evoData = evData
   if (currentPosition === 1) evoData = evData.evolves_to[0]
@@ -87,7 +87,7 @@ export const checkEvolutionPermition = async (
     if (!evoData) throw new PokemonNotFoundError(preferredPokemonName)
   }
 
-  if (evoData === null) {
+  if (!evoData) {
     return {
       message: '',
       status: 'evodata-null',

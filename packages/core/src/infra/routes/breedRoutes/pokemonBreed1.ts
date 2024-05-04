@@ -8,12 +8,12 @@ import {
   PokemonAlreadyHasChildrenError,
   TypeMissmatchError,
 } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { getBreedCost } from '../../../server/modules/pokemon/getBreedCost'
 import { TRouteParams } from '../router'
 import { pokemonBreed2 } from './pokemonBreed2'
 
-export const pokemonBreed1 = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonBreed1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , id1, id2, amount] = data.routeParams
   if (!id1 || !id2) throw new MissingParametersBreedRouteError()
   if (amount) return await pokemonBreed2(data)

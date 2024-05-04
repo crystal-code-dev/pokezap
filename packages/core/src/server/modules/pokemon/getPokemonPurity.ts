@@ -1,5 +1,5 @@
+import { PokemonBaseData, RaidPokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
-import { PokemonBaseData, RaidPokemonBaseData } from '../../../types'
 import { talentNameMap } from '../../constants/talentNameMap'
 
 export const getPokemonPurity = (pokemon: PokemonBaseData | RaidPokemonBaseData) => {

@@ -1,7 +1,7 @@
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { TRouteParams } from '../../router'
 
-export const register1 = async (data: TRouteParams): Promise<IResponse> => {
+export const register1 = async (data: TRouteParams): Promise<RouteResponse> => {
   return {
     message: `Muito bom, você já entendeu uma das formas de interagir com o bot do PokeZap!
 

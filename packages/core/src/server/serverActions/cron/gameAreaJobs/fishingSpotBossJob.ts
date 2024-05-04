@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { GameAreaName } from '../../../../types/prisma'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { gameAreasData } from '../../../constants/gameAreasData'
 import { verifySpawnTime } from '../../../modules/gameArea/verifySpawnTime'
 import { specialBossInvasion } from '../specialBossInvasion'

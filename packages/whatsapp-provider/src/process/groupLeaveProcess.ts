@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 import { Client, GroupNotification, MessageMedia } from 'whatsapp-web.js'
-import { ServerResponse } from '../../../../common/types/ServerResponse'
+import { ServerResponse } from '../../../core/src/types/ServerResponse'
 import { logger } from '../helpers/logger'
 import { requestServer } from '../helpers/requestServer'
 
