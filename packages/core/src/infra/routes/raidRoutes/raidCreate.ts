@@ -5,6 +5,7 @@ import { IResponse } from '../../../server/models/IResponse'
 import { generateMegaPokemon } from '../../../server/modules/pokemon/generate/generateMegaPokemon'
 import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
 import { RaidPokemonBaseDataSkills } from '../../../types'
+import { GameAreaName } from '../../../types/prisma'
 import {
   CantStartRaidOutsideRaidGroupError,
   InvalidDifficultError,
@@ -124,7 +125,7 @@ export const raidCreate = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   if (!gameRoom) throw new RouteNotFoundError(player.name, data.groupCode)
-  if (gameRoom.mode !== 'raid') throw new CantStartRaidOutsideRaidGroupError()
+  if (gameRoom.gameArea !== GameAreaName.RAIDROOM) throw new CantStartRaidOutsideRaidGroupError()
 
   const [bossBaseData, enemiesBaseData, lootData] = await prisma.$transaction([
     prisma.basePokemon.findFirst({

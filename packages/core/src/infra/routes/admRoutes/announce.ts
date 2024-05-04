@@ -1,6 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
 import { IResponse } from '../../../server/models/IResponse'
+import { GameAreaName } from '../../../types/prisma'
 import { TRouteParams } from '../router'
 
 const text = `🎣🐟 *EVENTO DE PESCARIA* 🎣🐟
@@ -22,7 +23,7 @@ export const announce = async (data: TRouteParams): Promise<IResponse> => {
       phone: {
         contains: '@g.us',
       },
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
     },
   })
 

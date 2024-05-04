@@ -41,7 +41,6 @@ export const duelRoutes = async (data: TRouteParams): Promise<IResponse> => {
     },
   })
   if (!gameRoom) throw new RouteNotFoundError('', '')
-  // if (gameRoom.mode !== 'duel-raid') throw new RouteForbiddenForDuelRaidError()
 
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersDuelRouteError()

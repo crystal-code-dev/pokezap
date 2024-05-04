@@ -1,5 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { IResponse } from '../../../../server/models/IResponse'
+import { GameAreaName } from '../../../../types/prisma'
 import { PlayerAlreadyExists } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 import { register1 } from './register1'
@@ -44,7 +45,7 @@ export const register = async (data: TRouteParams): Promise<IResponse> => {
         level: 1,
         experience: 0,
         phone: data.playerPhone,
-        mode: 'private',
+        gameArea: GameAreaName.PRIVATE,
       },
     })
 

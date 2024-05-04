@@ -1,10 +1,11 @@
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../types/prisma'
 import { sendMessage } from '../../helpers/sendMessage'
 
 export const pokemonCenterJob = async () => {
   const gameRooms = await prisma.gameRoom.findMany({
     where: {
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
       upgrades: {
         some: {
           base: {

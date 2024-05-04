@@ -1,13 +1,14 @@
 import { iGenRocketInvasion } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
+import { GameAreaName } from '../../../types/prisma'
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
 
 export const rocketInvasion = async () => {
   const gameRooms = await prisma.gameRoom.findMany({
     where: {
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
     },
     include: {
       players: true,
@@ -24,7 +25,7 @@ export const rocketInvasion = async () => {
   })
 
   for (const gameRoom of gameRooms) {
-    if (gameRoom.mode !== 'route') continue
+    if (gameRoom.gameArea !== GameAreaName.ROUTE) continue
     const poke1 = await generateWildPokemon({
       level: Math.round(gameRoom.level * 1.2),
       savage: true,

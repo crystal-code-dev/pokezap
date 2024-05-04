@@ -1,4 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
+import { gameAreasData } from '../../../server/constants/gameAreasData'
 import { IResponse } from '../../../server/models/IResponse'
 import {
   CatchFailedPokemonRanAwayError,
@@ -87,6 +88,7 @@ export const catchRoutes = async (data: TRouteParams): Promise<IResponse> => {
       baseData: true,
       defeatedBy: true,
       ranAwayFrom: true,
+      gameRoom: true,
     },
   })
   if (!pokemon) throw new PokemonNotFoundError(pokemonId)
@@ -210,12 +212,18 @@ export const catchRoutes = async (data: TRouteParams): Promise<IResponse> => {
 
   const shinyMultiplier = pokemon.isShiny ? 0.02 : 1
   const regionalMultiplier = pokemon.baseData.isRegional ? 0.7 : 1
+  const gameAreaMultiplier =
+    pokemon.gameRoom && pokemon.gameRoom.gameArea !== 'PRIVATE'
+      ? gameAreasData[pokemon.gameRoom.gameArea].catchModifier ?? 1
+      : 1
 
   const catchRate =
     calculateCatchRate(pokemon.isShiny ? 170 : pokemon.baseData.BaseExperience) *
     getBallRateMultiplier() *
     shinyMultiplier *
-    regionalMultiplier
+    regionalMultiplier *
+    gameAreaMultiplier
+
   const random = Math.random()
 
   logger.info(

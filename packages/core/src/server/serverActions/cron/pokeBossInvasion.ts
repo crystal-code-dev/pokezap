@@ -4,6 +4,7 @@ import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { bossInvasionLootMap } from '../../../server/constants/bossInvasionLootMap'
 import { bossPokemonNames } from '../../../server/constants/bossPokemonNames'
 import { generateBossPokemon } from '../../../server/modules/pokemon/generate/generateBossPokemon'
+import { GameAreaName } from '../../../types/prisma'
 import { sendMessage } from '../../helpers/sendMessage'
 
 export const pokeBossInvasion = async () => {
@@ -17,7 +18,7 @@ export const pokeBossInvasion = async () => {
 
   const gameRooms = await prisma.gameRoom.findMany({
     where: {
-      mode: 'route',
+      gameArea: GameAreaName.ROUTE,
     },
     include: {
       players: true,

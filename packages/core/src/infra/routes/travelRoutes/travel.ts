@@ -27,7 +27,7 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
       id: 1,
       name: 'fishing-spot',
       groupPhone: '',
-      inviteCode: 'LI1s8wie8U9FtbBHZM7qjJ',
+      inviteCode: 'F2fHcVRuJHvJyWYEhjbiw7',
       requires: null,
     },
   ],

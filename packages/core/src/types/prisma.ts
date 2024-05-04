@@ -6,6 +6,7 @@ export {
   BerryTree,
   EBerryNames,
   EBerryTreePhases,
+  GameAreaName,
   GameRoom,
   GymLeader,
   GymPokemon,
