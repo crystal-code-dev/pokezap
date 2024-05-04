@@ -1,22 +1,23 @@
+import { eventText } from '../../../server/constants/eventText'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
+import { eventInfo } from './eventInfo'
 
-const message = `🎣🐟 *EVENTO DE PESCARIA* 🎣🐟
-📅 SABADO E DOMINGO 📅
-
-Cardumes enormes de magikarps estão aparecendo em *fishing-spot*!
-Muitos magikarps gigantes e até shiny! 
-Utilize "pz. travel" e vá para fishing-spot capturar o máximo que puder!
-
-🥇 Premiação para os que somarem mais pontos
-🥇 Gigantes e shiny valem mais!
-😨 Cuidado com o Shiny Gyarados! [d]
-🕐 Os cardumes aparecem entre: 8h - 9h, 12h - 13h, 16h - 17h, 20h - 21h
-`
+const subRouteMap = new Map<string, any>([
+  ['INFO', eventInfo],
+  ['RANK', eventInfo],
+  ['RANKING', eventInfo],
+])
 
 export const eventRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
-  return {
-    message,
-    status: 200,
-  }
+  const [, , subRoute] = data.routeParams
+
+  const route = subRouteMap.get(subRoute ?? '')
+  if (!route)
+    return {
+      message: eventText,
+      status: 200,
+    }
+
+  return await route(data)
 }

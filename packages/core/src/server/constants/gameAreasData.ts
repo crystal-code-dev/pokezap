@@ -15,8 +15,9 @@ export const gameAreasData: Record<WildGameAreaNames, GameArea> = {
     spawnTime: [
       [8, 9],
       [12, 13],
-      [16, 17],
-      [20, 21],
+      [14, 15],
+      [19, 20],
+      [22, 23],
     ],
     catchModifier: 0.25,
   },

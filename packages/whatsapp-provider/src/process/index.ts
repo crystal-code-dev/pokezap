@@ -1,6 +1,7 @@
 import { Client } from 'whatsapp-web.js'
 
 import { authFailureProcess } from './authFailureProcess'
+import { codeProcess } from './codeProcess'
 import { groupJoinProcess } from './groupJoinProcess'
 import { groupLeaveProcess } from './groupLeaveProcess'
 import { loadingScreenProcess } from './loadingScreenProcess'
@@ -20,4 +21,5 @@ export const handleAllProcess = async (client: Client) => {
   client.on('message_create', async msg => messageCreateProcess(msg, initDate))
   client.on('group_join', notification => groupJoinProcess(notification, initDate))
   client.on('group_leave', notification => groupLeaveProcess(notification, initDate))
+  client.on('code', codeProcess)
 }
