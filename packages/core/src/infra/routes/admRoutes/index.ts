@@ -1,12 +1,14 @@
 import { IResponse } from '../../../server/models/IResponse'
 import { MissingParametersMarketRouteError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
+import { announce } from './announce'
 import { duelX1Generate } from './duelX1Generate'
 import { maintenance } from './maintenance'
 
 const subRouteMap = new Map<string, any>([
   ['DUEL', duelX1Generate],
   ['MAINTENANCE', maintenance],
+  ['ANNOUNCE', announce],
 ])
 
 export const admRoutes = async (data: TRouteParams): Promise<IResponse> => {

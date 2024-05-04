@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { PlayerNotFoundError } from '../../../../infra/errors/AppErrors'
+import { PlayerNotFoundError, SendEmptyMessageError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { IResponse } from '../../../../server/models/IResponse'
 
@@ -8,24 +8,30 @@ export const routeEnter = async (data: TRouteParams): Promise<IResponse> => {
     where: {
       phone: data.playerPhone,
     },
+    include: {
+      gameRoom: true,
+    },
   })
   if (!player) throw new PlayerNotFoundError(data.playerName)
-
-  const updatedRoute = await prisma.gameRoom.update({
+  const gameRoom = await prisma.gameRoom.findFirst({
     where: {
       phone: data.groupCode,
     },
+  })
+
+  if (!gameRoom || gameRoom.mode === 'raid') throw new SendEmptyMessageError()
+
+  await prisma.player.update({
+    where: {
+      id: player.id,
+    },
     data: {
-      players: {
-        connect: {
-          id: player.id,
-        },
-      },
+      gameRoomId: gameRoom.id,
     },
   })
 
   return {
-    message: `*${player.name}* acaba de se chegar em *ROTA ${updatedRoute.inGameName}!*`,
+    message: `*${player.name}* acaba de chegar em *${gameRoom.inGameName}!*`,
     status: 200,
     data: null,
   }

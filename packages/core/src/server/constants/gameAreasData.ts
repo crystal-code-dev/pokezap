@@ -1,7 +1,7 @@
 export const gameAreasData = {
   fishingSpot: {
-    id: 108,
-    phone: '120363276875490121@g.us',
+    id: 121,
+    phone: '120363277796230795@g.us',
     spawnTime: [
       [8, 9],
       [12, 13],

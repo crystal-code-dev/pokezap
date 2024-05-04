@@ -13,6 +13,7 @@ import {
 import { TRouteParams } from '../router'
 
 export const raidGroup = async (data: TRouteParams): Promise<IResponse> => {
+  if (data.playerPhone !== '5516988675837@c.us') throw new UnexpectedError('UTILIZE RAID START 🛠❌')
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,

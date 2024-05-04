@@ -8,9 +8,10 @@ export const travelInfo = async (data: TRouteParams): Promise<IResponse> => {
     message: `🗺 Mapa de Kanto 🗺 - [d]
 
 Para viajar: pz. travel nome-do-local
-    
-1 - 🎣 fishing-spot
-2 - 🤿 diving-spot`,
+
+0. 🏡 home  _(Retornar à rota natal)_    
+1. 🎣 fishing-spot
+2. 🤿 diving-spot`,
     status: 200,
     data: null,
     imageUrl,

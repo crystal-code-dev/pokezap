@@ -33,7 +33,7 @@ export const routeExit = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   return {
-    message: `*${player.name}* saiu da *ROTA ${updatedRoute.id}*.`,
+    message: `*${player.name}* saiu de *${updatedRoute.inGameName}*.`,
     status: 200,
     data: null,
   }
