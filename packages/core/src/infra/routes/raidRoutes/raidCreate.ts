@@ -304,10 +304,10 @@ export const raidCreate = async (data: TRouteParams): Promise<RouteResponse> => 
   return {
     message: `*${player.name}* inicou uma caravana para RAID: ${raidName} ${difficult}.
 
-      👍 - Juntar-se`,
+      👍 - Juntar-se\n\n❤ - Juntar - se`,
     status: 200,
     data: null,
     imageUrl,
-    actions: [`pz. raid join ${raid.id}`],
+    actions: [`pz. raid join ${raid.id}`, `pz. raid join ${raid.id}`],
   }
 }

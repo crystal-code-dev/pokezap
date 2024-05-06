@@ -870,6 +870,15 @@ export class CantBreedShiniesError extends AppError {
   }
 }
 
+export class CantBreedPuresError extends AppError {
+  constructor(pokemonId: number) {
+    const message = `Sinto muito, não é possivel cruzar pokemon puro. (#${pokemonId})`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
 export class PlayerDoesNotHaveItemError extends AppError {
   constructor(playerName: string, itemName: string) {
     const message = `${playerName} não possui nenhuma ${itemName}.`

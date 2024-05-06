@@ -1,6 +1,7 @@
 import { iGenPokemonBreed } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
 import {
+  CantBreedPuresError,
   CantBreedShiniesError,
   MissingParametersBreedRouteError,
   PlayerNotFoundError,
@@ -10,6 +11,7 @@ import {
 } from '../../../infra/errors/AppErrors'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import { getBreedCost } from '../../../server/modules/pokemon/getBreedCost'
+import { getTalentPurity } from '../../../server/modules/pokemon/getTalentPurity'
 import { TRouteParams } from '../router'
 import { pokemonBreed2 } from './pokemonBreed2'
 
@@ -74,6 +76,10 @@ export const pokemonBreed1 = async (data: TRouteParams): Promise<RouteResponse> 
   if (pokemon1.childrenId4) throw new PokemonAlreadyHasChildrenError(pokemon1.id, pokemon1.baseData.name, 4)
   if (pokemon2.childrenId4) throw new PokemonAlreadyHasChildrenError(pokemon2.id, pokemon1.baseData.name, 4)
   if (pokemon1.isShiny || pokemon2.isShiny) throw new CantBreedShiniesError()
+
+  const purities = [getTalentPurity(pokemon1), getTalentPurity(pokemon2)]
+  if (purities[0] === 9) throw new CantBreedPuresError(pokemon1.id)
+  if (purities[1] === 9) throw new CantBreedPuresError(pokemon2.id)
 
   const cost1 = getBreedCost(1, pokemon1, pokemon2)
   const cost2 = getBreedCost(2, pokemon1, pokemon2)

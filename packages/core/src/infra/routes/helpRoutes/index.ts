@@ -3,7 +3,7 @@ import { MissingParametersHelpRouteError, SubRouteNotFoundError } from '../../er
 import { pokemonSkills } from '../pokemonRoutes/skills/pokemonSkills'
 import { TRouteParams } from '../router'
 import { helpSkill } from './helpSkill'
-import { pokeBallBox, propCase, rareCandy, tm, tmCase } from './items'
+import { bazarTicket, pokeBallBox, propCase, rareCandy, tm, tmCase } from './items'
 
 const clanText = `
 📖 PokeZap Wiki - *CLANS*
@@ -336,6 +336,8 @@ const helpTextMap = new Map<string, any>([
   ['RARECANDY', rareCandy],
   ['PROPCASE', propCase],
   ['PROP-CASE', propCase],
+  ['BAZAR-TICKET', bazarTicket],
+  ['BAZARTICKET', bazarTicket],
 ])
 const subRouteMap = new Map<string, (data: TRouteParams) => Promise<RouteResponse>>([
   // SKILL ROUTES
