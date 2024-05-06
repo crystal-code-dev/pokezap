@@ -2,13 +2,17 @@ import { RouteResponse } from '../../../server/models/RouteResponse'
 import { MissingParametersMarketRouteError, SubRouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { announce } from './announce'
+import { berryTest } from './berryTest'
 import { duelX1Generate } from './duelX1Generate'
 import { maintenance } from './maintenance'
+import { pureCheck } from './pureCheck'
 
 const subRouteMap = new Map<string, any>([
   ['DUEL', duelX1Generate],
   ['MAINTENANCE', maintenance],
   ['ANNOUNCE', announce],
+  ['PR', pureCheck],
+  ['BR', berryTest],
 ])
 
 export const admRoutes = async (data: TRouteParams): Promise<RouteResponse> => {

@@ -18,7 +18,7 @@ app.use(router)
 const client = new Client({
   linkingMethod: new LinkingMethod({
     phone: {
-      number: '+573192218723',
+      number: '+5516981453197',
     },
   }),
   authStrategy: new NoAuth(),

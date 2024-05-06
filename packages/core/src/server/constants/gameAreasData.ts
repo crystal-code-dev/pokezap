@@ -12,14 +12,8 @@ type WildGameAreaNames = Exclude<GameAreaName, 'PRIVATE'>
 export const gameAreasData: Record<WildGameAreaNames, GameArea> = {
   [GameAreaName.FISHINGSPOT]: {
     inviteCode: '120363277796230795@g.us',
-    spawnTime: [
-      [8, 9],
-      [12, 13],
-      [14, 15],
-      [19, 20],
-      [22, 23],
-    ],
-    catchModifier: 0.25,
+    spawnTime: [[25, 25]],
+    catchModifier: 0.35,
   },
   [GameAreaName.ROUTE]: {
     inviteCode: '120363277796230795@g.us',

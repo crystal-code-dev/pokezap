@@ -24,3 +24,7 @@ Contém uma pokebola especial aleatória.
 
 Para usar: pz. useitem pokeball-box
 Para entender sobre pokebolas: pz. help pokeball`
+
+export const bazarTicket = `📖 PokeZap Wiki - *BAZAR-TICKET* - [d] 
+
+Pode ser utilizado para trocar por itens especiais no Bazar.`

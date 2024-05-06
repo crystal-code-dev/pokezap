@@ -4,7 +4,7 @@ import { TRouteParams } from '../../router'
 
 const subRouteMap = new Map<string, any>([])
 
-export const ranchRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
+export const berryRanchRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParameterError('Ação')
 

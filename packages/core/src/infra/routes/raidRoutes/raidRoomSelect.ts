@@ -188,9 +188,9 @@ export const raidRoomSelect = async (data: TRouteParams): Promise<RouteResponse>
   return {
     message: `${raid.name.toUpperCase()} - ${raid.difficulty}\nSALA: ${
       currentRoomIndex + 1
-    }/4 \n\n👍 - Pronto para próxima sala`,
+    }/4 \n\n👍 - Pronto para próxima sala \n\n❤ - Pronto para próxima sala`,
     status: 200,
     imageUrl,
-    actions: [`pz. raid select ${raid.id} ${roomId} confirm`],
+    actions: [`pz. raid select ${raid.id} ${roomId} confirm`, `pz. raid select ${raid.id} ${roomId} confirm`],
   }
 }
