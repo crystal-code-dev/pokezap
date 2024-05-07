@@ -189,6 +189,7 @@ model Pokemon {
   spAtk               Int
   spDef               Int
   speed               Int
+  isFavorite          Boolean          @default(false)
   isAdult             Boolean
   isMale              Boolean
   isShiny             Boolean          @default(false)

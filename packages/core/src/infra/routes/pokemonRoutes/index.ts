@@ -10,6 +10,8 @@ import { pokemonHoldItem } from './holdItem/pokemonHoldItem'
 import { pokemonInfo1 } from './info/pokemonInfo1'
 import { pokemonMegaEvolve } from './megaEvolve/pokemonMegaEvolve'
 import { pokemonNickname } from './nickname/pokemonNickname'
+import { pokemonFavorite } from './pokemonFavorite'
+import { pokemonUnfavorite } from './pokemonUnfavorite'
 import { pokemonSell } from './sell/pokemonSell'
 import { pokemonSetRole } from './setRole/pokemonSetRole'
 import { pokemonSkills } from './skills/pokemonSkills'
@@ -20,6 +22,12 @@ const subRouteMap = new Map<string, any>([
   ['INFORMATION', pokemonInfo1],
   ['INDO', pokemonInfo1],
   ['I', pokemonInfo1],
+
+  ['FAVORITE', pokemonFavorite],
+  ['FAVORITO', pokemonFavorite],
+  ['UNFAVORITE', pokemonUnfavorite],
+  ['DESFAVORITAR', pokemonUnfavorite],
+  ['FAVORITAR', pokemonFavorite],
 
   // POKEMON TEAM ROUTES
   [

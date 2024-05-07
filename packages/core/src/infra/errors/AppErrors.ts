@@ -764,6 +764,16 @@ export class PokemonExceededRanchTimeLimit extends AppError {
   }
 }
 
+export class CantSellFavoritePokemonError extends AppError {
+  constructor(id: number | string, pokemonName: string) {
+    const message = `O pokemon #${id} ${pokemonName} está marcado como favorito e não pode ser vendido.\n\n👍 - Desfavoritar`
+    const statusCode = 300
+    const actions = [`pz. p unfavorite ${id}`]
+
+    super(message, statusCode, undefined, actions)
+  }
+}
+
 export class PokemonDoesNotHasMegaEvolutionError extends AppError {
   constructor(id: number | string, pokemonName: string) {
     const message = `O pokemon #${id} ${pokemonName} não é capaz de mega-evoluir.`

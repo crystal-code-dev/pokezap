@@ -1,6 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
+  CantSellFavoritePokemonError,
   CantSellPokemonInTeamError,
   MissingParameterError,
   PlayerDoestNotOwnThePokemonError,
@@ -70,6 +71,8 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse
 
   for (const pokemon of pokemons) {
     if (pokemon.ownerId !== player.id) throw new PlayerDoestNotOwnThePokemonError(pokemon.id, player.name)
+    if (pokemon.isFavorite)
+      throw new CantSellFavoritePokemonError(pokemon.id, pokemon.nickName ?? pokemon.baseData.name)
     if (
       pokemon.teamSlot1 ||
       pokemon.teamSlot2 ||
