@@ -1190,6 +1190,15 @@ export class PokemonHasNotBornYetError extends AppError {
   }
 }
 
+export class FilterNotAvailableError extends AppError {
+  constructor(filterName: string) {
+    const message = `Não há um filtro com o nome "${filterName}". Tente: egg ou purity.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
 export class EggIsNotReadyToBeHatch extends AppError {
   constructor(id: number, hoursLeft: number) {
     const message = `O ovo #${id} ainda não está pronto para ser chocado. Faltam ${hoursLeft.toFixed(2)} horas ainda.`
