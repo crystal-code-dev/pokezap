@@ -29,7 +29,9 @@
     "tslog": "~4.9.2",
     "tsyringe": "~4.8.0",
     "typescript": "~5.4.5",
-    "whatsapp-web.js": "github:MobCode100/whatsapp-web.js"
+    "whatsapp-web.js": "~1.23.0",
+    "ffmpeg": "~0.0.4",
+    "@types/ffmpeg": "~1.0.7"
   },
   "files": [
     "/dist"

@@ -3,6 +3,7 @@ import { container } from 'tsyringe'
 import { Client, Message, MessageMedia } from 'whatsapp-web.js'
 
 import { AxiosError } from 'axios'
+import path from 'path'
 import { ServerResponse } from '../../../core/src/types/ServerResponse'
 import prisma from '../../../prisma-provider/src'
 import { UserDemandHandler } from '../constants/UserDemandHandler'
@@ -90,31 +91,36 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
       ? await new Promise<string>(resolve => {
           if (!response.isAnimated) resolve(response.imageUrl!)
 
-          const outputPath = `../ffmpeg/video-${Math.random().toFixed(5)}`
+          const outputPath = path.join(__dirname, `../ffmpeg/video-${Math.random().toFixed(5)}.mp4`)
 
           if (!response.imageUrl) return
 
           ffmpeg(response.imageUrl)
-            .output(outputPath)
+            .videoCodec('libx264')
+            .outputOptions('-profile:v', 'baseline', '-level', '3.0', '-pix_fmt', 'yuv420p')
             .noAudio()
             .on('end', () => {
               console.log('Conversão concluída!')
               resolve(outputPath)
             })
-            .on('error', (err: any) => {
-              console.log('Ocorreu um erro durante a conversão:', err)
+            .on('error', err => {
+              console.error('Ocorreu um erro durante a conversão:', err)
+              return
             })
-            .run()
+            .save(outputPath)
         }).catch(err => {
           logger.error(err)
           return ''
         })
       : response.imageUrl
 
+    console.log('1')
+
     const media = MessageMedia.fromFilePath(filePath)
     const result = await zapClient.sendMessage(msg.id.remote, response.message, {
-      media: media,
+      media,
     })
+
     if (msg.id.remote.includes('@g.us')) deleteSentMessage(result)
 
     if (response.actions) {
@@ -138,6 +144,7 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
     }
     return
   } catch (e: any) {
+    console.error(e)
     const error = e as AxiosError
     if (error.response?.data) {
       const data = error.response.data as any

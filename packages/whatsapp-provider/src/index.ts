@@ -2,7 +2,7 @@ import express from 'express'
 import ffmpegPath from 'ffmpeg-static'
 import 'reflect-metadata'
 import { container } from 'tsyringe'
-import { Client, LinkingMethod, NoAuth } from 'whatsapp-web.js'
+import { Client, NoAuth } from 'whatsapp-web.js'
 import { logger } from './helpers/logger'
 import router from './infra/router'
 import { handleAllProcess } from './process'
@@ -16,19 +16,16 @@ app.use(express.json())
 app.use(router)
 
 const client = new Client({
-  linkingMethod: new LinkingMethod({
-    phone: {
-      number: '+5516981453197',
-    },
-  }),
   authStrategy: new NoAuth(),
+  webVersion: '2.2412.54v2',
   puppeteer: {
+    headless: false,
     executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
   },
   ffmpegPath: ffmpegPath ?? '',
   webVersionCache: {
     type: 'remote',
-    remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
+    remotePath: 'https://raw.githubusercontent.com/guigo613/alternative-wa-version/main/html/2.2412.54v2.html',
   },
 })
 handleAllProcess(client)

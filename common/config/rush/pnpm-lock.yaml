@@ -74,12 +74,14 @@ importers:
   ../../packages/whatsapp-provider:
     specifiers:
       '@types/express': ~4.17.21
+      '@types/ffmpeg': ~1.0.7
       '@types/fluent-ffmpeg': ~2.1.24
       '@types/node': '*'
       '@types/qrcode-terminal': ~0.12.2
       axios: ~1.6.8
       eslint: 8.48.0
       express: ~4.19.2
+      ffmpeg: ~0.0.4
       ffmpeg-static: ~5.2.0
       fluent-ffmpeg: ~2.1.2
       moment: ~2.30.1
@@ -93,12 +95,14 @@ importers:
       whatsapp-web.js: ~1.23.0
     dependencies:
       '@types/express': 4.17.21
+      '@types/ffmpeg': 1.0.7
       '@types/fluent-ffmpeg': 2.1.24
       '@types/node': 20.12.7
       '@types/qrcode-terminal': 0.12.2
       axios: 1.6.8
       eslint: 8.48.0
       express: 4.19.2
+      ffmpeg: 0.0.4
       ffmpeg-static: 5.2.0
       fluent-ffmpeg: 2.1.2
       moment: 2.30.1
@@ -336,6 +340,10 @@ packages:
       '@types/express-serve-static-core': 4.19.0
       '@types/qs': 6.9.15
       '@types/serve-static': 1.15.7
+    dev: false
+
+  /@types/ffmpeg/1.0.7:
+    resolution: {integrity: sha512-7Pw61IDG9Tj+gXGNshJ7JIM2fhDe0IrK7/F+b8midmsiljiugWKbW5KoNmhtZS3pPXWVfVHP3wOwquF/wbVxiw==}
     dev: false
 
   /@types/fluent-ffmpeg/2.1.24:
@@ -1217,6 +1225,12 @@ packages:
       - supports-color
     dev: false
 
+  /ffmpeg/0.0.4:
+    resolution: {integrity: sha512-3TgWUJJlZGQn+crJFyhsO/oNeRRnGTy6GhgS98oUCIfZrOW5haPPV7DUfOm3xJcHr5q3TJpjk2GudPutrNisRA==}
+    dependencies:
+      when: 3.7.8
+    dev: false
+
   /file-entry-cache/6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -1913,8 +1927,8 @@ packages:
       formdata-polyfill: 4.0.10
     dev: false
 
-  /node-webpmux/3.2.0:
-    resolution: {integrity: sha512-Rmc7MIS7zxDRPkfC9B15malsd1uStX2N6mYqHZNZeCJAVRDjmnxxTsyDh6POvWdNC7nmAYBW6CcHVY62DlnzRg==}
+  /node-webpmux/3.1.7:
+    resolution: {integrity: sha512-ySkL4lBCto86OyQ0blAGzylWSECcn5I0lM3bYEhe75T8Zxt/BFUMHa8ktUguR7zwXNdS/Hms31VfSsYKN1383g==}
     dev: false
 
   /nopt/5.0.0:
@@ -2719,7 +2733,7 @@ packages:
       jsqr: 1.4.0
       mime: 3.0.0
       node-fetch: 2.7.0
-      node-webpmux: 3.2.0
+      node-webpmux: 3.1.7
       puppeteer: 13.7.0
     optionalDependencies:
       archiver: 5.3.2
@@ -2737,6 +2751,10 @@ packages:
     dependencies:
       tr46: 0.0.3
       webidl-conversions: 3.0.1
+    dev: false
+
+  /when/3.7.8:
+    resolution: {integrity: sha512-5cZ7mecD3eYcMiCH4wtRPA5iFJZ50BJYDfckI5RRpQiktMiYTcn0ccLTZOvcbBume+1304fQztxeNzNS9Gvrnw==}
     dev: false
 
   /which/1.3.1:
