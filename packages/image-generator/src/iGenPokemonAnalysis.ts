@@ -94,6 +94,11 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
       }
     }
 
+    if (pokemon.isFavorite) {
+      const starSprite = await loadOrSaveImageFromCache('./src/assets/sprites/star.png')
+      ctx.drawImage(starSprite, 10, 35, 40, 40)
+    }
+
     // write pokemon name
 
     ctx.font = '35px Righteous'
@@ -103,7 +108,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     ctx.fillText(
       `${pokemon.nickName?.toUpperCase() ?? pokemon.baseData.name.toUpperCase()}
  `,
-      10,
+      60,
       70
     )
     ctx.strokeStyle = 'rgba(0,0,0,0.5) 10px solid'
@@ -111,7 +116,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     ctx.strokeText(
       `${pokemon.nickName?.toUpperCase() ?? pokemon.baseData.name.toUpperCase()}
  `,
-      10,
+      60,
       70
     )
 

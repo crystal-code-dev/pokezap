@@ -83,6 +83,11 @@ export const iGenInventoryPokemons = async (data: TParams) => {
       ctx.drawImage(heldItemSprite, x + 41, y + 41, 15, 15)
     }
 
+    if (pokemons[i].isFavorite) {
+      const starSprite = await loadOrSaveImageFromCache('./src/assets/sprites/star.png')
+      ctx.drawImage(starSprite, x, y + 41, 15, 15)
+    }
+
     if (pokemons[i].TMs > 0) {
       const tmSprite = await loadOrSaveImageFromCache(tmSpriteUrl)
       ctx.globalAlpha = 1
