@@ -180,7 +180,7 @@ export const raidProgress = async (data: TRouteParams): Promise<RouteResponse> =
         status: 200,
         data: null,
         imageUrl: duel.imageUrl,
-        isAnimated: false,
+        isAnimated: true,
         afterMessage: `${currentRoom.enemyPokemons[0].baseData.name.toUpperCase()} derrotou a equipe de raid.
         
         ${duel.damageDealtMessage}`,
@@ -299,7 +299,7 @@ export const raidProgress = async (data: TRouteParams): Promise<RouteResponse> =
       status: 200,
       data: null,
       imageUrl: duel.imageUrl,
-      isAnimated: false,
+      isAnimated: true,
       afterMessage: `${raid.name} foi derrotado! A equipe de raid venceu!
       ${duel.damageDealtMessage}
            
