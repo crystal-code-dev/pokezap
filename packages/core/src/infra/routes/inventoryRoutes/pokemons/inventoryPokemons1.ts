@@ -35,6 +35,7 @@ export const inventoryPokemons1 = async (data: TRouteParams): Promise<RouteRespo
   const isFilteredByTalents = ['TALENT', 'TALENTS', 'TALENTO', 'TALENTOS'].includes(filter)
   const isFilteredByNames = ['NAME', 'NAMES', 'NOME', 'NOMES'].includes(filter)
   const isFilteredByTypes = ['TYPE', 'TYPES', 'TIPO', 'TIPOS'].includes(filter)
+  const isFilteredByGiant = ['GIANT', 'GIGA'].includes(filter)
 
   let baseData: any
   let filteredNumbers: number[] = []
@@ -73,6 +74,7 @@ export const inventoryPokemons1 = async (data: TRouteParams): Promise<RouteRespo
 
   const pokemons = await prisma.pokemon.findMany({
     where: {
+      isGiant: isFilteredByGiant ? true : undefined,
       ownerId: player.id,
       isAdult: !isFilteredByEggs,
       isInDaycare: false,
