@@ -99,16 +99,18 @@ export const messageReactionProcess = async (msg: Reaction, initDate: Date) => {
           if (!response.imageUrl) return
 
           ffmpeg(response.imageUrl)
-            .output(outputPath)
+            .videoCodec('libx264')
+            .outputOptions('-profile:v', 'baseline', '-level', '3.0', '-pix_fmt', 'yuv420p')
             .noAudio()
             .on('end', () => {
               console.log('Conversão concluída!')
               resolve(outputPath)
             })
             .on('error', err => {
-              console.log('Ocorreu um erro durante a conversão:', err)
+              console.error('Ocorreu um erro durante a conversão:', err)
+              return
             })
-            .run()
+            .save(outputPath)
         }).catch(err => {
           logger.error(err)
           return ''

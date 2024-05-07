@@ -80,7 +80,7 @@ export const duelNpcDuel = async ({ player, npc }: DuelNpcDuelParams): Promise<R
           npc.pokemons[4],
           npc.pokemons[5],
         ],
-        staticImage: true,
+        staticImage: false,
       })) ?? undefined
   } catch (e: any) {
     npcOutOfBattle(npc)
@@ -153,7 +153,7 @@ ${duel.damageDealtMessage}`
     data: null,
     imageUrl: duel.imageUrl,
     afterMessage,
-    isAnimated: false,
+    isAnimated: true,
   }
 }
 
