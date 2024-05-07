@@ -2,7 +2,6 @@ import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 export const iGenTest = async () => {
   // Define the dimensions of the canvas and the background
@@ -62,7 +61,6 @@ export const iGenTest = async () => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })
