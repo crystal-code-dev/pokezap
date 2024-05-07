@@ -261,6 +261,23 @@ export const iGenDuelX6Rounds = async (data: TDuelRoundData): Promise<string> =>
           ctx.strokeText(`VENCEDOR!`, data.winnerSide === 'right' ? 365 : 105, 180)
         }
 
+        if (data.staticImage) {
+          const filepath: string = await new Promise(resolve => {
+            // Save the canvas to disk
+            const filename = `images/image-${Math.random()}.png`
+            const filepath = path.join(__dirname, filename)
+            const out = fs.createWriteStream(filepath)
+            const stream = canvas.createPNGStream()
+            stream.pipe(out)
+            out.on('finish', () => {
+              resolve(filepath)
+            })
+          })
+
+          removeFileFromDisk(filepath)
+          return filepath
+        }
+
         encoder.addFrame(ctx as any)
       }
 

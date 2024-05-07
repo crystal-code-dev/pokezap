@@ -7,7 +7,6 @@ import { PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { getHoursDifference } from './helpers/getHoursDifference'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   pokemons: PokemonBaseDataSkillsHeld[]
@@ -149,7 +148,6 @@ export const iGenInventoryPokemons = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

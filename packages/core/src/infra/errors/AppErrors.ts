@@ -339,9 +339,66 @@ export class MissingParameterError extends AppError {
   }
 }
 
+export class NpcDuelInfoMissingDifficultyError extends AppError {
+  constructor() {
+    const message = `Informe a dificuldade de duelista que procura:
+👍 - EASY
+❤ - MEDIUM
+😂 - HARD
+😮 - EXPERT
+    - INSANE`
+    const statusCode = 300
+
+    const actions = [
+      'pz. duelist info easy',
+      'pz. duelist info medium',
+      'pz. duelist info hard',
+      'pz. duelist info expert',
+    ]
+
+    super(message, statusCode, undefined, actions)
+  }
+}
+
 export class InvalidNicknameError extends AppError {
   constructor(nickname: string) {
     const message = `Apelido "${nickname}" não é válido.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NpcAlreadyInBattleError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `*${npcIdentifier}* já está batalhando!`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NoNpcFoundError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `Parece que *${npcIdentifier}* não está aqui.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class MaxDailyDuelistsError extends AppError {
+  constructor(playerName: string) {
+    const message = `Parece que *${playerName}* já enfrentou 4 duelistas hoje. Tente novamente amanhã.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NpcDoesNotExistsError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `Parece que não há um duelista chamado *${npcIdentifier}*.`
     const statusCode = 300
 
     super(message, statusCode)
@@ -401,6 +458,20 @@ export class MissingParametersDuelRouteError extends AppError {
     const statusCode = 300
 
     super(message, statusCode)
+  }
+}
+
+export class MissingParametersNpcDuelRouteError extends AppError {
+  constructor() {
+    const message = `⚔ Duelistas ⚔ 
+
+👍 - Ver duelistas disponíveis
+
+[d] Para encontrar um duelista: pz. duelist find nome-do-duelista`
+    const statusCode = 300
+    const actions = ['pz. npcduel find']
+
+    super(message, statusCode, undefined, actions)
   }
 }
 
@@ -927,6 +998,15 @@ export class SessionIdNotFoundError extends AppError {
 export class PlayerDoesNotHaveThePokemonInTheTeamError extends AppError {
   constructor(playerName: string) {
     const message = `${playerName} não possui um pokemon no seu time.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class PlayerDoesNotHaveSixPokemonTeamError extends AppError {
+  constructor(playerName: string) {
+    const message = `${playerName} não possui 6 pokemon no seu time.`
     const statusCode = 300
 
     super(message, statusCode)

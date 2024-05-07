@@ -3,6 +3,7 @@ import { pokeBossInvasion } from '../../../server/serverActions/cron/pokeBossInv
 import { wildPokeSpawn } from '../../../server/serverActions/cron/wildPokeSpawn'
 import { energyResetJob } from '../../serverActions/cron/energyResetJob'
 import { fishingSpotBossJob, fishingSpotSpawnJob } from '../../serverActions/cron/gameAreaJobs'
+import { generateDuelist } from '../../serverActions/cron/generateDuelist'
 import { pokemonCenterJob } from '../../serverActions/cron/pokemonCenterJob'
 import { rocketInvasion } from '../../serverActions/cron/rocketInvasion'
 
@@ -22,5 +23,9 @@ export const initProcess = async () => {
   cron.schedule('1 0,6,12,18 * * *', () => pokemonCenterJob())
   cron.schedule('0 0,12 * * *', () => energyResetJob())
   cron.schedule(`0 0,6,12,18 * * *`, () => pokeBossInvasion())
-  cron.schedule(`0 2,6,10,14,18,22 * * *`, () => rocketInvasion())
+  cron.schedule(`0 2,6,10,14,18,22 * * *`, () => {
+    rocketInvasion()
+    generateDuelist()
+  })
+  generateDuelist()
 }

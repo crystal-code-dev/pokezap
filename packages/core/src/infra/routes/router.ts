@@ -10,6 +10,7 @@ import { pokemonBreed1 } from './breedRoutes/pokemonBreed1'
 import { pokemonHatch } from './breedRoutes/pokemonHatch'
 import { casinoRoutes } from './casinoRoutes'
 import { catchRoutes } from './catchRoutes'
+import { duelNpcRoutes } from './duelNpcRoutes'
 import { duelRoutes } from './duelRoutes'
 import { eventRoutes } from './eventRoutes'
 import { helpRoutes } from './helpRoutes'
@@ -178,6 +179,10 @@ const routeMap = new Map<string, TRouteType>([
 
   // EVENT ROUTES
   ['EVENT', eventRoutes],
+
+  // DUELIST ROUTES
+  ['DUELNPC', duelNpcRoutes],
+  ['DUELIST', duelNpcRoutes],
 
   /// //////////// EXPRESS ROUTES ////////////////////
 

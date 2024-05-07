@@ -4,7 +4,6 @@ import path from 'path'
 import { BasePokemon, Pokemon } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   pokemons: (Pokemon & {
@@ -66,7 +65,6 @@ export const iGenDaycareInfo = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

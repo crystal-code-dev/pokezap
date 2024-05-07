@@ -1,14 +1,14 @@
 import prisma from '../../../../../prisma-provider/src'
-import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
+import { PokemonBaseData, RaidPokemonBaseData } from '../../../../../prisma-provider/src/types'
 
 import { bossPokemonNames } from '../../constants/bossPokemonNames'
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'
 
 export const windPokeEvolve = async (
-  poke: PokemonBaseData,
+  poke: PokemonBaseData | RaidPokemonBaseData,
   maximumBaseExperience: number
-): Promise<PokemonBaseData> => {
+): Promise<PokemonBaseData | RaidPokemonBaseData> => {
   const fullData: any = poke.baseData.evolutionData
   const evData = fullData.evolutionChain[0]
 

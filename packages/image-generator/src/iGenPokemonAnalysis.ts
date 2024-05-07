@@ -6,7 +6,6 @@ import { talentIdMap } from '../../../common/constants/talentIdMap'
 import { PokemonBaseData, PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   pokemon: PokemonBaseData | PokemonBaseDataSkillsHeld
@@ -269,7 +268,6 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

@@ -3,7 +3,6 @@ import fs from 'fs'
 import path from 'path'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {}
 
@@ -102,7 +101,6 @@ export const iGenBerryRanch = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })
