@@ -10,7 +10,7 @@ import {
 import { UnexpectedError } from '../../../../infra/errors/AppErrors'
 import { generateGeneralStats } from '../generateGeneralStats'
 import { generateHpStat } from '../generateHpStat'
-import { windPokeEvolve } from '../windPokeEvolve'
+import { raidPokemonEvolve } from '../raidPokemonEvolve'
 
 type TParams = {
   level: number
@@ -31,7 +31,7 @@ export const generateDuelNpcPokemons = async ({ level, type, difficulty }: TPara
         },
       ],
       BaseExperience: {
-        lt: 550,
+        lt: 525,
         gte: 150,
       },
     },
@@ -103,8 +103,7 @@ export const generateDuelNpcPokemons = async ({ level, type, difficulty }: TPara
   const evolvedNpcPokemons: RaidPokemon[] = []
 
   for (const pokemon of npcPokemons) {
-    const evolved = await windPokeEvolve(pokemon, 600)
-    if (!('duelNpcId' in evolved)) continue
+    const evolved = await raidPokemonEvolve(pokemon, 600)
     evolvedNpcPokemons.push(evolved)
   }
 

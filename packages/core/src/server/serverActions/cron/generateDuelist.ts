@@ -15,5 +15,8 @@ export const generateDuelist = async () => {
     generateDuelNpc({
       difficulty: Difficulty.EASY,
     }),
+    generateDuelNpc({
+      difficulty: Difficulty.EASY,
+    }),
   ])
 }
