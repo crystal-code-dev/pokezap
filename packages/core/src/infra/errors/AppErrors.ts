@@ -1005,6 +1005,15 @@ export class SessionIdNotFoundError extends AppError {
   }
 }
 
+export class ItemNotAvailableInBazarError extends AppError {
+  constructor(itemString: string) {
+    const message = `Não há ${itemString} disponível no bazar.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
 export class PlayerDoesNotHaveThePokemonInTheTeamError extends AppError {
   constructor(playerName: string) {
     const message = `${playerName} não possui um pokemon no seu time.`
@@ -1035,6 +1044,17 @@ export class RequestedShopItemDoesNotExists extends AppError {
 export class InsufficientFundsError extends AppError {
   constructor(playerName: string, playerFunds: number, requiredFunds: number) {
     const message = `${playerName} não possui POKECOINS suficientes. São necessários ${requiredFunds}, ainda falta ${
+      requiredFunds - playerFunds
+    } `
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class InsufficientBazarTicketsError extends AppError {
+  constructor(playerName: string, playerFunds: number, requiredFunds: number) {
+    const message = `${playerName} não possui bazar-ticket suficientes. São necessários ${requiredFunds}, ainda falta ${
       requiredFunds - playerFunds
     } `
     const statusCode = 300

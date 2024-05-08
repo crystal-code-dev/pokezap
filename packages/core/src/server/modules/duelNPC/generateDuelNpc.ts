@@ -13,8 +13,8 @@ type TGenDuelNpcParams = {
 }
 
 const metaLevels: Record<Difficulty, number> = {
-  ['EASY']: 70,
-  ['MEDIUM']: 90,
+  ['EASY']: 60,
+  ['MEDIUM']: 85,
   ['HARD']: 110,
   ['EXPERT']: 135,
   ['INSANE']: 175,

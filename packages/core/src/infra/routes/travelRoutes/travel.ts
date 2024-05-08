@@ -2,6 +2,8 @@ import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   PlayerNotFoundError,
+  RouteDoesNotHaveUpgradeError,
+  RouteNotFoundError,
   TravelDestinationDisabledError,
   TravelDestinationNotFoundError,
 } from '../../errors/AppErrors'
@@ -31,6 +33,7 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
       requires: null,
     },
   ],
+
   [
     'DIVING-SPOT',
     {
@@ -42,10 +45,39 @@ const travelDestinationsMap = new Map<string, TravelDestination>([
       disabled: true,
     },
   ],
+  [
+    'ROCK-TUNNEL',
+    {
+      id: 3,
+      name: 'rock-tunnel',
+      groupPhone: '',
+      inviteCode: 'BQF5XSAwCSGCggk0raDqSo',
+      requires: null,
+    },
+  ],
 ])
 
 export const travel = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , destinationString] = data.routeParams
+
+  const gameRoom = await prisma.gameRoom.findFirst({
+    where: {
+      phone: data.groupCode,
+    },
+    include: {
+      upgrades: {
+        include: {
+          base: true,
+        },
+      },
+    },
+  })
+
+  if (!gameRoom) throw new RouteNotFoundError(data.playerName, data.groupCode)
+  if (gameRoom.gameArea === 'ROUTE' && !gameRoom.upgrades.some(upg => upg.base.name === 'minivan'))
+    throw new RouteDoesNotHaveUpgradeError('minivan')
+  if (gameRoom.gameArea === 'PRIVATE' && !gameRoom.upgrades.some(upg => upg.base.name === 'minivan'))
+    throw new RouteDoesNotHaveUpgradeError('minivan')
 
   if (['HOME', 'ROTA', 'VOLTAR', 'CASA'].includes(destinationString)) {
     const player = await prisma.player.findFirst({

@@ -1,3 +1,4 @@
+import { iGenDuelistFind } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
@@ -145,16 +146,31 @@ export const duelNpcFind = async (data: TRouteParams): Promise<RouteResponse> =>
       player,
       npc,
     })
+    await prisma.player.update({
+      where: {
+        id: player.id,
+      },
+      data: {
+        dailyDefeatedDuelists: {
+          increment: 1,
+        },
+      },
+    })
     return duelResponse
   }
 
-  return {
-    message: `Você encontrou *${npc.name}*! Um duelista especializado em pokemon do tipo ${npc.speciality}!
+  const imageUrl = await iGenDuelistFind({
+    npc,
+  })
 
-Seu time é:
-${npc.pokemons.map(poke => `*${poke.baseData.name}* nível ${poke.level}`).join('\n')}   
+  return {
+    message: `Você encontrou *${npc.name}*! 
+
+Um duelista especializado em pokemon do tipo ${npc.speciality}!
+
 👍 - Duelar `,
     status: 200,
     actions: [`pz. duelist find ${npc.name} duel`],
+    imageUrl,
   }
 }

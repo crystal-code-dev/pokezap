@@ -1,6 +1,7 @@
 import { MissingParametersRouteRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
+import { bazarRoutes } from './bazar/bazar'
 import { daycareRoutes } from './daycare'
 import { routeEnter } from './enter/routeEnter'
 import { routeForfeit } from './forfeit/routeForfeit'
@@ -67,6 +68,9 @@ const routesMap = new Map<string, (data: TRouteParams) => Promise<RouteResponse>
   ['TRAVEL', shipRoute],
   ['VIAJAR', shipRoute],
   ['VIAGEM', shipRoute],
+
+  // BAZAR ROUTES
+  ['BAZAR', bazarRoutes],
 ])
 
 export const routeRoutes = async (data: TRouteParams): Promise<RouteResponse> => {

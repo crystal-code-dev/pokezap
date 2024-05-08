@@ -15,6 +15,10 @@ export const gameAreasData: Record<WildGameAreaNames, GameArea> = {
     spawnTime: [[25, 25]],
     catchModifier: 0.35,
   },
+  [GameAreaName.ROCKTUNNEL]: {
+    inviteCode: '120363277796230795@g.us',
+    spawnTime: [[0, 24]],
+  },
   [GameAreaName.ROUTE]: {
     inviteCode: '120363277796230795@g.us',
     spawnTime: [

@@ -24,6 +24,7 @@ import { pokemonSetRole } from './pokemonRoutes/setRole/pokemonSetRole'
 import { raidRoutes } from './raidRoutes'
 import { rankRoutes } from './rankingRoutes'
 import { routeRoutes } from './routeRoutes'
+import { bazarRoutes } from './routeRoutes/bazar/bazar'
 import { daycareRoutes } from './routeRoutes/daycare'
 import { pokeranchRoute } from './routeRoutes/pokeranch/pokeranchRoute'
 import { sellRoutes } from './sellRoutes'
@@ -249,6 +250,14 @@ const routeMap = new Map<string, TRouteType>([
       const routeParams = [...data.routeParams]
       routeParams.unshift('shift')
       return pokemonSetRole({ ...data, routeParams })
+    },
+  ],
+  [
+    'BAZAR',
+    (data: TRouteParams) => {
+      const routeParams = [...data.routeParams]
+      routeParams.unshift('shift')
+      return bazarRoutes({ ...data, routeParams })
     },
   ],
 ])

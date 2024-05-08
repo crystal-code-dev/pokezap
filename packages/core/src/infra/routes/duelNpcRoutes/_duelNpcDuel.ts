@@ -93,18 +93,18 @@ export const duelNpcDuel = async ({ player, npc }: DuelNpcDuelParams): Promise<R
   const loserId = duel.loserTeam[0].ownerId
   const playerDefeated = loserId ? true : false
 
-  npcOutOfBattle(npc)
+  await prisma.duelNpc.update({
+    where: {
+      id: npc.id,
+    },
+    data: {
+      isDefeated: !playerDefeated,
+      isInBattle: false,
+    },
+  })
   let rewardMessage = ''
 
   if (!playerDefeated) {
-    await prisma.duelNpc.update({
-      where: {
-        id: npc.id,
-      },
-      data: {
-        isDefeated: true,
-      },
-    })
     const { cash, tickets } = metaValues.duelistRewards[npc.difficulty]
 
     await prisma.$transaction([

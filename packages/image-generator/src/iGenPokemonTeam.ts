@@ -2,11 +2,19 @@ import { Image, createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
 import { talentIdMap } from '../../../common/constants/talentIdMap'
+import { PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
 
 type TParams = {
-  playerData: any
+  playerData: {
+    teamPoke1: PokemonBaseDataSkillsHeld | null
+    teamPoke2: PokemonBaseDataSkillsHeld | null
+    teamPoke3: PokemonBaseDataSkillsHeld | null
+    teamPoke4: PokemonBaseDataSkillsHeld | null
+    teamPoke5: PokemonBaseDataSkillsHeld | null
+    teamPoke6: PokemonBaseDataSkillsHeld | null
+  }
 }
 
 export const iGenPokemonTeam = async (data: TParams) => {
@@ -55,7 +63,9 @@ export const iGenPokemonTeam = async (data: TParams) => {
       k = 0
     }
 
-    if (!pokeTeam[i]) continue
+    const pokemon = pokeTeam[i]
+
+    if (!pokemon) continue
 
     const x = 0 + k * 245
     const y = 5 + j * 165
@@ -69,34 +79,44 @@ export const iGenPokemonTeam = async (data: TParams) => {
     ctx.fill()
 
     // draw the pokemon sprite
-    const sprite = await loadOrSaveImageFromCache(pokeTeam[i].spriteUrl)
+    const sprite = await loadOrSaveImageFromCache(pokemon.spriteUrl)
     ctx.drawImage(sprite, x, y, 160, 160)
 
     // draw the pokemon types
     const typeSprite1 = await loadOrSaveImageFromCache(
-      './src/assets/sprites/UI/types/' + pokeTeam[i].baseData.type1Name + '.png'
+      './src/assets/sprites/UI/types/' + pokemon.baseData.type1Name + '.png'
     )
     ctx.drawImage(typeSprite1, x + 130, y + 70, 50, 25)
 
-    if (pokeTeam[i].baseData.type2Name) {
+    if (pokemon.baseData.type2Name) {
       const typeSprite2 = await loadOrSaveImageFromCache(
-        './src/assets/sprites/UI/types/' + pokeTeam[i].baseData.type2Name + '.png'
+        './src/assets/sprites/UI/types/' + pokemon.baseData.type2Name + '.png'
       )
       ctx.drawImage(typeSprite2, x + 180, y + 70, 50, 25)
+    }
+
+    if (pokemon.heldItem) {
+      ctx.beginPath()
+      ctx.arc(x + 40, y + 125, 15, 0, Math.PI * 2)
+      ctx.fillStyle = 'rgba(250,250,250,0.75)'
+      ctx.fill()
+      const spUrl = pokemon.heldItem!.baseItem.spriteUrl
+      const heldItemSprite = await loadOrSaveImageFromCache(spUrl)
+      ctx.drawImage(heldItemSprite, x + 25, y + 110, 30, 30)
     }
 
     /// draw pokemon talents
 
     const talents = [
-      pokeTeam[i].talentId1,
-      pokeTeam[i].talentId2,
-      pokeTeam[i].talentId3,
-      pokeTeam[i].talentId4,
-      pokeTeam[i].talentId5,
-      pokeTeam[i].talentId6,
-      pokeTeam[i].talentId7,
-      pokeTeam[i].talentId8,
-      pokeTeam[i].talentId9,
+      pokemon.talentId1,
+      pokemon.talentId2,
+      pokemon.talentId3,
+      pokemon.talentId4,
+      pokemon.talentId5,
+      pokemon.talentId6,
+      pokemon.talentId7,
+      pokemon.talentId8,
+      pokemon.talentId9,
     ]
 
     for (let i = 0; i < 5; i++) {
@@ -115,18 +135,24 @@ export const iGenPokemonTeam = async (data: TParams) => {
     ctx.font = ' 18px Pokemon'
     ctx.fillStyle = 'black'
     ctx.textAlign = 'center'
-    ctx.fillText(`lvl: ${pokeTeam[i].level}`, x + 110, y + 135)
+    ctx.fillText(`Lv: ${pokemon.level}`, x + 100, y + 142)
 
     /// draw pokemon name
     ctx.font = ' 18px Pokemon'
     ctx.fillStyle = 'black'
     ctx.textAlign = 'start'
-    ctx.fillText(`${pokeTeam[i].nickName ? pokeTeam[i].nickName : pokeTeam[i].baseData.name}`, x + 135, y + 52)
+    ctx.fillText(`${pokemon.nickName ? pokemon.nickName : pokemon.baseData.name}`, x + 135, y + 52)
+
+    /// draw role
+    ctx.font = ' 12px Pokemon'
+    ctx.fillStyle = 'black'
+    ctx.textAlign = 'end'
+    ctx.fillText(`${pokemon.role}`, x + 225, y + 30)
 
     ctx.font = ' 18px Pokemon'
     ctx.fillStyle = 'black'
     ctx.textAlign = 'start'
-    ctx.fillText(`#${pokeTeam[i].id}`, x + 25, y + 41)
+    ctx.fillText(`#${pokemon.id}`, x + 13, y + 30)
 
     k++
   }

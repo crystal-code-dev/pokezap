@@ -19,7 +19,7 @@ const client = new Client({
   authStrategy: new NoAuth(),
   webVersion: '2.2412.54v2',
   puppeteer: {
-    headless: false,
+    headless: true,
     executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
   },
   ffmpegPath: ffmpegPath ?? '',

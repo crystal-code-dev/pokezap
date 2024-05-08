@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios'
 import ffmpeg from 'fluent-ffmpeg'
+import path from 'path'
 import { container } from 'tsyringe'
 import { Client, MessageMedia, Reaction } from 'whatsapp-web.js'
 import { reactions } from '../../../../common/constants/reactions'
@@ -94,7 +95,7 @@ export const messageReactionProcess = async (msg: Reaction, initDate: Date) => {
       ? await new Promise<string>(resolve => {
           if (!response.isAnimated) resolve(response.imageUrl!)
 
-          const outputPath = `../ffmpeg/video-${Math.random().toFixed(5)}.mp4`
+          const outputPath = path.join(__dirname, `../ffmpeg/video-${Math.random().toFixed(5)}.mp4`)
 
           if (!response.imageUrl) return
 

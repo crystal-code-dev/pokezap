@@ -1,5 +1,6 @@
 import { MissingParametersPokemonRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
 import { RouteResponse } from '../../../server/models/RouteResponse'
+import { megaEvolve } from '../megaRoutes/megaEvolve'
 import { TRouteParams } from '../router'
 import { teamSet } from '../teamRoutes/teamSet'
 import { tradePoke1 } from '../tradeRoutes/tradePoke/tradePoke1'
@@ -8,7 +9,6 @@ import { pokemonEvolve } from './evolve/pokemonEvolve'
 import { pokemonExperience } from './experience/pokemonExperience'
 import { pokemonHoldItem } from './holdItem/pokemonHoldItem'
 import { pokemonInfo1 } from './info/pokemonInfo1'
-import { pokemonMegaEvolve } from './megaEvolve/pokemonMegaEvolve'
 import { pokemonNickname } from './nickname/pokemonNickname'
 import { pokemonFavorite } from './pokemonFavorite'
 import { pokemonUnfavorite } from './pokemonUnfavorite'
@@ -61,10 +61,10 @@ const subRouteMap = new Map<string, any>([
   ['EVOLUIR', pokemonEvolve],
 
   // POKEMON MEGA EVOLVE ROUTES
-  ['MEGA-EVOLVE', pokemonMegaEvolve],
-  ['MEGA-EVOLUIR', pokemonMegaEvolve],
-  ['MEGAEVOLVE', pokemonMegaEvolve],
-  ['MEGAEVOLUIR', pokemonMegaEvolve],
+  ['MEGA-EVOLVE', megaEvolve],
+  ['MEGA-EVOLUIR', megaEvolve],
+  ['MEGAEVOLVE', megaEvolve],
+  ['MEGAEVOLUIR', megaEvolve],
 
   // POKEMON SKILL ROUTES
   ['SKILL', pokemonSkills],
