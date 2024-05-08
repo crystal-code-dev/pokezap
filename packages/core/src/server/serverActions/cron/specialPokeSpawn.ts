@@ -38,7 +38,7 @@ export const specialPokeSpawn = async (data: TParams) => {
   })
 
   const baseData = basePokemons[Math.floor(Math.random() * basePokemons.length)]
-  const level = Math.floor(Math.random() * (levelRange[1] - levelRange[0]))
+  const level = Math.ceil(Math.random() * (levelRange[1] - levelRange[0]))
 
   const shinyChance = data.shinyChance ?? 0.05
 

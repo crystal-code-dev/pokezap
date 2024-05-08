@@ -6,8 +6,6 @@ import { PlayerNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
 export const teamInfo = async (data: TRouteParams): Promise<RouteResponse> => {
-  const [, , id1, id2, id3, id4, id5, id6] = data.routeParams
-
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,
@@ -20,32 +18,86 @@ export const teamInfo = async (data: TRouteParams): Promise<RouteResponse> => {
       },
       teamPoke1: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
       teamPoke2: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
       teamPoke3: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
       teamPoke4: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
       teamPoke5: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
       teamPoke6: {
         include: {
-          baseData: true,
+          baseData: {
+            include: {
+              skills: true,
+            },
+          },
+          heldItem: {
+            include: {
+              baseItem: true,
+            },
+          },
         },
       },
     },

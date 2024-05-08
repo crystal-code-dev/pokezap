@@ -31,21 +31,15 @@ export const generateDuelNpcPokemons = async ({ level, type, difficulty }: TPara
         },
       ],
       BaseExperience: {
-        lt: 600,
+        lt: 550,
         gte: 150,
       },
     },
   })
 
-  const oneTypePokemons = possibleBasePokemons.filter(p => !p.type2Name)
-
   const basePokemons: BasePokemon[] = []
 
   for (let i = 0; i < 6; i++) {
-    if (i < 3) {
-      basePokemons.push(oneTypePokemons[Math.floor(Math.random() * oneTypePokemons.length)])
-      continue
-    }
     basePokemons.push(possibleBasePokemons[Math.floor(Math.random() * possibleBasePokemons.length)])
   }
 

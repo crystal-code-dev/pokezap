@@ -1,8 +1,8 @@
 import prisma from '../../../../../prisma-provider/src'
+import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import { getTalentPurity } from '../../../server/modules/pokemon/getTalentPurity'
 import {
-  CantSellFavoritePokemonError,
   CantSellPokemonInTeamError,
   FilterNotAvailableError,
   MissingParameterError,
@@ -100,10 +100,11 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse
 
   let totalCash = 0
 
+  const pokemonsToSell: PokemonBaseData[] = []
+
   for (const pokemon of pokemons) {
     if (pokemon.ownerId !== player.id) throw new PlayerDoestNotOwnThePokemonError(pokemon.id, player.name)
-    if (pokemon.isFavorite)
-      throw new CantSellFavoritePokemonError(pokemon.id, pokemon.nickName ?? pokemon.baseData.name)
+    if (pokemon.isFavorite) continue
     if (
       pokemon.teamSlot1 ||
       pokemon.teamSlot2 ||
@@ -119,45 +120,11 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse
     )
 
     totalCash += pokemonSellPrice
-  }
-
-  if (data.fromReact && data.routeParams[data.routeParams.length - 1] === 'CONFIRM') {
-    await prisma.pokemon.updateMany({
-      where: {
-        id: {
-          in: pokemons.map(p => p.id),
-        },
-      },
-      data: {
-        ownerId: null,
-        gameRoomId: null,
-        statusTrashed: true,
-      },
-    })
-
-    await prisma.player.update({
-      where: {
-        id: player.id,
-      },
-      data: {
-        cash: {
-          increment: totalCash,
-        },
-      },
-    })
-    return {
-      message: `${data.playerName} vendeu ${pokemons
-        .map(poke => {
-          return `#${poke.id} ${poke.baseData.name}`
-        })
-        .join(', ')} e obteve $${totalCash}.`,
-      status: 200,
-      data: null,
-    }
+    pokemonsToSell.push(pokemon)
   }
 
   return {
-    message: `Deseja vender ${pokemons
+    message: `Deseja vender ${pokemonsToSell
       .map(poke => {
         return `#${poke.id} ${poke.baseData.name}`
       })
@@ -165,6 +132,6 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse
     👍 - CONFIRMAR`,
     status: 200,
     data: null,
-    actions: [`pz. sell poke ${pokemons.map(poke => poke.id).join(' ')} confirm`],
+    actions: [`pz. sell poke ${pokemonsToSell.map(poke => poke.id).join(' ')} confirm`],
   }
 }

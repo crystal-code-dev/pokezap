@@ -1,6 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
 import { GameAreaName } from '../../../../../prisma-provider/src/types'
-import { eventText } from '../../../server/constants/eventText'
 import { sendMessage } from '../../../server/helpers/sendMessage'
 import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
@@ -23,7 +22,11 @@ export const announce = async (data: TRouteParams): Promise<RouteResponse> => {
     promises.push(
       sendMessage({
         chatId: gameRoom.phone,
-        content: eventText,
+        content: `📢 *Anúncio - Atualizações* 📢
+
+        Para conferir:        
+        https://chat.whatsapp.com/DvOexb2MK5uGGxaG85zZaC        
+        `,
       })
     )
   }

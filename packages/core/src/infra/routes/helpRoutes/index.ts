@@ -125,7 +125,6 @@ Tente abreviar os comandos também! (pz. inventory item, pode ser pz. i i)
 ➡️ *poke info _(nome ou id do pokemon)_ -* _Informações do pokémon_
 ➡️ *poke sell _(nome ou id do pokemon)_ -* _Vender pokémon_
 ➡️ *poke evolve _(nome ou id do pokemon)_ -* _Evoluir pokémon_
-➡️ *poke mega-evolve _(nome ou id do pokemon)_ -* _Mega evoluir pokémon_
 ➡️ *poke skills _(nome ou id do pokemon)_ -* _Informações de habilidades do pokémon_
 ➡️ *poke giveitem _(nome ou id do pokemon)_ _(nome do item)_ -* _Dar item ao pokémon_
 ➡️ *poke dropitem _(nome ou id do pokemon)_ _(nome do item)_ -* _Remover item do pokémon_
@@ -149,9 +148,17 @@ Tente abreviar os comandos também! (pz. inventory item, pode ser pz. i i)
 ➡️ *route lock _(level)_ -* _Limitar nível máximo de aparição de pokémons na rota_
 ➡️ *route verify -* _Informar boss que está afugentando os pokémons da rota_
 ➡️ *route forfeit -* _Utilizar poké-coins e experiencia da rota para remover o boss que está afugentando os pokémons da rota_
-➡️ *route pokeranch _(id do pokemon)_ -* _Resgatar pokémon (Caso ele tenha fugido dentro de 6 horas)_
-➡️ *route daycare _(id do pokemon)_ -* _Adicionar pokémon ao day-care (O pokémon será treinado até alcançar o nível da rota)_
+➡️ *pokeranch _(id do pokemon)_ -* _Resgatar pokémon (Caso ele tenha fugido dentro de 6 horas)_
 ➡️ *route travel -* _Mover a rota para o destino, onde é possível capturar pokémons daquela região_
+
+*DAYCARE* 
+➡️ *daycare info* _Exibe os pokemons que estão no daycare_
+➡️ *daycare in _(id do pokemon)_ -* _Adicionar pokémon ao day-care (O pokémon será treinado até alcançar o nível da rota)_
+➡️ *daycare out_(id do pokemon)_ -* remove pokémon ao day-care (O pokémon será treinado até alcançar o nível da rota)_
+
+*VIAGEM*
+➡️ *travel* _Exibe o mapa e locais disponíveis_
+➡️ *travel _(nome-do-lugar)_ -* _Acessa o local escolhido_
 
 *CAPTURA*
 ➡️ *catch _(nome-da-pokebola)_ _(id do pokemon)_ -* _Utilizar pokébola especial para capturar o pokémon_
@@ -159,11 +166,16 @@ Tente abreviar os comandos também! (pz. inventory item, pode ser pz. i i)
 *INVENTÁRIO*
 ➡️ *inventory items -* _Exibir inventário de items_
 ➡️ *inventory poke -* _Exibir inventário de pokémons_
+➡️ *inventory poke egg-* _Exibir inventário de ovos pokémons_
 
 *DUELO*
 ➡️ *duel x1 _(id-do-oponente)_ -* _Convidar jogador para um duelo 1v1. (Utilizará o primeiro slot de pokémons de cada jogador)_
 ➡️ *duel x2 _(id-do-oponente)_ -* _Convidar jogador para um duelo 2v2. (Utilizará os primeiros 2 slots de pokémons de cada jogador)_
-➡️ *duel z6 _(id-do-oponente)_ -* _Convidar jogador para um duelo 6x6. (Utilizará os 6 slots de pokémons de cada jogador)_
+➡️ *duel x6 _(id-do-oponente)_ -* _Convidar jogador para um duelo 6x6. (Utilizará os 6 slots de pokémons de cada jogador)_
+
+*DUELIST*
+➡️ *duelist info* _Exibe os duelistas disponíveis para duelo_
+➡️ *duelist find _(nome-do-oponente)_* _Verifica se o duelista está no local_
 
 *TROCAS*
 ➡️ *trade poke _(id-do-pokemon)_ _(id-do-pokemon)_ -* _Trocar seu pokémon com o pokémon de outro jogador, respectivamente._
@@ -171,6 +183,10 @@ Tente abreviar os comandos também! (pz. inventory item, pode ser pz. i i)
 *LOJA*
 ➡️ *loja -* _Exibir a loja do jogo_
 ➡️ *loja _(nome do item OU posição dele na loja)_ _(quantidade)_ -* _Comprar item da loja_
+
+*BAZAR*
+➡️ *bazar -* _Exibir os items disponíveis no bazar_
+➡️ *bazar buy _(nome do item)_ _(quantidade)_ -* _Comprar item do bazar_
 
 *RANQUEAMENTO*
 ➡️ *rank elo -* _Exibir ranking de duelos_
@@ -185,19 +201,16 @@ Tente abreviar os comandos também! (pz. inventory item, pode ser pz. i i)
 ➡️ *send item _(nome-do-item)_ _(quantidade)_ _(id-do-jogador)_ -* _Enviar items para outro jogador_
 ➡️ *send cash _(quantidade)_ _(id-do-jogador)_ -* _Enviar poké-coins para outro jogador_
 
-*INVASÃO*
-➡️ *invasion defend _(id-do-pokemon)_ -* _Defender invasão_
 
 *ATAQUE*
+➡️ *raid group* _Exibe lista de salas disponíveis para raid_
 ➡️ *raid start _(raidName)_ _(nivel)_ -* _Iniciar raid_
-➡️ *raid enter _(raidId)_ -* _Participar da raid_
 ➡️ *raid cancel -* _Deixar a raid_
-➡️ *raid team -* _Exibir time para raid_
-➡️ *raid team _(id-do-pokemon)_ -* _Atualizar time para raid_
 
 *VENDAS*
 ➡️ *sell poke _(id-do-pokemon)_ -* _Vender pokémon_
 ➡️ *sell all-poke eggs 3 -* _Vender todos os pokémons com 3 ou mais ovos_
+➡️ *sell all-poke purity 4 -* _Vender todos os pokémons com pureza de talentos menor que 4_
 ➡️ *sell item _(nome-do-item)_ _(quantidade)_-* _Vender item_
 `
 const incenseText = `
@@ -237,7 +250,7 @@ const talentsText = `
 Em PokeZap, cada pokemon possui 9 talentos que podem ser vistos no canto inferior esquerdo.
 Os talento servem para:
 
-*1. Aumentar poder ofensivo*
+*1. Aumentar poder de habilidades*
 📋 De acordo com a contagem de talentos iguais ao tipo do ataque:
    (Exemplo: contagem de talentos fogo ao usar flamethrower)
 1 - ⚔ 2.5% 
@@ -272,6 +285,50 @@ Os talento servem para:
     1 - Golpe com até 40 de poder
     2 - Golpe com até 75 de poder
     3 - Todos os golpes
+`
+
+const purityText = `
+📖 PokeZap Wiki - *PUREZA DE TALENTOS* [d]
+
+Em PokeZap, cada pokemon possui 9 talentos que podem ser vistos no canto inferior esquerdo.
+Para conhecer sobre os talentos e o que ele impacta no pokemon, use pz. help talent
+
+Para definir a pureza de talentos de um pokemon, o sistema considera a melhor dupla de talentos possível.
+Ou seja, se um magikarp possui 3 talentos fogo, 3 talentos voador, e os outros 3 talentos sortidos, sua pureza é *6*.
+Mesmo que o magikarp não seja do tipo fogo/voador, sua pureza de talentos ainda é 6, já que ele poderá ser utilizado para breed com um charmander por exemplo, 
+visando criar um charizard de talentos fogo/voador.
+
+No caso de um voltorb com 7 talentos pedra, e 2 talentos planta, seguindo a mesma lógica, ele é considerado totalmente puro.
+Exceção: No caso de um pokemon com 8 talentos fada e 1 veneno, sua pureza é 8. (O sistema não considera a soma, já que seria impossivel pureza 8 caso considerasse)
+
+Ou seja, a pureza de talentos não depende do pokemon que detém os talentos, e pode ser uma pureza de tipo único (9 talentos do mesmo tipo), ou pureza de tipo duplo (somando 9 talentos dos dois tipos)
+`
+
+const berryText = `
+📖 PokeZap Wiki - *BERRY* [d]
+
+Atualmente, as berries são um conteúdo futuro.
+Serão úteis para adicionar ao pokemon, resistencia à certo tipo.
+Será util também para permitir breeds de pureza muito alta.
+
+*PASSHO* - fire
+*OCCA* - electric
+*WACAN* - water
+*RINDO* - grass
+*YACHE* - ice
+*CHOPLE* - fighting
+*KEBIA* - poison
+*SHUCA* - ground
+*COBA* - flying
+*PAYAPA* - psychic
+*TANGA* - bug
+*CHARTI* - rock
+*KASIB* - ghost
+*HABAN* - dragon
+*COLBUR* - dark
+*BABIRI* - steel
+*ROSELI* - fairy
+
 `
 
 const helpTextMap = new Map<string, any>([
@@ -324,6 +381,12 @@ const helpTextMap = new Map<string, any>([
   ['TALENTS', talentsText],
   ['TALENTO', talentsText],
   ['TALENTOS', talentsText],
+
+  ['PURITY', purityText],
+  ['PUREZA', purityText],
+
+  ['BERRY', purityText],
+  ['BERRIES', purityText],
 
   // ITEM ROUTES
   ['TM', tm],
