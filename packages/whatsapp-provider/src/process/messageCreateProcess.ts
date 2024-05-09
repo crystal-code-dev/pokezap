@@ -22,6 +22,7 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
     const msgDate = new Date(msg.timestamp * 1000)
     if (msgDate.getTime() < initDate.getTime()) return
 
+    // generic
     const permit = await verifyTargetChat(msg.to)
     if (!permit) return
 
@@ -32,18 +33,9 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
     if (msg.body.includes('[dsb]')) return
     if (msg.body.includes('[d]')) return
 
-    const getPlayerPhone = () => {
-      if (!msg.author) return msg.from
+    const playerPhone = getPlayerPhone(msg)
 
-      const match = msg.author.match(/^(\d+):(\d+)@c\.us$/)
-      if (match) {
-        return `${match[1]}@c.us`
-      }
-
-      return msg.author
-    }
-    const playerPhone = getPlayerPhone()
-
+    // generic
     const demand = userDemand.get(playerPhone)
     if (demand && demand >= 3) {
       msg.react('💤')
@@ -154,4 +146,15 @@ export const messageCreateProcess = async (msg: Message, initDate: Date) => {
       msg.reply('❌ Sem resposta do servidor ❌')
     }
   }
+}
+
+const getPlayerPhone = (msg: Message) => {
+  if (!msg.author) return msg.from
+
+  const match = msg.author.match(/^(\d+):(\d+)@c\.us$/)
+  if (match) {
+    return `${match[1]}@c.us`
+  }
+
+  return msg.author
 }

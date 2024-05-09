@@ -53,7 +53,9 @@ export type TRouteParams = {
     }
   }
   prismaClient: PrismaClient
+  generateImage?: boolean
 }
+
 export type TRouteType = (data: TRouteParams) => Promise<RouteResponse>
 
 const routeMap = new Map<string, TRouteType>([

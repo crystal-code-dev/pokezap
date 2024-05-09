@@ -39,6 +39,11 @@ export const register5 = async (data: TRouteParams): Promise<RouteResponse> => {
           skills: true,
         },
       },
+      heldItem: {
+        include: {
+          baseItem: true,
+        },
+      },
     },
   })
   if (!player || !wildPokemon) throw new PlayerNotFoundError(data.playerPhone)

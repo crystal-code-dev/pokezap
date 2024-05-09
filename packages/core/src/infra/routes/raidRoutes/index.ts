@@ -6,7 +6,6 @@ import { raidCreate } from './raidCreate'
 import { raidGroup } from './raidGroup'
 import { raidJoin } from './raidJoin'
 import { raidRoomSelect } from './raidRoomSelect'
-import { raidTeam } from './raidTeam'
 
 const subRouteMap = new Map<string, any>([
   // START RAID ROUTES
@@ -29,9 +28,6 @@ const subRouteMap = new Map<string, any>([
 
   ['CANCEL', raidCancel],
   ['CANCELAR', raidCancel],
-
-  ['TEAM', raidTeam],
-  ['TIME', raidTeam],
 ])
 
 export const raidRoutes = async (data: TRouteParams): Promise<RouteResponse> => {

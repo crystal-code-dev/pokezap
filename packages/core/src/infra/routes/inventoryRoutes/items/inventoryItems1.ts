@@ -79,8 +79,10 @@ export const inventoryItems1 = async (data: TRouteParams): Promise<RouteResponse
       ', '
     )} \n\n👍 - Próxima página.`,
     status: 200,
-    data: null,
     imageUrl: imageUrl,
+    data: {
+      items: player.ownedItems,
+    },
     actions: [`pz. inventory item ${numberPage() + 1}`],
   }
 }

@@ -66,7 +66,7 @@ export const pokemonHatch = async (data: TRouteParams): Promise<RouteResponse> =
   }
   if (!pokemon) throw new PlayersPokemonNotFoundError(pokemonId, player.name)
 
-  if (getHoursDifference(pokemon.createdAt, new Date()) < metaValues.eggHatchingTimeInHours - (isLabEnhanced ? 12 : 0))
+  if (getHoursDifference(pokemon.createdAt, new Date()) < metaValues.eggHatchingTimeInHours - (isLabEnhanced ? 18 : 12))
     throw new EggIsNotReadyToBeHatch(
       pokemon.id,
       metaValues.eggHatchingTimeInHours - getHoursDifference(pokemon.createdAt, new Date())
