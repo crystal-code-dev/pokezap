@@ -2,8 +2,8 @@ import express from 'express'
 import 'reflect-metadata'
 import { registerFonts } from '../../image-generator/src/helpers/registerFonts'
 import { logger } from './infra/logger'
-import router from './infra/router'
-import { initProcess } from './server/modules/init'
+import router from './infra/routers'
+import { initProcess } from './server/oldModules/init'
 
 process.on('uncaughtException', error => {
   logger.error(error)

@@ -9,7 +9,7 @@ import {
   TypeMissmatchError,
 } from '../../../infra/errors/AppErrors'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { getBreedCost } from '../../../server/modules/pokemon/getBreedCost'
+import { getBreedCost } from '../../../server/oldModules/pokemon/getBreedCost'
 import { TRouteParams } from '../router'
 import { pokemonBreed2 } from './pokemonBreed2'
 

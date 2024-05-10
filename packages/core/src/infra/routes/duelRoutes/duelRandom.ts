@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
-import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
+import { ContinuousDuel6x6 } from '../../../server/oldModules/duel/ContinuousDuel6x6'
+import { generateRaidPokemon } from '../../../server/oldModules/pokemon/generate/generateRaidPokemon'
 import {
   NoDuelLoserFoundError,
   NoDuelWinnerFoundError,

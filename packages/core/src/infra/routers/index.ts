@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { initProcess } from '../../server/modules/init'
+import { initProcess } from '../../server/oldModules/init'
 import { router } from '../routes/router'
 
 const expressRouter = Router() as any

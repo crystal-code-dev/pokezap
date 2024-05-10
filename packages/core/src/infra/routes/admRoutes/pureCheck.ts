@@ -8,7 +8,7 @@ import {
 import { TRouteParams } from '../../../infra/routes/router'
 import { getPokemonRequestData } from '../../../server/helpers/getPokemonRequestData'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { getTalentPurity } from '../../../server/modules/pokemon/getTalentPurity'
+import { getTalentPurity } from '../../../server/oldModules/pokemon/getTalentPurity'
 
 export const pureCheck = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams

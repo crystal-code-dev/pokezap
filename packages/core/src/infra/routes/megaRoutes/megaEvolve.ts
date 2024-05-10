@@ -2,8 +2,8 @@ import prisma from '../../../../../prisma-provider/src'
 import { megaPokemonNames } from '../../../server/constants/megaPokemonNames'
 import { getPokemonRequestData } from '../../../server/helpers/getPokemonRequestData'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { generateGeneralStats } from '../../../server/modules/pokemon/generateGeneralStats'
-import { generateHpStat } from '../../../server/modules/pokemon/generateHpStat'
+import { generateGeneralStats } from '../../../server/oldModules/pokemon/generateGeneralStats'
+import { generateHpStat } from '../../../server/oldModules/pokemon/generateHpStat'
 import {
   MissingParametersPokemonInformationError,
   PlayerNotFoundError,

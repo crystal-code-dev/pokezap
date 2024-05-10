@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { verifyTalentPermission } from '../../../../server/modules/duel/duelNXN'
+import { verifyTalentPermission } from '../../../../server/oldModules/duel/duelNXN'
 import {
   MissingParametersPokemonInformationError,
   PlayerNotFoundError,

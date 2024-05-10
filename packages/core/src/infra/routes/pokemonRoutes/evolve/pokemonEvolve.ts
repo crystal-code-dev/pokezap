@@ -2,11 +2,11 @@ import { iGenPokemonAnalysis } from '../../../../../../image-generator/src/iGenP
 import prisma from '../../../../../../prisma-provider/src'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { checkEvolutionPermition } from '../../../../server/modules/pokemon/checkEvolutionPermition'
+import { checkEvolutionPermition } from '../../../../server/oldModules/pokemon/checkEvolutionPermition'
 import {
   getRegionalEvolutionData,
   handleAlolaGalarEvolution,
-} from '../../../../server/modules/pokemon/handleAlolaGalarEvolution'
+} from '../../../../server/oldModules/pokemon/handleAlolaGalarEvolution'
 import {
   MissingParametersPokemonInformationError,
   PlayerDoestNotOwnThePokemonError,

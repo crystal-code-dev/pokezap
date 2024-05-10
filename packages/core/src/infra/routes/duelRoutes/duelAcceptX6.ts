@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
-import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
+import { ContinuousDuel6x6 } from '../../../server/oldModules/duel/ContinuousDuel6x6'
+import { handleExperienceGain } from '../../../server/oldModules/pokemon/handleExperienceGain'
 import {
   CouldNotUpdatePlayerError,
   NoDuelLoserFoundError,

@@ -1,7 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
 import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { getTalentPurity } from '../../../server/modules/pokemon/getTalentPurity'
+import { getTalentPurity } from '../../../server/oldModules/pokemon/getTalentPurity'
 import {
   CantSellPokemonInTeamError,
   FilterNotAvailableError,

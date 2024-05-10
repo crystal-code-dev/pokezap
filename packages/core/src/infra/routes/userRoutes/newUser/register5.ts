@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { duelNXN } from '../../../../server/modules/duel/duelNXN'
+import { duelNXN } from '../../../../server/oldModules/duel/duelNXN'
 import { PlayerNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 

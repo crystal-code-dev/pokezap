@@ -3,7 +3,7 @@ import prisma from '../../../../../prisma-provider/src'
 import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { sendMessage } from '../../helpers/sendMessage'
-import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
+import { generateWildPokemon } from '../../oldModules/pokemon/generate/generateWildPokemon'
 
 export const rocketInvasion = async () => {
   const gameRooms = await prisma.gameRoom.findMany({

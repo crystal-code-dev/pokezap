@@ -11,7 +11,7 @@ import {
 } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
+import { ContinuousDuel6x6 } from '../../../server/oldModules/duel/ContinuousDuel6x6'
 import { PlayerDoesNotHaveSixPokemonTeamError, UnexpectedError } from '../../errors/AppErrors'
 import { logger } from '../../logger'
 

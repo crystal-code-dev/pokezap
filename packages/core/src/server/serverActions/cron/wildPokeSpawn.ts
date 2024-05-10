@@ -3,8 +3,8 @@ import prisma from '../../../../../prisma-provider/src'
 import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
 import { sendMessage } from '../../helpers/sendMessage'
-import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
-import { windPokeEvolve } from '../../modules/pokemon/windPokeEvolve'
+import { generateWildPokemon } from '../../oldModules/pokemon/generate/generateWildPokemon'
+import { windPokeEvolve } from '../../oldModules/pokemon/windPokeEvolve'
 
 type TParams = {
   needIncense?: boolean

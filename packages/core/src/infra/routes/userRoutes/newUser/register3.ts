@@ -1,8 +1,8 @@
 import { iGenPlayerAnalysis } from '../../../../../../image-generator/src/iGenPlayerAnalysis'
 import prisma from '../../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { generateGeneralStats } from '../../../../server/modules/pokemon/generateGeneralStats'
-import { generateHpStat } from '../../../../server/modules/pokemon/generateHpStat'
+import { generateGeneralStats } from '../../../../server/oldModules/pokemon/generateGeneralStats'
+import { generateHpStat } from '../../../../server/oldModules/pokemon/generateHpStat'
 import { GenderDoesNotExistError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 

@@ -2,7 +2,7 @@ import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { handleLevelSet } from '../../../../server/modules/pokemon/handleLevelSet'
+import { handleLevelSet } from '../../../../server/oldModules/pokemon/handleLevelSet'
 import {
   MissingParametersPokemonInformationError,
   PlayerDoestNotOwnThePokemonError,

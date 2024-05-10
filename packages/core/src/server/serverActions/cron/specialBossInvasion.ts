@@ -4,7 +4,7 @@ import { GameRoom } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { LootData } from '../../constants/bossInvasionLootMap'
 import { sendMessage } from '../../helpers/sendMessage'
-import { generateBossPokemon } from '../../modules/pokemon/generate/generateBossPokemon'
+import { generateBossPokemon } from '../../oldModules/pokemon/generate/generateBossPokemon'
 
 type SpecialBossInvasionParams = {
   name: string

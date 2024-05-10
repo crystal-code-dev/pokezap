@@ -2,8 +2,8 @@ import prisma from '../../../../../../prisma-provider/src'
 import { InvasionSession, TDuelNXNResponse } from '../../../../../../prisma-provider/src/types'
 import { bossInvasionLootMap } from '../../../../server/constants/bossInvasionLootMap'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { duelNXN } from '../../../../server/modules/duel/duelNXN'
-import { handleExperienceGain } from '../../../../server/modules/pokemon/handleExperienceGain'
+import { duelNXN } from '../../../../server/oldModules/duel/duelNXN'
+import { handleExperienceGain } from '../../../../server/oldModules/pokemon/handleExperienceGain'
 
 import {
   InsufficentPlayersForInvasionError,

@@ -4,8 +4,8 @@ import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../infra/errors/AppErrors'
 import { bossInvasionLootMap } from '../../../server/constants/bossInvasionLootMap'
 import { bossPokemonNames } from '../../../server/constants/bossPokemonNames'
-import { generateBossPokemon } from '../../../server/modules/pokemon/generate/generateBossPokemon'
 import { sendMessage } from '../../helpers/sendMessage'
+import { generateBossPokemon } from '../../oldModules/pokemon/generate/generateBossPokemon'
 
 export const pokeBossInvasion = async () => {
   const bossesBaseData = await prisma.basePokemon.findMany({

@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { spawnTutorialPokemon } from '../../../../server/modules/pokemon/spawnTutorialPokemon'
+import { spawnTutorialPokemon } from '../../../../server/oldModules/pokemon/spawnTutorialPokemon'
 import { PlayerNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 

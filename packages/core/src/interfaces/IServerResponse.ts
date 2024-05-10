@@ -1,4 +1,4 @@
-export type ServerResponse = {
+interface IServerResponse {
   status: number
   message: string
   data?: any

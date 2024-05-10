@@ -11,9 +11,9 @@ import {
 } from '../../../infra/errors/AppErrors'
 import { sendMessage } from '../../../server/helpers/sendMessage'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { breed } from '../../../server/modules/pokemon/breed'
-import { getBreedCost } from '../../../server/modules/pokemon/getBreedCost'
-import { getChildrenCount } from '../../../server/modules/pokemon/getChildrenCount'
+import { breed } from '../../../server/oldModules/pokemon/breed'
+import { getBreedCost } from '../../../server/oldModules/pokemon/getBreedCost'
+import { getChildrenCount } from '../../../server/oldModules/pokemon/getChildrenCount'
 import { TRouteParams } from '../router'
 
 export const pokemonBreed2 = async (data: TRouteParams): Promise<RouteResponse> => {

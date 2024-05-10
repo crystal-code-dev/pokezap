@@ -1,10 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
 
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { duelNXN } from '../../../../server/modules/duel/duelNXN'
+import { duelNXN } from '../../../../server/oldModules/duel/duelNXN'
 
 import { InvasionSession, TDuelNXNResponse } from '../../../../../../prisma-provider/src/types'
-import { handleExperienceGain } from '../../../../server/modules/pokemon/handleExperienceGain'
+import { handleExperienceGain } from '../../../../server/oldModules/pokemon/handleExperienceGain'
 import {
   InsufficentPlayersForInvasionError,
   NoDuelLoserFoundError,

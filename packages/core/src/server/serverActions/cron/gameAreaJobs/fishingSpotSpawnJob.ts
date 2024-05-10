@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { gameAreasData } from '../../../constants/gameAreasData'
-import { verifySpawnTime } from '../../../modules/gameArea/verifySpawnTime'
+import { verifySpawnTime } from '../../../oldModules/gameArea/verifySpawnTime'
 import { specialPokeSpawn } from '../specialPokeSpawn'
 
 export const fishingSpotSpawnJob = async () => {

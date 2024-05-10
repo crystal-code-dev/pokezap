@@ -13,8 +13,8 @@ import {
   UnexpectedError,
 } from '../../../infra/errors/AppErrors'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { duelNXN } from '../../../server/modules/duel/duelNXN'
-import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
+import { duelNXN } from '../../../server/oldModules/duel/duelNXN'
+import { handleExperienceGain } from '../../../server/oldModules/pokemon/handleExperienceGain'
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 import { DuelPlayer, DuelPokemon } from './generatedDuelAccept'

@@ -1,8 +1,8 @@
 import prisma from '../../../../../prisma-provider/src'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { duelNXN } from '../../../server/modules/duel/duelNXN'
-import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
-import { handleRouteExperienceGain } from '../../../server/modules/route/handleRouteExperienceGain'
+import { duelNXN } from '../../../server/oldModules/duel/duelNXN'
+import { handleExperienceGain } from '../../../server/oldModules/pokemon/handleExperienceGain'
+import { handleRouteExperienceGain } from '../../../server/oldModules/route/handleRouteExperienceGain'
 import {
   CouldNotUpdatePlayerError,
   MissingParametersBattleRouteError,

@@ -4,7 +4,7 @@ import { GameRoom } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
 
 import { sendMessage } from '../../helpers/sendMessage'
-import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
+import { generateWildPokemon } from '../../oldModules/pokemon/generate/generateWildPokemon'
 
 type TParams = {
   pokeNames: string[]

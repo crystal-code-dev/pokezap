@@ -3,8 +3,8 @@ import prisma from '../../../../../prisma-provider/src'
 import { GameAreaName, RaidPokemonBaseDataSkills } from '../../../../../prisma-provider/src/types'
 import { raidsDataMap } from '../../../server/constants/raidsDataMap'
 import { RouteResponse } from '../../../server/models/RouteResponse'
-import { generateMegaPokemon } from '../../../server/modules/pokemon/generate/generateMegaPokemon'
-import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
+import { generateMegaPokemon } from '../../../server/oldModules/pokemon/generate/generateMegaPokemon'
+import { generateRaidPokemon } from '../../../server/oldModules/pokemon/generate/generateRaidPokemon'
 
 import {
   CantStartRaidOutsideRaidGroupError,

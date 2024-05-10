@@ -2,7 +2,7 @@ import prisma from '../../../../../../prisma-provider/src'
 import { IPokemon } from '../../../../server/models/IPokemon'
 import { ISession } from '../../../../server/models/ISession'
 import { RouteResponse } from '../../../../server/models/RouteResponse'
-import { checkEvolutionPermition } from '../../../../server/modules/pokemon/checkEvolutionPermition'
+import { checkEvolutionPermition } from '../../../../server/oldModules/pokemon/checkEvolutionPermition'
 import { CantProceedWithPokemonInTeamError } from '../../../errors/AppErrors'
 
 export type TTradePokeParams = {

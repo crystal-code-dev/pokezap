@@ -1,5 +1,5 @@
 import { Difficulty } from '../../../../../prisma-provider/src/types'
-import { generateDuelNpc } from '../../modules/duelNPC/generateDuelNpc'
+import { generateDuelNpc } from '../../oldModules/duelNPC/generateDuelNpc'
 
 export const generateDuelist = async () => {
   Promise.all([

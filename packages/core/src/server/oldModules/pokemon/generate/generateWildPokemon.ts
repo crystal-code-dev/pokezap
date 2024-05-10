@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { BasePokemon, PokemonBaseData, Skill } from '../../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../../infra/errors/AppErrors'
-import { talentNameMap } from '../../../../server/constants/talentNameMap'
+import { talentNameMap } from '../../../constants/talentNameMap'
 import { generateGeneralStats } from '../generateGeneralStats'
 import { generateHpStat } from '../generateHpStat'
 
