@@ -1,10 +1,9 @@
 import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
-import { BaseRoomUpgrades, GameRoom, RoomUpgrades } from '../../../common/types/prisma'
+import { BaseRoomUpgrades, GameRoom, RoomUpgrades } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   route: GameRoom & {
@@ -47,7 +46,6 @@ export const iGenRouteInfo = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

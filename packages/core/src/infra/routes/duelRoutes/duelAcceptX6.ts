@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import {
@@ -18,7 +18,7 @@ import {
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 
-export const duelAcceptX6 = async (data: TRouteParams): Promise<IResponse> => {
+export const duelAcceptX6 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , sessionIdString, fast] = data.routeParams
   const sessionId = Number(sessionIdString)
   if (typeof sessionId !== 'number') throw new TypeMissmatchError(sessionIdString, 'number')

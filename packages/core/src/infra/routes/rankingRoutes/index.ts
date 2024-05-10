@@ -1,5 +1,5 @@
 import { MissingParametersRankRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { catchRanking } from './catchRanking'
 import { eloRanking } from './eloRanking'
@@ -18,7 +18,7 @@ const routesMap = new Map<string, any>([
   ['CATCHES', catchRanking],
 ])
 
-export const rankRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const rankRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , subRoute] = data.routeParams
   if (!subRoute) throw new MissingParametersRankRouteError()
 

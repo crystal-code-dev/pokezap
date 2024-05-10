@@ -17,18 +17,21 @@ import { findKeyByValue } from '../../helpers/findKeyByValue'
 import prisma from '../../../../../prisma-provider/src'
 import {
   DuelNxNRoundData,
+  DuelPokemonExtra,
   PokemonBaseData,
   PokemonBaseDataSkillsHeld,
   RaidPokemonBaseData,
   RaidPokemonBaseDataSkillsHeld,
   RoundPokemonData,
+  Skill,
   TDuelNXNResponse,
   attackPower,
   enemyName,
-} from '../../../types'
-import { Skill } from '../../../types/prisma'
+} from '../../../../../prisma-provider/src/types'
+import { talentDefenseBonusMap } from '../../constants/talentDefenseBonusMap'
 import { getBestSkillSet } from '../../helpers/getBestSkillSet'
-import { DuelPokemonExtra, getTeamBonuses } from './getTeamBonuses'
+import { getPokemonPurity } from '../pokemon/getPokemonPurity'
+import { getTeamBonuses } from './getTeamBonuses'
 
 type TParams = {
   leftTeam: PokemonBaseDataSkillsHeld[]
@@ -233,6 +236,9 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     if (poke.role === 'TANKER') roleBonuses.defense = 0.1
     if (poke.role === 'DAMAGE') roleBonuses.damage = 0.1
     if (poke.role === 'SUPPORT') roleBonuses.support = 0.1
+
+    roleBonuses.defense += talentDefenseBonusMap.get(getPokemonPurity(poke) ?? 0) ?? 0
+
     leftTeamData.push({
       name: poke.baseData.name,
       id: poke.id,
@@ -290,6 +296,9 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     if ('role' in poke && poke.role === 'TANKER') roleBonuses.defense = 0.1
     if ('role' in poke && poke.role === 'DAMAGE') roleBonuses.damage = 0.1
     if ('role' in poke && poke.role === 'SUPPORT') roleBonuses.support = 0.1
+
+    roleBonuses.defense += talentDefenseBonusMap.get(getPokemonPurity(poke) ?? 0) ?? 0
+
     rightTeamData.push({
       name: poke.baseData.name,
       pokemonBaseData: poke,
@@ -342,8 +351,8 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
   let duelFinished = false
   const isDraw = false
   let roundCount = 1
-  let winnerTeam: any[] | null = null
-  let loserTeam: any[] | null = null
+  let winnerTeam: RoundPokemonData[] = []
+  let loserTeam: RoundPokemonData[] = []
   let winnerSide: 'right' | 'left' | undefined
 
   duelMap.set(1, {
@@ -459,17 +468,19 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
         const adratio = adRatio(currentSkillData.skill, attacker, target)
         const pwrWithADRatio = attacker.currentSkillPower * adratio * (1 + attacker.damageAmplifying)
         const pwrDividedByTargets = pwrWithADRatio / currentSkillData.targets.length
+        const randomFactor = 0.9 + Math.random() * 0.2
         if (!target.block) {
-          target.hp -= pwrDividedByTargets * (0.9 + Math.random() * 0.2) * (1 - target.damageResistance)
+          target.hp -= pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
           attacker.hp += pwrDividedByTargets * attacker.lifeSteal * (1 - target.damageResistance)
-          attacker.totalDamageDealt += pwrDividedByTargets * (0.9 + Math.random() * 0.2) * (1 - target.damageResistance)
+          attacker.totalDamageDealt += pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
+          target.totalDamageReceived += pwrDividedByTargets * randomFactor * (1 - target.damageResistance)
         }
         if (attacker.crit) {
           if (!target.block) {
-            target.hp -= pwrDividedByTargets * (0.9 + Math.random() * 0.2) * 0.5 * (1 - target.damageResistance)
+            target.hp -= pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
             attacker.hp += pwrDividedByTargets * attacker.lifeSteal * 0.5 * (1 - target.damageResistance)
-            attacker.totalDamageDealt +=
-              pwrDividedByTargets * (0.9 + Math.random() * 0.2) * 0.5 * (1 - target.damageResistance)
+            attacker.totalDamageDealt += pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
+            target.totalDamageReceived += pwrDividedByTargets * randomFactor * 0.5 * (1 - target.damageResistance)
           }
         }
         if (attacker.hp > attacker.maxHp) attacker.hp = attacker.maxHp
@@ -586,7 +597,7 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
 
       if (currentSkillData.skill.category === 'heal') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.04
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
         const healingPower =
           currentSkillData.skill.healing +
           (4 * (pokemon.spAtk / 200)) ** 4.15 *
@@ -601,7 +612,7 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
 
       if (currentSkillData.skill.category === 'net-good-stats') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.06
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
 
         const nameFixMap = new Map<string, string>([
           ['attack', 'atk'],
@@ -835,7 +846,8 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     }
   }
 
-  if (!winnerTeam || !loserTeam) throw new UnexpectedError('Time vencedor/perdedor do duelo não foi determinado')
+  if (winnerTeam.length <= 0 || loserTeam.length <= 0)
+    throw new UnexpectedError('Time vencedor/perdedor do duelo não foi determinado')
   if (!winnerSide || !['right', 'left'].includes(winnerSide)) {
     throw new UnexpectedError('Índice do time vencedor/perdedor do duelo não foi determinado')
   }
@@ -882,13 +894,19 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     })
     .filter((m: string) => m.length > 0)
     .join('\n')}
+    
+  ${[...leftTeamData]
+    .map(p => {
+      if (p.role === 'TANKER') return `*${p.name}* recebeu ${p.totalDamageReceived.toFixed(0)} de dano.`
+    })
+    .join('\n')}
   
   ${[...leftTeamData]
     .map(p => {
       const messages: string[] = []
       for (const key in p.buffData) {
         if (p.buffData[key] > 0) {
-          messages.push(`*${p.name}* aumentou a ${key} de seu time em ${p.buffData[key]}.`)
+          messages.push(`*${p.name}* aumentou ${key} em ${p.buffData[key].toFixed(0)}.`)
         }
       }
       return messages.join('\n')
@@ -896,8 +914,6 @@ export const duelNXN = async (data: TParams): Promise<TDuelNXNResponse | void> =
     .filter((m: string) => m.length > 5)
     .join('\n')}
   `
-
-  console.log({ damageDealtMessage })
 
   return {
     message: `DUELO X2`,

@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   InsufficientItemAmountError,
   MissingParameterError,
@@ -11,7 +11,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const sendItem = async (data: TRouteParams): Promise<IResponse> => {
+export const sendItem = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , itemNameUppercase, amountString, targetPlayerIdString] = data.routeParams
 
   if (!itemNameUppercase) throw new MissingParameterError('nome do item à ser trocado')

@@ -1,7 +1,7 @@
 import { Image } from 'canvas'
 import path from 'path'
 import { talentIdMap } from '../../../common/constants/talentIdMap'
-import { RoundPokemonData } from '../../../common/types'
+import { RoundPokemonData } from '../../prisma-provider/src/types'
 import { TCanvas2D, createCanvas2d, drawBackground, drawTalents, writeSkills } from './helpers/canvasHelper'
 import { initEncoder } from './helpers/encoderHelper'
 import { removeFileFromDisk, saveFileOnDisk } from './helpers/fileHelper'

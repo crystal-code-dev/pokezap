@@ -81,5 +81,8 @@ common/autoinstallers/*/.npmrc
 packages/image-generator/src/images/*.png
 packages/image-generator/src/images/*.jpg 
 packages/image-generator/src/images/*.jpeg
+packages/whatsapp-provider/src/ffmpeg/*
 
 dist
+
+packages/**/dist

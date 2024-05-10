@@ -1,25 +1,27 @@
+import { talentPowerBonusMap } from '../../../../../../common/constants/talentPowerBonusMap'
 import { iGenDuelX6Rounds } from '../../../../../image-generator/src/iGenDuelX6Rounds'
 import prisma from '../../../../../prisma-provider/src'
-import { UnexpectedError } from '../../../infra/errors/AppErrors'
-import { logger } from '../../../infra/logger'
 import {
   DuelNxNRoundData,
+  DuelPokemonExtra,
   PokemonBaseData,
   PokemonBaseDataSkillsHeld,
   RaidPokemonBaseData,
   RaidPokemonBaseDataSkillsHeld,
   RoundPokemonData,
+  Skill,
   TDuelNXNResponse,
   attackPower,
   enemyName,
-} from '../../../types'
-import { Skill } from '../../../types/prisma'
+} from '../../../../../prisma-provider/src/types'
+import { UnexpectedError } from '../../../infra/errors/AppErrors'
+import { logger } from '../../../infra/logger'
 import { defEffectivenessMap } from '../../constants/defEffectivenessMap'
 import { plateTypeMap } from '../../constants/plateTypeMap'
 import { talentIdMap } from '../../constants/talentIdMap'
 import { findKeyByValue } from '../../helpers/findKeyByValue'
 import { getBestSkillSet } from '../../helpers/getBestSkillSet'
-import { DuelPokemonExtra, getTeamBonuses } from './getTeamBonuses'
+import { getTeamBonuses } from './getTeamBonuses'
 
 type TParams = {
   leftTeam: PokemonBaseDataSkillsHeld[]
@@ -597,7 +599,7 @@ export const ContinuousDuel6x6 = async (data: TParams): Promise<TDuelNXNResponse
 
       if (currentSkillData.skill.category === 'heal') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.04
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
         const healingPower =
           currentSkillData.skill.healing +
           (4 * (pokemon.spAtk / 200)) ** 4.15 *
@@ -612,7 +614,7 @@ export const ContinuousDuel6x6 = async (data: TParams): Promise<TDuelNXNResponse
 
       if (currentSkillData.skill.category === 'net-good-stats') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.06
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
 
         const nameFixMap = new Map<string, string>([
           ['attack', 'atk'],
@@ -727,7 +729,7 @@ export const ContinuousDuel6x6 = async (data: TParams): Promise<TDuelNXNResponse
 
       if (currentSkillData.skill.category === 'net-good-stats') {
         const talentData = await verifyTalentPermission(pokemon.pokemonBaseData, currentSkillData.skill)
-        const talentBonus = talentData.count * 0.06
+        const talentBonus = talentPowerBonusMap.get(talentData.count) ?? 0
 
         const nameFixMap = new Map<string, string>([
           ['attack', 'atk'],
@@ -1004,7 +1006,7 @@ const getBestSkills = async ({ attacker, defenders }: TGetBestSkillsParams) => {
       return 1
     }
 
-    const talentBonus = 0.06 * talentCheck.count
+    const talentBonus = talentPowerBonusMap.get(talentCheck.count) ?? 0
 
     const getEffectivenessMultiplier = () => {
       if (efData.best.includes(skill.typeName)) return 2.25

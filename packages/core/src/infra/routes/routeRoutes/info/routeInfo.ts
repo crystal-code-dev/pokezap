@@ -2,9 +2,9 @@ import { iGenRouteInfo } from '../../../../../../image-generator/src/iGenRouteIn
 import prisma from '../../../../../../prisma-provider/src'
 import { InvalidRouteError, SubRouteNotFoundError, TypeMissmatchError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const routeInfo = async (data: TRouteParams): Promise<IResponse> => {
+export const routeInfo = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , routeId] = data.routeParams
 
   if (!routeId) {

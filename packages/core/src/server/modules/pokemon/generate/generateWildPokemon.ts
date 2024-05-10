@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { BasePokemon, PokemonBaseData, Skill } from '../../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../../../infra/errors/AppErrors'
 import { talentNameMap } from '../../../../server/constants/talentNameMap'
-import { BasePokemon, Skill } from '../../../../types/prisma'
 import { generateGeneralStats } from '../generateGeneralStats'
 import { generateHpStat } from '../generateHpStat'
 
@@ -18,7 +18,7 @@ type TParams = {
   fromIncense?: boolean
 }
 
-export const generateWildPokemon = async (data: TParams) => {
+export const generateWildPokemon = async (data: TParams): Promise<PokemonBaseData> => {
   const { baseData, level, shinyChance, savage, isAdult, gameRoomId } = data
 
   const isShiny = Math.random() < shinyChance

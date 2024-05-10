@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { raidsDataMap } from '../../../server/constants/raidsDataMap'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { duelNXN } from '../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import {
@@ -16,7 +16,7 @@ import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 import { raidDifficultyDataMap } from './raidCreate'
 
-export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
+export const raidProgress = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , raidIdString, roomIdString] = data.routeParams
   if (!data.fromReact) throw new UnexpectedError('Rota não permitida.')
   if (!raidIdString) throw new MissingParameterError('raid id')
@@ -180,7 +180,7 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
         status: 200,
         data: null,
         imageUrl: duel.imageUrl,
-        isAnimated: false,
+        isAnimated: true,
         afterMessage: `${currentRoom.enemyPokemons[0].baseData.name.toUpperCase()} derrotou a equipe de raid.
         
         ${duel.damageDealtMessage}`,
@@ -211,6 +211,8 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
     }
   }
 
+  const soloRaidModifier = [...new Set(raid.lobbyPokemons.map(p => p.ownerId))].length === 1 ? 0.85 : 1
+
   // handle raid end win scenario
   if (currentRoom.isFinalRoom) {
     const raidLootData = raidsDataMap.get(currentRoom.enemyPokemons[0].baseData.name)
@@ -227,7 +229,7 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
         continue
       }
       for (const loot of raidLootData.loot) {
-        if (Math.random() < loot.dropRate * raidDifficultyData.dropRate) {
+        if (Math.random() < loot.dropRate * raidDifficultyData.dropRate * soloRaidModifier) {
           const amount = Math.floor(Math.random() * loot.amount[1] + loot.amount[0])
           lootMessages.push(`${player.name} obteve ${amount} *${loot.name}*`)
           prismaPromises.push(
@@ -297,7 +299,7 @@ export const raidProgress = async (data: TRouteParams): Promise<IResponse> => {
       status: 200,
       data: null,
       imageUrl: duel.imageUrl,
-      isAnimated: false,
+      isAnimated: true,
       afterMessage: `${raid.name} foi derrotado! A equipe de raid venceu!
       ${duel.damageDealtMessage}
            

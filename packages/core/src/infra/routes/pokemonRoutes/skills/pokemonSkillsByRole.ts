@@ -1,10 +1,11 @@
-import { Skill } from '@prisma/client'
+import prisma from '../../../../../../prisma-provider/src'
+import { Skill } from '../../../../../../prisma-provider/src/types'
 import { checkIfSkillIsSupportSkill, checkIfSkillIsTankerSkill } from '../../../../server/helpers/getBestSkillSet'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { MissingParameterError, PokemonNotFoundError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const pokemonSkillsByRole = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonSkillsByRole = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , elementUppercase, pokemonName] = data.routeParams
   if (!elementUppercase) throw new MissingParameterError('função')
   if (!pokemonName) throw new MissingParameterError('nome do pokemon')
@@ -44,7 +45,9 @@ export const pokemonSkillsByRole = async (data: TRouteParams): Promise<IResponse
   for (const skill of skills) {
     if (!checkFunction(skill)) continue
     const skillLevel = skillMap.get(skill.name)
-    const skillDisplay = `*${skill.name}* -PWR:${skill.attackPower} -LVL:${skillLevel}-CLASSE:${skill.class}`
+    const skillDisplay = `*${skill.name}* -PWR:${skill.attackPower === 0 ? 'status' : skill.attackPower} -LVL:${
+      skillLevel === '999' ? '💿' : skillLevel
+    }`
     skillDisplays.push(skillDisplay)
   }
 

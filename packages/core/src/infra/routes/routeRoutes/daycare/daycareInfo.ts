@@ -1,7 +1,7 @@
 import { iGenDaycareInfo } from '../../../../../../image-generator/src/iGenDaycareInfo'
 import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   PlayerNotFoundError,
   RouteDoesNotHaveUpgradeError,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const daycareInfo = async (data: TRouteParams): Promise<IResponse> => {
+export const daycareInfo = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,

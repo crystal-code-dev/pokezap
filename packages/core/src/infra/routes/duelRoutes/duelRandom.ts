@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { ContinuousDuel6x6 } from '../../../server/modules/duel/ContinuousDuel6x6'
 import { generateRaidPokemon } from '../../../server/modules/pokemon/generate/generateRaidPokemon'
 import {
@@ -13,7 +13,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const duelRandom = async (data: TRouteParams): Promise<IResponse> => {
+export const duelRandom = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , duelLevelString] = data.routeParams
   const duelLevel = Number(duelLevelString)
   if (typeof duelLevel !== 'number') throw new TypeMissmatchError(duelLevelString, 'number')

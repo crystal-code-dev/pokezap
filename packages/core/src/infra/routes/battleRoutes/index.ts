@@ -1,9 +1,9 @@
 import { MissingParametersBattleRouteError, TypeMissmatchError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { battleWildPokemon } from './battleWildPokemon'
 
-export const battleRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const battleRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , idString] = data.routeParams
   if (!idString) throw new MissingParametersBattleRouteError()
 

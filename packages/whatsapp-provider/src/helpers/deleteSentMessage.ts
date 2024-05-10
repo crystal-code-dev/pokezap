@@ -1,7 +1,6 @@
 import { Message } from 'whatsapp-web.js'
 import { logger } from './logger'
 
-
 export const deleteSentMessage = async (msg: Message) => {
   setTimeout(() => {
     try {
@@ -9,5 +8,5 @@ export const deleteSentMessage = async (msg: Message) => {
     } catch (e: any) {
       logger.error(e)
     }
-  }, 30 * 1000 * 60)
+  }, 10 * 1000 * 60)
 }

@@ -1,7 +1,7 @@
 import { iGenWildPokemon } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
-import { PokemonBaseData } from '../../../types'
-import { GameRoom, Player } from '../../../types/prisma'
+import { GameRoom, Player, PokemonBaseData } from '../../../../../prisma-provider/src/types'
+
 import { generateWildPokemon } from './generate/generateWildPokemon'
 
 type TParams = {
@@ -9,7 +9,12 @@ type TParams = {
   gameRoom: GameRoom
 }
 
-export const spawnTutorialPokemon = async (data: TParams): Promise<PokemonBaseData> => {
+type TResponse = {
+  pokemon: PokemonBaseData
+  imageUrl: string | undefined
+}
+
+export const spawnTutorialPokemon = async (data: TParams): Promise<TResponse> => {
   const baseExperienceTreshold = Math.floor(64 + (1 / 100) * 276)
 
   const basePokemons = await prisma.basePokemon.findMany({

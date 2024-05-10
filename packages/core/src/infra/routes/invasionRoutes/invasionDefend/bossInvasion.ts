@@ -1,10 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
+import { InvasionSession, TDuelNXNResponse } from '../../../../../../prisma-provider/src/types'
 import { bossInvasionLootMap } from '../../../../server/constants/bossInvasionLootMap'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { duelNXN } from '../../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../../server/modules/pokemon/handleExperienceGain'
-import { TDuelNXNResponse } from '../../../../types'
-import { InvasionSession } from '../../../../types/prisma'
+
 import {
   InsufficentPlayersForInvasionError,
   NoDuelLoserFoundError,
@@ -17,7 +17,7 @@ import {
 import { DuelPlayer } from '../../duelRoutes/generatedDuelAccept'
 import { TRouteParams } from '../../router'
 
-export const bossInvasion = async (data: TRouteParams): Promise<IResponse> => {
+export const bossInvasion = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , invasionSessionIdString] = data.routeParams
   const invasionSessionId = Number(invasionSessionIdString)
   if (typeof invasionSessionId !== 'number') throw new TypeMissmatchError(invasionSessionIdString, 'number')

@@ -1,5 +1,5 @@
-import { MissingParametersTradeRouteError, SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { SubRouteNotFoundError } from '../../../infra/errors/AppErrors'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 import { playerInfo1 } from './info/playerInfo1'
 import { playerCash } from './playerCash'
@@ -13,7 +13,7 @@ const routesMap = new Map<string, any>([
   ['ENERGY', playerEnergy],
 ])
 
-export const playerRoutes = async (data: TRouteParams): Promise<IResponse> => {
+export const playerRoutes = async (data: TRouteParams): Promise<RouteResponse> => {
   let [, , subRouteName] = data.routeParams
   if (!subRouteName) subRouteName = 'INFO'
 

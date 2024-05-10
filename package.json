@@ -10,8 +10,8 @@
   "author": "wayto66",
   "license": "MIT",
   "scripts": {
-    "client": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules packages/whatsapp-provider/src/index.ts",
-    "server": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules packages/core/src/index.ts"
+    "client": "node ./packages/whatsapp-provider/dist/packages/whatsapp-provider/src/index.js",
+    "server": "node ./packages/core/dist/packages/core/src/index.js"
   },
   "dependencies": {
     "ts-node-dev": "^2.0.0"

@@ -1,8 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
+import { BasePokemon, Pokemon, RaidPokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { PokemonNotFoundError, UnexpectedError } from '../../../infra/errors/AppErrors'
 import { logger } from '../../../infra/logger'
-import { RaidPokemonBaseData } from '../../../types'
-import { BasePokemon, Pokemon } from '../../../types/prisma'
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'
 
@@ -25,6 +24,7 @@ type TResponse = {
 }
 
 const experiencePenaltyByLevel = (level: number) => {
+  if (level > 90) return 0.25
   if (level > 75) return 0.4
   if (level > 50) return 0.66
   return 1
@@ -32,7 +32,7 @@ const experiencePenaltyByLevel = (level: number) => {
 
 export const handleExperienceGain = async (data: TParams): Promise<TResponse> => {
   const divideFactor = data.divide ? 0.5 : 1
-  const expGain = Math.round(getExperienceGain(data) * divideFactor * experiencePenaltyByLevel(data.pokemon.level))
+  const expGain = Math.round(getExperienceGain(data) * divideFactor * experiencePenaltyByLevel(data.pokemon.level)) * 2
   const newExp = data.pokemon.experience + expGain
   const newLevel = Math.floor(Math.cbrt(newExp))
 

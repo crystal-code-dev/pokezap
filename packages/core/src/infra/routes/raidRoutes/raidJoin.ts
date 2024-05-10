@@ -1,12 +1,13 @@
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   InvasionNotFoundError,
   MissingParametersBattleRouteError,
   NoEnergyError,
   PlayerDoesNotHaveThePokemonInTheTeamError,
   PlayerNotFoundError,
+  PokemonDoesNotHaveOwnerError,
   PokemonNotFoundError,
   RaidAlreadyFinishedError,
   RaidAlreadyInProgressError,
@@ -15,7 +16,7 @@ import {
 import { TRouteParams } from '../router'
 import { raidRoomSelect } from './raidRoomSelect'
 
-export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
+export const raidJoin = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , raidIdString] = data.routeParams
   if (!raidIdString) throw new MissingParametersBattleRouteError()
 
@@ -28,7 +29,7 @@ export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
@@ -55,7 +56,11 @@ export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
       id: raidId,
     },
     include: {
-      lobbyPokemons: true,
+      lobbyPokemons: {
+        include: {
+          baseData: true,
+        },
+      },
     },
   })
 
@@ -113,18 +118,24 @@ export const raidJoin = async (data: TRouteParams): Promise<IResponse> => {
       },
     })
 
-    await prisma.player.updateMany({
-      where: {
-        id: {
-          in: raid.lobbyPokemons.map(p => p.ownerId || 0),
-        },
-      },
-      data: {
-        energy: {
-          decrement: 1,
-        },
-      },
-    })
+    for (const pokemon of raid.lobbyPokemons) {
+      if (!pokemon.ownerId) throw new PokemonDoesNotHaveOwnerError(pokemon.id, pokemon.baseData.name)
+    }
+
+    await prisma.$transaction(
+      raid.lobbyPokemons.map(p =>
+        prisma.player.update({
+          where: {
+            id: p.ownerId!,
+          },
+          data: {
+            energy: {
+              decrement: 1,
+            },
+          },
+        })
+      )
+    )
 
     return await raidRoomSelect({
       ...data,

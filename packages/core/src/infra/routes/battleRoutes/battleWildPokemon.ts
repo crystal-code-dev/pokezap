@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { duelNXN } from '../../../server/modules/duel/duelNXN'
 import { handleExperienceGain } from '../../../server/modules/pokemon/handleExperienceGain'
 import { handleRouteExperienceGain } from '../../../server/modules/route/handleRouteExperienceGain'
@@ -23,7 +23,7 @@ import {
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'
 
-export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> => {
+export const battleWildPokemon = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , wildPokemonIdString, fast] = data.routeParams
   if (!data.fromReact) throw new SendEmptyMessageError()
   if (!wildPokemonIdString) throw new MissingParametersBattleRouteError()
@@ -37,7 +37,7 @@ export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> 
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
@@ -84,6 +84,7 @@ export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> 
           id: true,
         },
       },
+      gameRoom: true,
     },
   })
 
@@ -97,8 +98,8 @@ export const battleWildPokemon = async (data: TRouteParams): Promise<IResponse> 
   if (wildPokemon.battledBy.map(player => player.id).includes(player.id))
     throw new PokemonAlreadyBattledByPlayerError(wildPokemon.id, player.name)
 
-  if (!player.gameRooms.map(gameRoom => gameRoom.id).includes(wildPokemon.gameRoomId))
-    throw new PlayerDoesNotResideOnTheRoute(wildPokemon.gameRoomId, player.name)
+  if (player.gameRoomId !== wildPokemon.gameRoomId)
+    throw new PlayerDoesNotResideOnTheRoute(wildPokemon.gameRoom?.inGameName ?? '', player.name)
 
   const route = await prisma.gameRoom.findFirst({
     where: {

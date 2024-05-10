@@ -1,9 +1,8 @@
 import prisma from '../../../../prisma-provider/src'
-import { PrismaClient } from '../../../../prisma-provider/src/types'
+import { BaseItem, Item, Player, PokemonBaseData, PrismaClient } from '../../../../prisma-provider/src/types'
 import { AppError, RouteNotFoundError, RouteNotProvidedError } from '../../infra/errors/AppErrors'
-import { IResponse } from '../../server/models/IResponse'
-import { PokemonBaseData } from '../../types'
-import { BaseItem, Item, Player } from '../../types/prisma'
+import { RouteResponse } from '../../server/models/RouteResponse'
+
 import { logger } from '../logger'
 import { admRoutes } from './admRoutes'
 import { battleRoutes } from './battleRoutes'
@@ -11,7 +10,9 @@ import { pokemonBreed1 } from './breedRoutes/pokemonBreed1'
 import { pokemonHatch } from './breedRoutes/pokemonHatch'
 import { casinoRoutes } from './casinoRoutes'
 import { catchRoutes } from './catchRoutes'
+import { duelNpcRoutes } from './duelNpcRoutes'
 import { duelRoutes } from './duelRoutes'
+import { eventRoutes } from './eventRoutes'
 import { helpRoutes } from './helpRoutes'
 import { invasionRoutes } from './invasionRoutes'
 import { inventoryRoutes } from './inventoryRoutes'
@@ -23,6 +24,7 @@ import { pokemonSetRole } from './pokemonRoutes/setRole/pokemonSetRole'
 import { raidRoutes } from './raidRoutes'
 import { rankRoutes } from './rankingRoutes'
 import { routeRoutes } from './routeRoutes'
+import { bazarRoutes } from './routeRoutes/bazar/bazar'
 import { daycareRoutes } from './routeRoutes/daycare'
 import { pokeranchRoute } from './routeRoutes/pokeranch/pokeranchRoute'
 import { sellRoutes } from './sellRoutes'
@@ -31,6 +33,7 @@ import { shopRoutes } from './shopRoutes'
 import { teamRoutes } from './teamRoutes'
 import { tournamentRoutes } from './tournamentRoutes'
 import { tradeRoutes } from './tradeRoutes'
+import { travelRoutes } from './travelRoutes'
 import { useItemRoutes } from './useItemRoutes'
 import { playerRoutes } from './userRoutes'
 import { register } from './userRoutes/newUser'
@@ -50,8 +53,10 @@ export type TRouteParams = {
     }
   }
   prismaClient: PrismaClient
+  generateImage?: boolean
 }
-export type TRouteType = (data: TRouteParams) => Promise<IResponse>
+
+export type TRouteType = (data: TRouteParams) => Promise<RouteResponse>
 
 const routeMap = new Map<string, TRouteType>([
   // NEW USER ROUTES
@@ -168,6 +173,20 @@ const routeMap = new Map<string, TRouteType>([
   ['USE-ITEN', useItemRoutes],
   ['USE', useItemRoutes],
 
+  // TRAVEL ROUTES
+  ['TRAVEL', travelRoutes],
+  ['VIAJAR', travelRoutes],
+  ['VIAGEM', travelRoutes],
+  ['MAPA', travelRoutes],
+  ['MAP', travelRoutes],
+
+  // EVENT ROUTES
+  ['EVENT', eventRoutes],
+
+  // DUELIST ROUTES
+  ['DUELNPC', duelNpcRoutes],
+  ['DUELIST', duelNpcRoutes],
+
   /// //////////// EXPRESS ROUTES ////////////////////
 
   ['P', pokemonRoutes],
@@ -235,9 +254,17 @@ const routeMap = new Map<string, TRouteType>([
       return pokemonSetRole({ ...data, routeParams })
     },
   ],
+  [
+    'BAZAR',
+    (data: TRouteParams) => {
+      const routeParams = [...data.routeParams]
+      routeParams.unshift('shift')
+      return bazarRoutes({ ...data, routeParams })
+    },
+  ],
 ])
 
-export const router = async (data: TRouteParams): Promise<IResponse> => {
+export const router = async (data: TRouteParams): Promise<RouteResponse> => {
   try {
     const [, routeName] = data.routeParams
     if (!routeName) throw new RouteNotProvidedError()

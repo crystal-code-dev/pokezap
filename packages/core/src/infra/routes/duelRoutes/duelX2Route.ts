@@ -1,6 +1,6 @@
 import { iGenDuelX2 } from '../../../../../image-generator/src/iGenDuelX2'
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   CantDuelItselfError,
   NoEnergyError,
@@ -10,7 +10,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const duelX2Route = async (data: TRouteParams): Promise<IResponse> => {
+export const duelX2Route = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , challengedPlayerIdString] = data.routeParams
   const challengedPlayerId = Number(challengedPlayerIdString)
   if (typeof challengedPlayerId !== 'number') throw new TypeMissmatchError(challengedPlayerIdString, 'number')

@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   ItemNotEligibleForBazarError,
   MissingParameterError,
@@ -9,7 +9,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const cassinoTrade = async (data: TRouteParams): Promise<IResponse> => {
+export const cassinoTrade = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , itemNameUppercase, amountString] = data.routeParams
 
   if (!itemNameUppercase) throw new MissingParameterError('nome do item à ser trocado no Bazar.')

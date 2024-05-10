@@ -8,9 +8,9 @@ import {
 } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { getPokemonRequestData } from '../../../../server/helpers/getPokemonRequestData'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const pokemonInfo1 = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonInfo1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 
@@ -73,6 +73,9 @@ export const pokemonInfo1 = async (data: TRouteParams): Promise<IResponse> => {
       id: {
         in: [pokemon?.parentId1 ?? 0, pokemon?.parentId2 ?? 0],
       },
+    },
+    include: {
+      baseData: true,
     },
   })
 

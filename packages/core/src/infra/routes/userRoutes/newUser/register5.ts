@@ -1,10 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { duelNXN } from '../../../../server/modules/duel/duelNXN'
 import { PlayerNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const register5 = async (data: TRouteParams): Promise<IResponse> => {
+export const register5 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pokemonIdString] = data.routeParams
   const wildPokemonId = Number(pokemonIdString)
 
@@ -37,6 +37,11 @@ export const register5 = async (data: TRouteParams): Promise<IResponse> => {
       baseData: {
         include: {
           skills: true,
+        },
+      },
+      heldItem: {
+        include: {
+          baseItem: true,
         },
       },
     },

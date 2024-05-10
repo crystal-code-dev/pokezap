@@ -1,6 +1,6 @@
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   InvasionAlreadyFinishedError,
   InvasionNotFoundError,
@@ -15,7 +15,7 @@ import { TRouteParams } from '../router'
 import { battleInvasionX2 } from './invasionDefend/battleInvasionX2'
 import { bossInvasion } from './invasionDefend/bossInvasion'
 
-export const invasionDefendLobbyRoute = async (data: TRouteParams): Promise<IResponse> => {
+export const invasionDefendLobbyRoute = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , invasionSessionIdString] = data.routeParams
   if (!invasionSessionIdString) throw new MissingParametersBattleRouteError()
 
@@ -28,7 +28,7 @@ export const invasionDefendLobbyRoute = async (data: TRouteParams): Promise<IRes
     },
     include: {
       teamPoke1: true,
-      gameRooms: true,
+      gameRoom: true,
     },
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)

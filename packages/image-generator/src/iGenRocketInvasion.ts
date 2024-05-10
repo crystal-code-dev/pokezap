@@ -1,4 +1,4 @@
-import { BasePokemon, Pokemon } from '../../../common/types/prisma'
+import { BasePokemon, Pokemon } from '../../prisma-provider/src/types'
 import { createCanvas2d, drawBackground } from './helpers/canvasHelper'
 import { removeFileFromDisk, saveFileOnDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'

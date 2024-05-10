@@ -2,7 +2,7 @@ import { Image } from 'canvas'
 import fs from 'fs'
 import GIFEncoder from 'gifencoder'
 import path from 'path'
-import { DuelNxNRoundData } from '../../../common/types/index'
+import { DuelNxNRoundData } from '../../prisma-provider/src/types'
 
 import { createCanvas2d, drawBackground } from './helpers/canvasHelper'
 import { removeFileFromDisk } from './helpers/fileHelper'

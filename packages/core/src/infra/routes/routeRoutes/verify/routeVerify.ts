@@ -1,11 +1,11 @@
 import { iGenPokeBossInvasion } from '../../../../../../image-generator/src/iGenPokeBossInvasion'
 import { iGenRocketInvasion } from '../../../../../../image-generator/src/iGenRocketInvasion'
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { InvasionNotFoundError, RouteNotFoundError, UnexpectedError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeVerify = async (data: TRouteParams): Promise<IResponse> => {
+export const routeVerify = async (data: TRouteParams): Promise<RouteResponse> => {
   const route = await prisma.gameRoom.findFirst({
     where: {
       phone: data.groupCode,

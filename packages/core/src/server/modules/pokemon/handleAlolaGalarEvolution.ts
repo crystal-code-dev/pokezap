@@ -1,4 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
+import { BasePokemon, PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import {
   InsufficientLevelToEvolveError,
   PlayerDoesNotHaveItemError,
@@ -8,8 +9,6 @@ import {
   UnknownEvolutionMethodError,
   WrongRegionToEvolveError,
 } from '../../../infra/errors/AppErrors'
-import { PokemonBaseData } from '../../../types'
-import { BasePokemon } from '../../../types/prisma'
 
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'

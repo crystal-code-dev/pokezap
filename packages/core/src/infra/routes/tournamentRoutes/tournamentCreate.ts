@@ -1,14 +1,14 @@
-import { Client } from 'whatsapp-web.js'
-import { IResponse } from '../../../server/models/IResponse'
+import prisma from '../../../../../prisma-provider/src'
+import { sendMessage } from '../../../server/helpers/sendMessage'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { RouteNotFoundError, SendEmptyMessageError, UnexpectedError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 import { tournamentStart } from './tournamentStart'
 
-export const tournamentCreate = async (data: TRouteParams): Promise<IResponse> => {
+export const tournamentCreate = async (data: TRouteParams): Promise<RouteResponse> => {
   if (data.playerPhone !== '5516988675837@c.us') throw new SendEmptyMessageError()
   const [, , , gameRoomIdString] = data.routeParams
 
-  const zapClient = container.resolve<Client>('ZapClientInstance1')
   const gameRoomId = Number(gameRoomIdString)
 
   if (isNaN(gameRoomId)) throw new UnexpectedError('gameRoomIdString must be a number')
@@ -30,17 +30,17 @@ export const tournamentCreate = async (data: TRouteParams): Promise<IResponse> =
     },
   })
 
-  zapClient.sendMessage(
-    gameRoom.phone,
-    `
+  sendMessage({
+    chatId: gameRoom.phone,
+    content: `
   *INSCRIÇÕES PARA O TORNEIO ABERTAS!*
 
   O torneio se iniciará em breve, para entrar utilize:
   pz. torneio entrar
 
   [dsb]
-  `
-  )
+  `,
+  })
 
   setTimeout(() => {
     try {

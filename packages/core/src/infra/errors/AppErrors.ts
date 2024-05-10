@@ -70,6 +70,22 @@ export class RouteNotFoundError extends AppError {
   }
 }
 
+export class AlreadyInRaidGroupError extends AppError {
+  constructor() {
+    const message = `Você já esá em um grupo de raid.`
+
+    super(message)
+  }
+}
+
+export class CantStartRaidOutsideRaidGroupError extends AppError {
+  constructor() {
+    const message = `[d] Você deve primeiro criar um grupo de raid. \n\nComando: pz. raid group \n👍 - Criar`
+    const actions = ['pz. raid group']
+    super(message, 200, undefined, actions)
+  }
+}
+
 export class RouteForbiddenForDuelRaidError extends AppError {
   constructor() {
     const message = `Na rota atual, não é permitido duelos.`
@@ -323,9 +339,66 @@ export class MissingParameterError extends AppError {
   }
 }
 
+export class NpcDuelInfoMissingDifficultyError extends AppError {
+  constructor() {
+    const message = `Informe a dificuldade de duelista que procura:
+👍 - EASY
+❤ - MEDIUM
+😂 - HARD
+😮 - EXPERT
+    - INSANE`
+    const statusCode = 300
+
+    const actions = [
+      'pz. duelist info easy',
+      'pz. duelist info medium',
+      'pz. duelist info hard',
+      'pz. duelist info expert',
+    ]
+
+    super(message, statusCode, undefined, actions)
+  }
+}
+
 export class InvalidNicknameError extends AppError {
   constructor(nickname: string) {
     const message = `Apelido "${nickname}" não é válido.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NpcAlreadyInBattleError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `*${npcIdentifier}* já está batalhando!`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NoNpcFoundError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `Parece que *${npcIdentifier}* não está aqui.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class MaxDailyDuelistsError extends AppError {
+  constructor(playerName: string) {
+    const message = `Parece que *${playerName}* já enfrentou 4 duelistas hoje. Tente novamente amanhã.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class NpcDoesNotExistsError extends AppError {
+  constructor(npcIdentifier: string) {
+    const message = `Parece que não há um duelista chamado *${npcIdentifier}*.`
     const statusCode = 300
 
     super(message, statusCode)
@@ -385,6 +458,20 @@ export class MissingParametersDuelRouteError extends AppError {
     const statusCode = 300
 
     super(message, statusCode)
+  }
+}
+
+export class MissingParametersNpcDuelRouteError extends AppError {
+  constructor() {
+    const message = `⚔ Duelistas ⚔ 
+
+👍 - Ver duelistas disponíveis
+
+[d] Para encontrar um duelista: pz. duelist find nome-do-duelista`
+    const statusCode = 300
+    const actions = ['pz. npcduel find']
+
+    super(message, statusCode, undefined, actions)
   }
 }
 
@@ -451,8 +538,9 @@ export class CatchFailedPokemonRanAwayError extends AppError {
 }
 
 export class PlayerDoesNotResideOnTheRoute extends AppError {
-  constructor(gameRoomId: number, playerName: string) {
-    const message = `*${playerName}* não reside na rota ${gameRoomId}, portanto não pode enfrentar os pokemons da rota.
+  constructor(gameroomName: string, playerName: string) {
+    const message = `*${playerName}* não está em ${gameroomName}, portanto não pode enfrentar os pokemons da rota.
+    
     👍 - Entrar na rota`
     const statusCode = 300
     const actions = ['pz. rota entrar']
@@ -486,6 +574,14 @@ export class PlayerNotFoundError extends AppError {
   }
 }
 
+export class CantTradeWithYourselfError extends AppError {
+  constructor() {
+    const message = `Não é permitido trocar um pokemon consigo mesmo.`
+
+    super(message)
+  }
+}
+
 export class PlayerAlreadyExists extends AppError {
   constructor(name: string) {
     const message = `${name}, parece que você já tem um personagem cadastrado.`
@@ -497,6 +593,22 @@ export class PlayerAlreadyExists extends AppError {
 export class SkillNotFoundError extends AppError {
   constructor(skillName: string) {
     const message = `ERRO: Não existe uma skill com o nome: "${skillName}"`
+
+    super(message)
+  }
+}
+
+export class TravelDestinationNotFoundError extends AppError {
+  constructor(destination: string) {
+    const message = `🤔 Não existe nenhum local acessível chamado "*${destination}*"`
+
+    super(message)
+  }
+}
+
+export class TravelDestinationDisabledError extends AppError {
+  constructor(destination: string) {
+    const message = `🤔 Parece que *${destination}* está inacessível no momento. O que será que pode ter acontecido?`
 
     super(message)
   }
@@ -649,6 +761,16 @@ export class PokemonExceededRanchTimeLimit extends AppError {
     const statusCode = 300
 
     super(message, statusCode)
+  }
+}
+
+export class CantSellFavoritePokemonError extends AppError {
+  constructor(id: number | string, pokemonName: string) {
+    const message = `O pokemon #${id} ${pokemonName} está marcado como favorito e não pode ser vendido.\n\n👍 - Desfavoritar`
+    const statusCode = 300
+    const actions = [`pz. p unfavorite ${id}`]
+
+    super(message, statusCode, undefined, actions)
   }
 }
 
@@ -829,6 +951,15 @@ export class CantBreedShiniesError extends AppError {
   }
 }
 
+export class CantBreedPuresError extends AppError {
+  constructor(pokemonId: number) {
+    const message = `Sinto muito, não é possivel cruzar pokemon puro. (#${pokemonId})`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
 export class PlayerDoesNotHaveItemError extends AppError {
   constructor(playerName: string, itemName: string) {
     const message = `${playerName} não possui nenhuma ${itemName}.`
@@ -874,9 +1005,27 @@ export class SessionIdNotFoundError extends AppError {
   }
 }
 
+export class ItemNotAvailableInBazarError extends AppError {
+  constructor(itemString: string) {
+    const message = `Não há ${itemString} disponível no bazar.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
 export class PlayerDoesNotHaveThePokemonInTheTeamError extends AppError {
   constructor(playerName: string) {
     const message = `${playerName} não possui um pokemon no seu time.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class PlayerDoesNotHaveSixPokemonTeamError extends AppError {
+  constructor(playerName: string) {
+    const message = `${playerName} não possui 6 pokemon no seu time.`
     const statusCode = 300
 
     super(message, statusCode)
@@ -895,6 +1044,17 @@ export class RequestedShopItemDoesNotExists extends AppError {
 export class InsufficientFundsError extends AppError {
   constructor(playerName: string, playerFunds: number, requiredFunds: number) {
     const message = `${playerName} não possui POKECOINS suficientes. São necessários ${requiredFunds}, ainda falta ${
+      requiredFunds - playerFunds
+    } `
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class InsufficientBazarTicketsError extends AppError {
+  constructor(playerName: string, playerFunds: number, requiredFunds: number) {
+    const message = `${playerName} não possui bazar-ticket suficientes. São necessários ${requiredFunds}, ainda falta ${
       requiredFunds - playerFunds
     } `
     const statusCode = 300
@@ -1044,6 +1204,15 @@ export class NoEnergyError extends AppError {
 export class PokemonHasNotBornYetError extends AppError {
   constructor(id: number) {
     const message = `Pokemon #${id} ainda não nasceu.`
+    const statusCode = 300
+
+    super(message, statusCode)
+  }
+}
+
+export class FilterNotAvailableError extends AppError {
+  constructor(filterName: string) {
+    const message = `Não há um filtro com o nome "${filterName}". Tente: egg ou purity.`
     const statusCode = 300
 
     super(message, statusCode)

@@ -1,6 +1,6 @@
 import { iGenRouteInfo } from '../../../../../../image-generator/src/iGenRouteInfo'
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   InsufficientFundsError,
   PlayerNotFoundError,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeUpgrade = async (data: TRouteParams): Promise<IResponse> => {
+export const routeUpgrade = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , upgradeNameUppercase, confirm] = data.routeParams
 
   if (!upgradeNameUppercase) {

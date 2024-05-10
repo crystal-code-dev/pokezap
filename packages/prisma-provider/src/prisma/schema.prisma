@@ -11,58 +11,63 @@ datasource db {
 }
 
 model Player {
-  id                   Int               @id @default(autoincrement())
-  phone                String            @unique
-  name                 String
-  nickname             String?
-  clan                 String?
-  spriteUrl            String            @default("")
-  elo                  Int               @default(1200)
-  cash                 Int               @default(500)
-  pokeShards           Int               @default(0)
-  energy               Int               @default(20)
-  teamPokeId1          Int?              @unique
-  teamPokeId2          Int?              @unique
-  teamPokeId3          Int?              @unique
-  teamPokeId4          Int?              @unique
-  teamPokeId5          Int?              @unique
-  teamPokeId6          Int?              @unique
-  raidTeamIds          Int[]
-  statusTrashed        Boolean           @default(false)
-  statusLocked         Boolean           @default(false)
-  isInRaid             Boolean           @default(false)
-  dailyQuestDone       Boolean           @default(false)
-  questId              Int?              @unique
-  createdAt            DateTime          @default(now())
-  updatedAt            DateTime          @default(now())
-  lastGymTry           DateTime?
-  lastEliteFourTry     DateTime?
-  caughtDbIds          Int[]
-  caughtDexIds         Int[]
-  ownedPokemons        Pokemon[]
-  ownedItems           Item[]
-  ownedBadges          Badge[]
-  gameRooms            GameRoom[]
-  pokeTeams            PokeTeam[]
-  teamPoke1            Pokemon?          @relation(name: "team-poke-1", fields: [teamPokeId1], references: [id])
-  teamPoke2            Pokemon?          @relation(name: "team-poke-2", fields: [teamPokeId2], references: [id])
-  teamPoke3            Pokemon?          @relation(name: "team-poke-3", fields: [teamPokeId3], references: [id])
-  teamPoke4            Pokemon?          @relation(name: "team-poke-4", fields: [teamPokeId4], references: [id])
-  teamPoke5            Pokemon?          @relation(name: "team-poke-5", fields: [teamPokeId5], references: [id])
-  teamPoke6            Pokemon?          @relation(name: "team-poke-6", fields: [teamPokeId6], references: [id])
-  invitedSessions      Session[]         @relation(name: "session-invited")
-  createdSessions      Session[]         @relation(name: "session-creator")
-  defeatedWildPokemons Pokemon[]         @relation(name: "defeatedBy")
-  ranAwayWildPokemons  Pokemon[]         @relation(name: "ranAwayFrom")
-  battledWildPokemons  Pokemon[]         @relation(name: "battledBy")
-  defeatedInvasions    InvasionSession[] @relation(name: "invasion-defeated-players")
-  winnedInvasions      InvasionSession[] @relation(name: "invasion-winner-players")
-  lobbdyInvasions      InvasionSession[] @relation(name: "invasion-lobby-players")
-  quest                Quest?            @relation(fields: [questId], references: [id])
-  activeTournament     Tournament?       @relation(fields: [activeTournamentId], references: [id], name: "active")
-  activeTournamentId   Int?
-  defeatedTournament   Tournament?       @relation(fields: [defeatedTournamentId], references: [id], name: "defeated")
-  defeatedTournamentId Int?
+  id                    Int               @id @default(autoincrement())
+  phone                 String            @unique
+  name                  String
+  nickname              String?
+  clan                  String?
+  spriteUrl             String            @default("")
+  elo                   Int               @default(1200)
+  cash                  Int               @default(500)
+  pokeShards            Int               @default(0)
+  energy                Int               @default(20)
+  teamPokeId1           Int?              @unique
+  teamPokeId2           Int?              @unique
+  teamPokeId3           Int?              @unique
+  teamPokeId4           Int?              @unique
+  teamPokeId5           Int?              @unique
+  teamPokeId6           Int?              @unique
+  raidTeamIds           Int[]
+  dailyDefeatedDuelists Int               @default(0)
+  statusTrashed         Boolean           @default(false)
+  statusLocked          Boolean           @default(false)
+  isInRaid              Boolean           @default(false)
+  dailyQuestDone        Boolean           @default(false)
+  questId               Int?              @unique
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @default(now())
+  lastGymTry            DateTime?
+  lastEliteFourTry      DateTime?
+  caughtDbIds           Int[]
+  caughtDexIds          Int[]
+  ownedPokemons         Pokemon[]
+  ownedItems            Item[]
+  ownedBadges           Badge[]
+  gameRoomId            Int?
+  gameRoom              GameRoom?         @relation(fields: [gameRoomId], references: [id])
+  travelBlockedUntil    DateTime          @default(now())
+  defeatedUntil         DateTime          @default(now())
+  homeInviteCode        String            @default("K0BZCDfndyK1yjw9D7C9aV")
+  pokeTeams             PokeTeam[]
+  teamPoke1             Pokemon?          @relation(name: "team-poke-1", fields: [teamPokeId1], references: [id])
+  teamPoke2             Pokemon?          @relation(name: "team-poke-2", fields: [teamPokeId2], references: [id])
+  teamPoke3             Pokemon?          @relation(name: "team-poke-3", fields: [teamPokeId3], references: [id])
+  teamPoke4             Pokemon?          @relation(name: "team-poke-4", fields: [teamPokeId4], references: [id])
+  teamPoke5             Pokemon?          @relation(name: "team-poke-5", fields: [teamPokeId5], references: [id])
+  teamPoke6             Pokemon?          @relation(name: "team-poke-6", fields: [teamPokeId6], references: [id])
+  invitedSessions       Session[]         @relation(name: "session-invited")
+  createdSessions       Session[]         @relation(name: "session-creator")
+  defeatedWildPokemons  Pokemon[]         @relation(name: "defeatedBy")
+  ranAwayWildPokemons   Pokemon[]         @relation(name: "ranAwayFrom")
+  battledWildPokemons   Pokemon[]         @relation(name: "battledBy")
+  defeatedInvasions     InvasionSession[] @relation(name: "invasion-defeated-players")
+  winnedInvasions       InvasionSession[] @relation(name: "invasion-winner-players")
+  lobbdyInvasions       InvasionSession[] @relation(name: "invasion-lobby-players")
+  quest                 Quest?            @relation(fields: [questId], references: [id])
+  activeTournament      Tournament?       @relation(fields: [activeTournamentId], references: [id], name: "active")
+  activeTournamentId    Int?
+  defeatedTournament    Tournament?       @relation(fields: [defeatedTournamentId], references: [id], name: "defeated")
+  defeatedTournamentId  Int?
 }
 
 model Badge {
@@ -184,6 +189,7 @@ model Pokemon {
   spAtk               Int
   spDef               Int
   speed               Int
+  isFavorite          Boolean          @default(false)
   isAdult             Boolean
   isMale              Boolean
   isShiny             Boolean          @default(false)
@@ -323,6 +329,8 @@ model RaidPokemon {
   talent9       Talent      @relation(name: "raid-pokemon-talent-9", fields: [talentId9], references: [id])
   raidRoom      RaidRoom[]
   baseData      BasePokemon @relation(fields: [basePokemonId], references: [id])
+  duelNpc       DuelNpc?    @relation(fields: [duelNpcId], references: [id])
+  duelNpcId     Int?
 }
 
 model Skill {
@@ -482,7 +490,9 @@ model InvasionSession {
 
 model GameRoom {
   id                Int              @id @default(autoincrement())
-  mode              String
+  name              String           @default("room")
+  inGameName        String           @default("room")
+  gameArea          GameAreaName     @default(ROUTE)
   phone             String           @unique
   level             Int
   levelLock         Int?
@@ -694,4 +704,68 @@ model BerryTree {
   createdAt       DateTime         @default(now())
 
   ranchSlot RanchSlot @relation(fields: [ranchSlotId], references: [id])
+}
+
+enum GameAreaName {
+  FISHINGSPOT
+  DIVINGSPOT
+  ROCKTUNNEL
+  POWERPLANT
+  CINNABARCAVE
+  LAVENDERCAVE
+  CELADONFOREST
+  MTMOON
+  VIRIDIANDOJO
+
+  RAIDROOM
+  ROUTE
+  DUELROOM
+  PRIVATE
+}
+
+enum Types {
+  FIRE
+  FAIRY
+  DARK
+  GHOST
+  PSYCHIC
+  FIGHTING
+  ROCK
+  FLYING
+  BUG
+  GRASS
+  WATER
+  GROUND
+  ELECTRIC
+  POISON
+  STEEL
+  NORMAL
+  ICE
+  DRAGON
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+  EXPERT
+  INSANE
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model DuelNpc {
+  id         Int           @id @default(autoincrement())
+  name       String        @unique
+  gender     Gender
+  spriteUrl  String
+  speciality Types
+  difficulty Difficulty
+  location   GameAreaName
+  isInBattle Boolean       @default(false)
+  isDefeated Boolean       @default(false)
+  pokemons   RaidPokemon[]
 }

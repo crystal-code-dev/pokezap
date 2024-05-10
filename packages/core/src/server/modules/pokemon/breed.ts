@@ -1,10 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
+import { BasePokemon, Pokemon, PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { FailedToFindXinYError } from '../../../infra/errors/AppErrors'
 import { evoDataIdMap } from '../../../server/constants/evoDataIdMap'
 import { getRandomBetween2 } from '../../../server/helpers/getRandomBetween2'
 import { getRandomBetween3 } from '../../../server/helpers/getRandomBetween3'
-import { PokemonBaseData } from '../../../types'
-import { BasePokemon, Pokemon } from '../../../types/prisma'
 
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'

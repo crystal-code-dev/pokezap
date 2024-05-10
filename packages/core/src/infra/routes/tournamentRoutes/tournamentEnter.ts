@@ -1,8 +1,9 @@
-import { IResponse } from '../../../server/models/IResponse'
+import prisma from '../../../../../prisma-provider/src'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { PlayerNotFoundError, RouteNotFoundError, UnexpectedError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const tournamentEnter = async (data: TRouteParams): Promise<IResponse> => {
+export const tournamentEnter = async (data: TRouteParams): Promise<RouteResponse> => {
   const gameRoom = await prisma.gameRoom.findFirst({
     where: {
       phone: data.groupCode,

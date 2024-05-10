@@ -1,5 +1,6 @@
 import { iGenWildPokemon } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
 import { sendMessage } from '../../helpers/sendMessage'
 import { generateWildPokemon } from '../../modules/pokemon/generate/generateWildPokemon'
@@ -20,8 +21,7 @@ export const wildPokeSpawn = async (data?: TParams) => {
   })
 
   for (const gameRoom of gameRooms) {
-    if (gameRoom.phone !== '120363269482791516@g.us') continue
-    // if (gameRoom.mode !== 'route') continue
+    if (gameRoom.gameArea !== GameAreaName.ROUTE) continue
     if (gameRoom.invasorId && Math.random() < 0.5) {
       sendMessage({
         chatId: gameRoom.phone,

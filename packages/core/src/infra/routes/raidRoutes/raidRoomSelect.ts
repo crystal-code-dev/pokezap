@@ -1,7 +1,7 @@
 import { iGenRaidNextRoom } from '../../../../../image-generator/src/iGenRaidNextRoom'
 import prisma from '../../../../../prisma-provider/src'
 import { sendMessage } from '../../../server/helpers/sendMessage'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   MissingParameterError,
   PlayerDoesNotBelongToRaidTeamError,
@@ -19,7 +19,7 @@ import {
 import { TRouteParams } from '../router'
 import { raidProgress } from './raidProgress'
 
-export const raidRoomSelect = async (data: TRouteParams): Promise<IResponse> => {
+export const raidRoomSelect = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , selectType, raidIdString, roomIdString, confirm] = data.routeParams
   if (!data.fromReact) throw new UnexpectedError('Rota não permitida.')
   if (!raidIdString) throw new MissingParameterError('Id da raid')
@@ -188,9 +188,9 @@ export const raidRoomSelect = async (data: TRouteParams): Promise<IResponse> => 
   return {
     message: `${raid.name.toUpperCase()} - ${raid.difficulty}\nSALA: ${
       currentRoomIndex + 1
-    }/4 \n\n👍 - Pronto para próxima sala`,
+    }/4 \n\n👍 - Pronto para próxima sala \n\n❤ - Pronto para próxima sala`,
     status: 200,
     imageUrl,
-    actions: [`pz. raid select ${raid.id} ${roomId} confirm`],
+    actions: [`pz. raid select ${raid.id} ${roomId} confirm`, `pz. raid select ${raid.id} ${roomId} confirm`],
   }
 }

@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { IPokemon } from '../../../../server/models/IPokemon'
-import { IResponse } from '../../../../server/models/IResponse'
 import { ISession } from '../../../../server/models/ISession'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
 export type TParams = {
   creatorPokemon: IPokemon
@@ -9,7 +9,7 @@ export type TParams = {
   session: ISession
 }
 
-export const tradePokeEvolutionTrigger = async (data: TParams): Promise<IResponse> => {
+export const tradePokeEvolutionTrigger = async (data: TParams): Promise<RouteResponse> => {
   if (!data.creatorPokemon.ownerId || !data.invitedPokemon.ownerId)
     return {
       message: `ERRO" `,

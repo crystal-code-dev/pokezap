@@ -1,10 +1,9 @@
 import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
-import { BasePokemon, Pokemon, Talent } from '../../../common/types/prisma'
+import { BasePokemon, Pokemon, Talent } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   pokemon1: Pokemon & {
@@ -85,6 +84,18 @@ export const iGenPokemonBreed = async (data: TParams) => {
       // Draw the typeLabel2 on the canvas
       ctx.globalAlpha = 1
       ctx.drawImage(typeLabel2, typeLabel2X, typeLabel2Y, typeLabel2Width, typeLabel2Height)
+    }
+
+    if (data.pokemon1.isGiant) {
+      const giantLabel = await loadOrSaveImageFromCache('./src/assets/sprites/UI/types/giant.png')
+      // Calculate the position of the sprite in the middle of the canvas
+      const giantLabelWidth = 80 // replace with the actual width of the giantLabel
+      const giantLabelHeight = 25 // replace with the actual height of the giantLabel
+      const giantLabelX = 0
+      const giantLabelY = 175
+      // Draw the giantLabel on the canvas
+      ctx.globalAlpha = 1
+      ctx.drawImage(giantLabel, giantLabelX, giantLabelY, giantLabelWidth, giantLabelHeight)
     }
 
     // write pokemon name
@@ -182,6 +193,18 @@ export const iGenPokemonBreed = async (data: TParams) => {
       ctx.drawImage(typeLabel2, typeLabel2X, typeLabel2Y, typeLabel2Width, typeLabel2Height)
     }
 
+    if (data.pokemon2.isGiant) {
+      const giantLabel = await loadOrSaveImageFromCache('./src/assets/sprites/UI/types/giant.png')
+      // Calculate the position of the sprite in the middle of the canvas
+      const giantLabelWidth = 80 // replace with the actual width of the giantLabel
+      const giantLabelHeight = 25 // replace with the actual height of the giantLabel
+      const giantLabelX = 420
+      const giantLabelY = 175
+      // Draw the giantLabel on the canvas
+      ctx.globalAlpha = 1
+      ctx.drawImage(giantLabel, giantLabelX, giantLabelY, giantLabelWidth, giantLabelHeight)
+    }
+
     // write pokemon name
 
     const name = data.pokemon2.baseData.name
@@ -247,7 +270,6 @@ export const iGenPokemonBreed = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

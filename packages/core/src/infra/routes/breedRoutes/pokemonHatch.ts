@@ -1,6 +1,6 @@
-import { PokemonBaseData } from '../../../../../../common/types/index'
 import { iGenPokemonAnalysis } from '../../../../../image-generator/src'
 import prisma from '../../../../../prisma-provider/src'
+import { BaseRoomUpgrades, PokemonBaseData, RoomUpgrades } from '../../../../../prisma-provider/src/types'
 import { metaValues } from '../../../constants/metaValues'
 import {
   EggIsNotReadyToBeHatch,
@@ -9,11 +9,10 @@ import {
   TypeMissmatchError,
 } from '../../../infra/errors/AppErrors'
 import { getHoursDifference } from '../../../server/helpers/getHoursDifference'
-import { IResponse } from '../../../server/models/IResponse'
-import { BaseRoomUpgrades, RoomUpgrades } from '../../../types/prisma'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
-export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
+export const pokemonHatch = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , pokemonIdString] = data.routeParams
 
   const pokemonId = pokemonIdString ? Number(pokemonIdString.slice(pokemonIdString.indexOf('#') + 1)) : 0
@@ -29,7 +28,7 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
           baseData: true,
         },
       },
-      gameRooms: {
+      gameRoom: {
         include: {
           upgrades: {
             include: {
@@ -42,8 +41,8 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
   })
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
 
-  const isLabEnhanced = player.gameRooms.some(groom =>
-    groom.upgrades.some((upg: RoomUpgrades & { base: BaseRoomUpgrades }) => upg.base.name === 'lab')
+  const isLabEnhanced = player.gameRoom?.upgrades.some(
+    (upg: RoomUpgrades & { base: BaseRoomUpgrades }) => upg.base.name === 'lab'
   )
 
   console.log({ isLabEnhanced })
@@ -67,7 +66,7 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
   }
   if (!pokemon) throw new PlayersPokemonNotFoundError(pokemonId, player.name)
 
-  if (getHoursDifference(pokemon.createdAt, new Date()) < metaValues.eggHatchingTimeInHours - (isLabEnhanced ? 12 : 0))
+  if (getHoursDifference(pokemon.createdAt, new Date()) < metaValues.eggHatchingTimeInHours - (isLabEnhanced ? 18 : 12))
     throw new EggIsNotReadyToBeHatch(
       pokemon.id,
       metaValues.eggHatchingTimeInHours - getHoursDifference(pokemon.createdAt, new Date())
@@ -81,7 +80,18 @@ export const pokemonHatch = async (data: TRouteParams): Promise<IResponse> => {
       isAdult: true,
       spriteUrl: pokemon.baseData.defaultSpriteUrl,
     },
-    include: { baseData: true },
+    include: {
+      baseData: {
+        include: {
+          skills: true,
+        },
+      },
+      heldItem: {
+        include: {
+          baseItem: true,
+        },
+      },
+    },
   })
 
   const parents = await prisma.pokemon.findMany({

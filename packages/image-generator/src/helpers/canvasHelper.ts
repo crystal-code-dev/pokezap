@@ -1,4 +1,4 @@
-import { Canvas, Image, PNGStream, createCanvas } from 'canvas'
+import { Canvas, CanvasTextAlign, Image, PNGStream, createCanvas } from 'canvas'
 import GIFEncoder from 'gifencoder'
 import { loadOrSaveImageFromCache } from './loadOrSaveImageFromCache'
 

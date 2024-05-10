@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "eslint --fix"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +19,13 @@
     "@types/gifencoder": "~2.0.3",
     "fs": "~0.0.1-security",
     "path": "~0.12.7",
-    "@types/node": "~20.12.7"
+    "@types/node": "~20.12.7",
+    "eslint": "8.48.0"
   },
   "devDependencies": {
     "@types/node": "~20.12.7"
-  }
+  },
+  "files": [
+    "/dist"
+  ]
 }

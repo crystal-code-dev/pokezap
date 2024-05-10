@@ -1,6 +1,6 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { pokemonTypes } from '../../../../server/constants/pokemonTypes'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   PlayerDoesNotHaveItemError,
   PlayerNotFoundError,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeIncense = async (data: TRouteParams): Promise<IResponse> => {
+export const routeIncense = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , givenIncenseName, element1, element2, element3, element4, element5, element6] = data.routeParams
 
   const incenseName = (givenIncenseName || 'full-incense').toLowerCase()

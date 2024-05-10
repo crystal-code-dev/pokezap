@@ -2,9 +2,9 @@ import { iGenInventoryItems } from '../../../../../../image-generator/src/iGenIn
 import prisma from '../../../../../../prisma-provider/src'
 import { PlayerNotFoundError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const inventoryItems1 = async (data: TRouteParams): Promise<IResponse> => {
+export const inventoryItems1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , ...options] = data.routeParams
 
   const lastOption = options[options.length - 1]
@@ -79,8 +79,10 @@ export const inventoryItems1 = async (data: TRouteParams): Promise<IResponse> =>
       ', '
     )} \n\n👍 - Próxima página.`,
     status: 200,
-    data: null,
     imageUrl: imageUrl,
+    data: {
+      items: player.ownedItems,
+    },
     actions: [`pz. inventory item ${numberPage() + 1}`],
   }
 }

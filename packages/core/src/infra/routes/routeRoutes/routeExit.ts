@@ -1,8 +1,9 @@
+import prisma from '../../../../../prisma-provider/src'
 import { PlayerNotFoundError, RouteNotFoundError } from '../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../infra/routes/router'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 
-export const routeExit = async (data: TRouteParams): Promise<IResponse> => {
+export const routeExit = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,
@@ -32,7 +33,7 @@ export const routeExit = async (data: TRouteParams): Promise<IResponse> => {
   })
 
   return {
-    message: `*${player.name}* deixou de ser residente da *ROTA ${updatedRoute.id}*.`,
+    message: `*${player.name}* saiu de *${updatedRoute.inGameName}*.`,
     status: 200,
     data: null,
   }

@@ -1,8 +1,9 @@
-import { IResponse } from '../../../server/models/IResponse'
+import prisma from '../../../../../prisma-provider/src'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { PlayerNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const marketOffers = async (data: TRouteParams): Promise<IResponse> => {
+export const marketOffers = async (data: TRouteParams): Promise<RouteResponse> => {
   /* const [, , , pokemonIdString] = data.routeParams
   if (!pokemonIdString) throw new MissingParametersPokemonInformationError()
 

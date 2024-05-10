@@ -1,5 +1,5 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import {
   InsufficientItemAmountError,
   ItemNotFoundError,
@@ -9,7 +9,7 @@ import {
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const sellItem = async (data: TRouteParams): Promise<IResponse> => {
+export const sellItem = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , itemNameUppercase, amountString, confirm] = data.routeParams
 
   if (!itemNameUppercase) throw new MissingParameterError('Nome do item')

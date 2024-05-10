@@ -45,7 +45,7 @@ export const iGenDuelX6Rounds = async (data: TDuelRoundData): Promise<string> =>
           ...poke.skillMap.tankerSkills,
           ...Array.from(poke.skillMap.damageSkills.keys()),
         ]
-        console.log(skillMap.map(s => s.name))
+
         for (const skill of skillMap) {
           if (!skillFlagImagesMap.get(skill.typeName)) {
             skillFlagImagesMap.set(
@@ -74,7 +74,7 @@ export const iGenDuelX6Rounds = async (data: TDuelRoundData): Promise<string> =>
       encoder.start()
       encoder.setRepeat(0) // 0 for repeat, -1 for no-repeat
       encoder.setDelay(400) // Delay between frames in milliseconds
-      encoder.setQuality(60) // Image quality (lower is better)
+      encoder.setQuality(100) // Image quality (lower is better)
 
       const framesPerRound = 2
       let round = 1
@@ -89,21 +89,6 @@ export const iGenDuelX6Rounds = async (data: TDuelRoundData): Promise<string> =>
         if (!roundInfo) continue
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.drawImage(duelStillImage, 0, 0, canvasWidth, canvasHeight)
-
-        console.log({
-          leftTeam: roundInfo.leftTeamData.map(p => {
-            return {
-              poke: p.name,
-              hp: p.hp,
-            }
-          }),
-          rightTeam: roundInfo.rightTeamData.map(p => {
-            return {
-              poke: p.name,
-              hp: p.hp,
-            }
-          }),
-        })
 
         const rPoke1Sprite = rightTeamSprites.get(roundInfo.rightTeamData[0]?.id)
         const rPoke2Sprite = rightTeamSprites.get(roundInfo.rightTeamData[1]?.id)
@@ -259,6 +244,23 @@ export const iGenDuelX6Rounds = async (data: TDuelRoundData): Promise<string> =>
           ctx.textAlign = 'center'
           ctx.fillText(`VENCEDOR!`, data.winnerSide === 'right' ? 365 : 105, 180)
           ctx.strokeText(`VENCEDOR!`, data.winnerSide === 'right' ? 365 : 105, 180)
+        }
+
+        if (data.staticImage) {
+          const filepath: string = await new Promise(resolve => {
+            // Save the canvas to disk
+            const filename = `images/image-${Math.random()}.png`
+            const filepath = path.join(__dirname, filename)
+            const out = fs.createWriteStream(filepath)
+            const stream = canvas.createPNGStream()
+            stream.pipe(out)
+            out.on('finish', () => {
+              resolve(filepath)
+            })
+          })
+
+          removeFileFromDisk(filepath)
+          return filepath
         }
 
         encoder.addFrame(ctx as any)

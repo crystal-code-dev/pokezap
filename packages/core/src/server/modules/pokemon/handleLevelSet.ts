@@ -1,8 +1,7 @@
 import prisma from '../../../../../prisma-provider/src'
+import { BasePokemon, Pokemon, PokemonBaseData } from '../../../../../prisma-provider/src/types'
 import { PokemonNotFoundError, UnexpectedError } from '../../../infra/errors/AppErrors'
 import { logger } from '../../../infra/logger'
-import { PokemonBaseData } from '../../../types'
-import { BasePokemon, Pokemon } from '../../../types/prisma'
 
 import { generateGeneralStats } from './generateGeneralStats'
 import { generateHpStat } from './generateHpStat'

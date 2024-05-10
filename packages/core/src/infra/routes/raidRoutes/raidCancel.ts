@@ -1,9 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { PlayerNotFoundError, RouteNotFoundError } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-export const raidCancel = async (data: TRouteParams): Promise<IResponse> => {
+export const raidCancel = async (data: TRouteParams): Promise<RouteResponse> => {
   const gameRoom = await prisma.gameRoom.findFirst({
     where: {
       phone: data.groupCode,

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ServerResponse } from '../../../../common/types/ServerResponse'
+import { ServerResponse } from '../../../core/src/types/ServerResponse'
 
 type RequestServerParams = {
   playerPhone: string
@@ -15,6 +15,5 @@ export const requestServer = async (inputData: RequestServerParams): Promise<Ser
   if (!response) throw new Error('Sem resposta do servidor.')
 
   const data = await response.data
-  console.log({ data })
   return data as ServerResponse
 }

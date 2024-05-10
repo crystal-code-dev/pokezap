@@ -1,20 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES6",
     "module": "CommonJS",
+    "target": "ES2015",
     "declaration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "removeComments": false,
-    "strict": true,
-    "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
-  },
-
-  "exclude": ["node_modules"]
+    "strict": true,
+    "esModuleInterop": true
+  }
 }

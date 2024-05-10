@@ -1,29 +1,43 @@
 import prisma from '../../../../../prisma-provider/src'
-import { IResponse } from '../../../server/models/IResponse'
+import { PokemonBaseData } from '../../../../../prisma-provider/src/types'
+import { RouteResponse } from '../../../server/models/RouteResponse'
+import { getTalentPurity } from '../../../server/modules/pokemon/getTalentPurity'
 import {
   CantSellPokemonInTeamError,
+  FilterNotAvailableError,
   MissingParameterError,
   PlayerDoestNotOwnThePokemonError,
   PlayerNotFoundError,
   TypeMissmatchError,
-  UnexpectedError,
   ZeroPokemonsFoundError,
 } from '../../errors/AppErrors'
 import { TRouteParams } from '../router'
 
-enum FilterTypes {
-  'EGG',
-  'EGGS',
+enum SellManyPokemonFilterNames {
+  CHILDREN = 'CHILDREN',
+  PURITY = 'PURITY',
 }
 
-export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> => {
-  const [, , , filterType, valueString] = data.routeParams
+const filterMap = new Map<string, SellManyPokemonFilterNames>([
+  ['EGG', SellManyPokemonFilterNames.CHILDREN],
+  ['EGGS', SellManyPokemonFilterNames.CHILDREN],
+  //
+  ['TALENT', SellManyPokemonFilterNames.PURITY],
+  ['TALENT', SellManyPokemonFilterNames.PURITY],
+  ['PURITY', SellManyPokemonFilterNames.PURITY],
+  ['TALENTO', SellManyPokemonFilterNames.PURITY],
+  ['TALENTOS', SellManyPokemonFilterNames.PURITY],
+])
 
-  if (!['EGG', 'EGGS'].includes(filterType)) throw new UnexpectedError('Apenas permitido o filtro "egg"')
-  if (!valueString) throw new MissingParameterError('Quantidade mínima de ovos para vender o pokemon')
+export const sellManyPokemon = async (data: TRouteParams): Promise<RouteResponse> => {
+  const [, , , filterTypeString, valueString] = data.routeParams
+
+  const filterType: SellManyPokemonFilterNames | undefined = filterMap.get(filterTypeString)
+
+  if (!filterType) throw new FilterNotAvailableError(filterTypeString)
+  if (!valueString) throw new MissingParameterError('Valor para o filtro')
   const value = Number(valueString)
   if (isNaN(value)) throw new TypeMissmatchError(valueString, 'NÚMERO')
-  if (![2, 3, 4].includes(value)) throw new UnexpectedError('Só é permitido valores: 2, 3 ou 4')
 
   const player = await prisma.player.findFirst({
     where: {
@@ -36,8 +50,12 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
 
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
 
-  const pokemons = await prisma.pokemon.findMany({
-    where: {
+  let where: any = undefined
+
+  console.log(filterType)
+
+  if (filterType === SellManyPokemonFilterNames.CHILDREN)
+    where = {
       childrenId1: {
         not: null,
       },
@@ -45,14 +63,23 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
         not: null,
       },
       childrenId3: {
-        [value > 2 ? 'equals' : 'not']: null,
+        [value > 2 ? 'not' : 'equals']: null,
       },
       childrenId4: {
-        [value > 3 ? 'equals' : 'not']: null,
+        [value > 3 ? 'not' : 'equals']: null,
       },
       ownerId: player.id,
       isAdult: true,
-    },
+    }
+
+  if (filterType === SellManyPokemonFilterNames.PURITY)
+    where = {
+      ownerId: player.id,
+      isAdult: true,
+    }
+
+  let pokemons = await prisma.pokemon.findMany({
+    where,
     include: {
       baseData: true,
       teamSlot1: true,
@@ -64,12 +91,20 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
       owner: true,
     },
   })
+
+  if (filterType === SellManyPokemonFilterNames.PURITY) {
+    pokemons = pokemons.filter(poke => getTalentPurity(poke) < value)
+  }
+
   if (pokemons.length === 0) throw new ZeroPokemonsFoundError()
 
   let totalCash = 0
 
+  const pokemonsToSell: PokemonBaseData[] = []
+
   for (const pokemon of pokemons) {
     if (pokemon.ownerId !== player.id) throw new PlayerDoestNotOwnThePokemonError(pokemon.id, player.name)
+    if (pokemon.isFavorite) continue
     if (
       pokemon.teamSlot1 ||
       pokemon.teamSlot2 ||
@@ -85,45 +120,11 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
     )
 
     totalCash += pokemonSellPrice
-  }
-
-  if (data.fromReact && data.routeParams[data.routeParams.length - 1] === 'CONFIRM') {
-    await prisma.pokemon.updateMany({
-      where: {
-        id: {
-          in: pokemons.map(p => p.id),
-        },
-      },
-      data: {
-        ownerId: null,
-        gameRoomId: null,
-        statusTrashed: true,
-      },
-    })
-
-    await prisma.player.update({
-      where: {
-        id: player.id,
-      },
-      data: {
-        cash: {
-          increment: totalCash,
-        },
-      },
-    })
-    return {
-      message: `${data.playerName} vendeu ${pokemons
-        .map(poke => {
-          return `#${poke.id} ${poke.baseData.name}`
-        })
-        .join(', ')} e obteve $${totalCash}.`,
-      status: 200,
-      data: null,
-    }
+    pokemonsToSell.push(pokemon)
   }
 
   return {
-    message: `Deseja vender ${pokemons
+    message: `Deseja vender ${pokemonsToSell
       .map(poke => {
         return `#${poke.id} ${poke.baseData.name}`
       })
@@ -131,6 +132,6 @@ export const sellManyPokemon = async (data: TRouteParams): Promise<IResponse> =>
     👍 - CONFIRMAR`,
     status: 200,
     data: null,
-    actions: [`pz. sell poke ${pokemons.map(poke => poke.id).join(' ')} confirm`],
+    actions: [`pz. sell poke ${pokemonsToSell.map(poke => poke.id).join(' ')} confirm`],
   }
 }

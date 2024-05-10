@@ -1,9 +1,9 @@
 import prisma from '../../../../../prisma-provider/src'
 import { MissingParameterError, PlayerNotFoundError } from '../../../infra/errors/AppErrors'
-import { IResponse } from '../../../server/models/IResponse'
+import { RouteResponse } from '../../../server/models/RouteResponse'
 import { TRouteParams } from '../router'
 
-export const teamSave = async (data: TRouteParams): Promise<IResponse> => {
+export const teamSave = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , teamNameUppercase] = data.routeParams
 
   if (!teamNameUppercase) throw new MissingParameterError('Nome do time')

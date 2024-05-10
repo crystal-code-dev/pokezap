@@ -4,7 +4,6 @@ import GIFEncoder from 'gifencoder'
 import path from 'path'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 import { TDuelRoundData } from './iGenDuel2X1Rounds'
 
 export const iGenDuelX2Rounds = async (data: TDuelRoundData): Promise<string> => {
@@ -239,7 +238,6 @@ export const iGenDuelX2Rounds = async (data: TDuelRoundData): Promise<string> =>
             const stream = canvas.createPNGStream()
             stream.pipe(out)
             out.on('finish', () => {
-              logger.info('The PNG file was created.')
               resolve(filepath)
             })
           })

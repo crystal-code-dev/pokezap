@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios'
 import ffmpeg from 'fluent-ffmpeg'
-import moment from 'moment'
+import path from 'path'
 import { container } from 'tsyringe'
 import { Client, MessageMedia, Reaction } from 'whatsapp-web.js'
 import { reactions } from '../../../../common/constants/reactions'
-import { ServerResponse } from '../../../../common/types/ServerResponse'
+import { ServerResponse } from '../../../core/src/types/ServerResponse'
 import prisma from '../../../prisma-provider/src/index'
 import { UserDemandHandler } from '../constants/UserDemandHandler'
 import { deleteSentMessage } from '../helpers/deleteSentMessage'
@@ -14,12 +14,13 @@ import { verifyTargetChat } from '../helpers/verifyTargetChat'
 
 const userDemand = new UserDemandHandler()
 
-export const messageReactionProcess = async (msg: Reaction) => {
+export const messageReactionProcess = async (msg: Reaction, initDate: Date) => {
   try {
-    if (msg.msgId.remote !== '120363269482791516@g.us' && msg.id.remote !== '120363269482791516@g.us') return
+    const permit = await verifyTargetChat(msg.msgId.remote)
+    if (!permit) return
 
-    // const permit = await verifyTargetChat(msg.msgId.remote)
-    // if (!permit) return
+    const msgDate = new Date(msg.timestamp * 1000)
+    if (msgDate.getTime() < initDate.getTime()) return
 
     const zapClient = container.resolve<Client>('WhatsappClient')
 
@@ -29,18 +30,7 @@ export const messageReactionProcess = async (msg: Reaction) => {
       },
     })
 
-    console.log({ message })
-
     if (!message) return
-
-    const currentTimestamp: number = Math.floor(Date.now() / 1000)
-    const difference: number = moment
-      .duration(currentTimestamp - Math.floor(new Date(message.createdAt).getTime() / 1000), 'seconds')
-      .asMinutes()
-    if (difference >= 60) {
-      logger.info('ignoring old msg. difference: ' + difference.toFixed(2) + 'minutes')
-      return
-    }
 
     const player = await prisma.player.findFirst({
       where: {
@@ -57,8 +47,6 @@ export const messageReactionProcess = async (msg: Reaction) => {
     }
 
     const routeParams = getRequestedAction()
-
-    console.log({ routeParams, player })
 
     if (!routeParams) return
 
@@ -85,8 +73,6 @@ export const messageReactionProcess = async (msg: Reaction) => {
       fromReact: true,
     })
 
-    logger.info({ response })
-
     if (!response) return
 
     if (!response.imageUrl) {
@@ -109,21 +95,23 @@ export const messageReactionProcess = async (msg: Reaction) => {
       ? await new Promise<string>(resolve => {
           if (!response.isAnimated) resolve(response.imageUrl!)
 
-          const outputPath = `../ffmpeg/video-${Math.random().toFixed(5)}.mp4`
+          const outputPath = path.join(__dirname, `../ffmpeg/video-${Math.random().toFixed(5)}.mp4`)
 
           if (!response.imageUrl) return
 
           ffmpeg(response.imageUrl)
-            .output(outputPath)
+            .videoCodec('libx264')
+            .outputOptions('-profile:v', 'baseline', '-level', '3.0', '-pix_fmt', 'yuv420p')
             .noAudio()
             .on('end', () => {
               console.log('Conversão concluída!')
               resolve(outputPath)
             })
             .on('error', err => {
-              console.log('Ocorreu um erro durante a conversão:', err)
+              console.error('Ocorreu um erro durante a conversão:', err)
+              return
             })
-            .run()
+            .save(outputPath)
         }).catch(err => {
           logger.error(err)
           return ''

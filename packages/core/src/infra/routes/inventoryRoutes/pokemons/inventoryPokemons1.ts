@@ -1,12 +1,13 @@
 /* eslint-disable array-callback-return */
+
 import { iGenInventoryPokemons } from '../../../../../../image-generator/src/iGenInventoryPokemons'
 import prisma from '../../../../../../prisma-provider/src'
 import { PlayerNotFoundError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
 import { talentIdMap } from '../../../../server/constants/talentIdMap'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const inventoryPokemons1 = async (data: TRouteParams): Promise<IResponse> => {
+export const inventoryPokemons1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , pageOrFilter, ...filteredOptions] = data.routeParams
 
   const player = await prisma.player.findFirst({
@@ -34,6 +35,7 @@ export const inventoryPokemons1 = async (data: TRouteParams): Promise<IResponse>
   const isFilteredByTalents = ['TALENT', 'TALENTS', 'TALENTO', 'TALENTOS'].includes(filter)
   const isFilteredByNames = ['NAME', 'NAMES', 'NOME', 'NOMES'].includes(filter)
   const isFilteredByTypes = ['TYPE', 'TYPES', 'TIPO', 'TIPOS'].includes(filter)
+  const isFilteredByGiant = ['GIANT', 'GIGA'].includes(filter)
 
   let baseData: any
   let filteredNumbers: number[] = []
@@ -72,6 +74,7 @@ export const inventoryPokemons1 = async (data: TRouteParams): Promise<IResponse>
 
   const pokemons = await prisma.pokemon.findMany({
     where: {
+      isGiant: isFilteredByGiant ? true : undefined,
       ownerId: player.id,
       isAdult: !isFilteredByEggs,
       isInDaycare: false,

@@ -3,11 +3,10 @@ import fs from 'fs'
 import path from 'path'
 import { pokemonTypes } from '../../../common/constants/pokemonTypes'
 import { talentIdMap } from '../../../common/constants/talentIdMap'
-import { PokemonBaseDataSkillsHeld } from '../../../common/types'
+import { PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { getHoursDifference } from './helpers/getHoursDifference'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
   pokemons: PokemonBaseDataSkillsHeld[]
@@ -84,6 +83,11 @@ export const iGenInventoryPokemons = async (data: TParams) => {
       ctx.drawImage(heldItemSprite, x + 41, y + 41, 15, 15)
     }
 
+    if (pokemons[i].isFavorite) {
+      const starSprite = await loadOrSaveImageFromCache('./src/assets/sprites/star.png')
+      ctx.drawImage(starSprite, x, y + 41, 15, 15)
+    }
+
     if (pokemons[i].TMs > 0) {
       const tmSprite = await loadOrSaveImageFromCache(tmSpriteUrl)
       ctx.globalAlpha = 1
@@ -91,6 +95,13 @@ export const iGenInventoryPokemons = async (data: TParams) => {
       for (let k = 0; k < pokemons[k].TMs; k++) {
         ctx.drawImage(tmSprite, x + 41 - k * 9, y + 5, 15, 15)
       }
+    }
+
+    if (pokemons[i].isGiant) {
+      ctx.font = ' 7px Pokemon'
+      ctx.fillStyle = 'white'
+      ctx.textAlign = 'start'
+      ctx.fillText(`GIANT`, x - 3, y + 6)
     }
 
     if (pokemons[i].isAdult) {
@@ -142,7 +153,6 @@ export const iGenInventoryPokemons = async (data: TParams) => {
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

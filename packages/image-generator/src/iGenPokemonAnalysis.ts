@@ -2,15 +2,15 @@ import { createCanvas } from 'canvas'
 import fs from 'fs'
 import path from 'path'
 import { talentIdMap } from '../../../common/constants/talentIdMap'
-import { PokemonBaseData, PokemonBaseDataSkillsHeld } from '../../../common/types'
+
+import { PokemonBaseData, PokemonBaseDataSkillsHeld } from '../../prisma-provider/src/types'
 import { removeFileFromDisk } from './helpers/fileHelper'
 import { loadOrSaveImageFromCache } from './helpers/loadOrSaveImageFromCache'
-import { logger } from './helpers/logger'
 
 type TParams = {
-  pokemon: PokemonBaseDataSkillsHeld
-  parent1: PokemonBaseData
-  parent2: PokemonBaseData
+  pokemon: PokemonBaseData | PokemonBaseDataSkillsHeld
+  parent1?: PokemonBaseData
+  parent2?: PokemonBaseData
 }
 
 export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams) => {
@@ -94,6 +94,11 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
       }
     }
 
+    if (pokemon.isFavorite) {
+      const starSprite = await loadOrSaveImageFromCache('./src/assets/sprites/star.png')
+      ctx.drawImage(starSprite, 10, 35, 40, 40)
+    }
+
     // write pokemon name
 
     ctx.font = '35px Righteous'
@@ -103,7 +108,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     ctx.fillText(
       `${pokemon.nickName?.toUpperCase() ?? pokemon.baseData.name.toUpperCase()}
  `,
-      10,
+      60,
       70
     )
     ctx.strokeStyle = 'rgba(0,0,0,0.5) 10px solid'
@@ -111,7 +116,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     ctx.strokeText(
       `${pokemon.nickName?.toUpperCase() ?? pokemon.baseData.name.toUpperCase()}
  `,
-      10,
+      60,
       70
     )
 
@@ -239,7 +244,7 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     }
   }
 
-  if (pokemon.heldItem) {
+  if ('heldItem' in pokemon && pokemon.heldItem) {
     const heldItemImage = await loadOrSaveImageFromCache(pokemon.heldItem.baseItem.spriteUrl)
     ctx.drawImage(heldItemImage, 145, 425, 45, 45)
   }
@@ -268,7 +273,6 @@ export const iGenPokemonAnalysis = async ({ pokemon, parent1, parent2 }: TParams
     const stream = canvas.createPNGStream()
     stream.pipe(out)
     out.on('finish', () => {
-      logger.info('The PNG file was created.')
       resolve(filepath)
     })
   })

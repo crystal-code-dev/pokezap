@@ -1,7 +1,7 @@
 import prisma from '../../../../../../prisma-provider/src'
 import { getHoursDifference } from '../../../../server/helpers/getHoursDifference'
 import { sendMessage } from '../../../../server/helpers/sendMessage'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   AlreadyTravelingError,
   MissingTravelRegionError,
@@ -12,7 +12,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const shipRoute = async (data: TRouteParams): Promise<IResponse> => {
+export const shipRoute = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , regionUppercase] = data.routeParams
 
   const route = await prisma.gameRoom.findFirst({

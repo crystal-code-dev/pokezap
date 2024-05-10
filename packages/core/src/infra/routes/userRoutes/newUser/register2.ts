@@ -1,10 +1,10 @@
 import { iGenAvatarChoose } from '../../../../../../image-generator/src/iGenAvatarChoose'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { InvalidSpriteError } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 import { register3 } from './register3'
 
-export const register2 = async (data: TRouteParams): Promise<IResponse> => {
+export const register2 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , gender, spriteNumber] = data.routeParams
   if (spriteNumber) {
     if (Number(spriteNumber) <= 16) {

@@ -1,11 +1,10 @@
 import prisma from '../../../../../../prisma-provider/src'
 
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { duelNXN } from '../../../../server/modules/duel/duelNXN'
 
+import { InvasionSession, TDuelNXNResponse } from '../../../../../../prisma-provider/src/types'
 import { handleExperienceGain } from '../../../../server/modules/pokemon/handleExperienceGain'
-import { TDuelNXNResponse } from '../../../../types'
-import { InvasionSession } from '../../../../types/prisma'
 import {
   InsufficentPlayersForInvasionError,
   NoDuelLoserFoundError,
@@ -18,7 +17,7 @@ import {
 import { DuelPlayer } from '../../duelRoutes/generatedDuelAccept'
 import { TRouteParams } from '../../router'
 
-export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> => {
+export const battleInvasionX2 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , invasionSessionIdString] = data.routeParams
   const invasionSessionId = Number(invasionSessionIdString)
   if (typeof invasionSessionId !== 'number') throw new TypeMissmatchError(invasionSessionIdString, 'number')
@@ -106,8 +105,61 @@ export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> =
   }
 
   const cashReward = invasionSession.cashReward || 0
+  const lootData = invasionSession.lootItemsDropRate as {
+    itemName: string
+    dropChance: number
+    amount?: [number, number]
+  }[]
 
-  await prisma.player.updateMany({
+  const playerIdLootRewardData: Record<number, { name: string; amount: number }[]> = {
+    [player1.id]: [],
+    [player2.id]: [],
+  }
+
+  for (const player of [player1, player2]) {
+    for (const loot of lootData) {
+      const random = Math.random()
+      if (random < loot.dropChance) {
+        loot.amount
+          ? playerIdLootRewardData[player.id].push({
+              name: loot.itemName,
+              amount: Math.ceil(Math.random() * loot.amount[1] - loot.amount[0]),
+            })
+          : playerIdLootRewardData[player.id].push({
+              name: loot.itemName,
+              amount: 1,
+            })
+      }
+    }
+  }
+
+  const itemRewardPrismaPromises: any[] = []
+
+  for (const player of [player1, player2]) {
+    for (const loot of playerIdLootRewardData[player.id]) {
+      const operation = prisma.item.upsert({
+        where: {
+          ownerId_name: {
+            name: loot.name,
+            ownerId: player.id,
+          },
+        },
+        create: {
+          amount: loot.amount,
+          name: loot.name,
+          ownerId: player.id,
+        },
+        update: {
+          amount: {
+            increment: loot.amount,
+          },
+        },
+      })
+      itemRewardPrismaPromises.push(operation)
+    }
+  }
+
+  const cashUpdatePrismaPromise = prisma.player.updateMany({
     where: {
       OR: [{ id: player1.id }, { id: player2.id }],
     },
@@ -118,17 +170,7 @@ export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> =
     },
   })
 
-  const player1ExpGain = await handleExperienceGain({
-    pokemon: player1.teamPoke1,
-    targetPokemon: invasionSession.enemyPokemons[0],
-  })
-
-  const player2ExpGain = await handleExperienceGain({
-    pokemon: player2.teamPoke1,
-    targetPokemon: invasionSession.enemyPokemons[1],
-  })
-
-  await prisma.invasionSession.update({
+  const invasionSessionUpdatePromise = prisma.invasionSession.update({
     where: {
       id: invasionSession.id,
     },
@@ -139,7 +181,7 @@ export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> =
     },
   })
 
-  await prisma.gameRoom.update({
+  const gameRoomUpdatePromise = prisma.gameRoom.update({
     where: {
       id: invasionSession.gameRoomId,
     },
@@ -150,6 +192,25 @@ export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> =
     },
   })
 
+  await prisma.$transaction([
+    ...itemRewardPrismaPromises,
+    cashUpdatePrismaPromise,
+    invasionSessionUpdatePromise,
+    gameRoomUpdatePromise,
+  ])
+
+  const player1ExpGainPromise = handleExperienceGain({
+    pokemon: player1.teamPoke1,
+    targetPokemon: invasionSession.enemyPokemons[0],
+  })
+
+  const player2ExpGainPromise = handleExperienceGain({
+    pokemon: player2.teamPoke1,
+    targetPokemon: invasionSession.enemyPokemons[1],
+  })
+
+  const [player1ExpGain, player2ExpGain] = await Promise.all([player1ExpGainPromise, player2ExpGainPromise])
+
   const player1LevelUpMessage0 = player1ExpGain.leveledUp
     ? `*${player1.teamPoke1.baseData.name}* subiu para o nível ${player1.teamPoke1.level}!`
     : ''
@@ -157,7 +218,15 @@ export const battleInvasionX2 = async (data: TRouteParams): Promise<IResponse> =
     ? `*${player2.teamPoke1.baseData.name}* subiu para o nível ${player2.teamPoke1.level}!`
     : ''
 
+  let lootDisplay: string[] = []
+  for (const player of [player1, player2]) {
+    for (const loot of playerIdLootRewardData[player.id]) {
+      lootDisplay.push(`*${player.name}* obteve ${loot.amount} *${loot.name}*!`)
+    }
+  }
+
   const afterMessage = `*${player1.name}* e ${player2.name} vencem a invasão e recebem $${cashReward} POKECOINS!.
+${lootDisplay.join('\n')}
 ${player1LevelUpMessage0}
 ${player2LevelUpMessage0}
 `

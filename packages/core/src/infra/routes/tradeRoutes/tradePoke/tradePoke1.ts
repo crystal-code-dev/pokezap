@@ -1,6 +1,8 @@
 import { iGenTradePokemon } from '../../../../../../image-generator/src/iGenTradePokemon'
 import prisma from '../../../../../../prisma-provider/src'
+import { Session } from '../../../../../../prisma-provider/src/types'
 import {
+  CantTradeWithYourselfError,
   PlayerInRaidIsLockedError,
   PlayerNotFoundError,
   PokemonDoesNotBelongsToTheUserError,
@@ -11,12 +13,11 @@ import {
   SessionNotFoundError,
   TypeMissmatchError,
 } from '../../../../infra/errors/AppErrors'
-import { IResponse } from '../../../../server/models/IResponse'
-import { ISession } from '../../../../server/models/ISession'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import { TRouteParams } from '../../router'
 import { tradePoke2 } from './tradePoke2'
 
-export const tradePoke1 = async (data: TRouteParams): Promise<IResponse> => {
+export const tradePoke1 = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , creatorPokemonIdString, invitedPokemonIdString, confirm, sessionIdString] = data.routeParams
   const creatorPokemonId = Number(creatorPokemonIdString)
   const invitedPokemonId = Number(invitedPokemonIdString)
@@ -37,7 +38,7 @@ export const tradePoke1 = async (data: TRouteParams): Promise<IResponse> => {
   if (data.fromReact && (typeof sessionId !== 'number' || isNaN(sessionId)))
     throw new TypeMissmatchError(sessionIdString, 'number')
 
-  let session: ISession | undefined | null
+  let session: Session | null = null
 
   if (confirm === 'CONFIRM' && data.fromReact) {
     session = await prisma.session.findUnique({
@@ -78,6 +79,8 @@ export const tradePoke1 = async (data: TRouteParams): Promise<IResponse> => {
 
   const invitedPokemon = pokemons.find(poke => poke.id === invitedPokemonId)
   if (!invitedPokemon) throw new PokemonNotFoundError(invitedPokemonId)
+
+  if (creatorPokemon.ownerId === invitedPokemon.ownerId) throw new CantTradeWithYourselfError()
 
   if (creatorPokemon.ownerId !== requesterPlayer.id && !data.fromReact)
     throw new PokemonDoesNotBelongsToTheUserError(creatorPokemon.id, creatorPokemon.baseData.name, requesterPlayer.name)

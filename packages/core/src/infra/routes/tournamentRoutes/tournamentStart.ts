@@ -1,4 +1,5 @@
-import { Player } from '@prisma/client'
+import prisma from '../../../../../prisma-provider/src'
+import { Player } from '../../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../errors/AppErrors'
 import { logger } from '../../logger'
 import { TRouteParams } from '../router'

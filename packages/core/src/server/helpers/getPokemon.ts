@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import { PokemonBaseData, PrismaClient } from '../../../../prisma-provider/src/types'
 import { UnexpectedError } from '../../infra/errors/AppErrors'
-import { PokemonBaseData } from '../modules/duel/duelNXN'
+
 import { getPokemonRequestData } from './getPokemonRequestData'
 
 export const getPokemon = async (

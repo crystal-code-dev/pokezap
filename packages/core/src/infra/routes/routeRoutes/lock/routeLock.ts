@@ -1,5 +1,5 @@
 import prisma from '../../../../../../prisma-provider/src'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 import {
   MissingParameterError,
   PlayerDoesNotResideOnTheRoute,
@@ -10,7 +10,7 @@ import {
 } from '../../../errors/AppErrors'
 import { TRouteParams } from '../../router'
 
-export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
+export const routeLock = async (data: TRouteParams): Promise<RouteResponse> => {
   const [, , , levelLockString] = data.routeParams
 
   if (!levelLockString) throw new MissingParameterError('Nível de trava')
@@ -20,7 +20,7 @@ export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
       phone: data.playerPhone,
     },
     include: {
-      gameRooms: true,
+      gameRoom: true,
     },
   })
 
@@ -32,8 +32,7 @@ export const routeLock = async (data: TRouteParams): Promise<IResponse> => {
 
   if (!player) throw new PlayerNotFoundError(data.playerPhone)
   if (!route) throw new RouteNotFoundError(player.name, data.groupCode)
-  if (!player.gameRooms.map(g => g.id).includes(route.id))
-    throw new PlayerDoesNotResideOnTheRoute(route.id, player.name)
+  if (player.gameRoomId !== route.id) throw new PlayerDoesNotResideOnTheRoute(route.inGameName, player.name)
 
   if (['REMOVE', 'REMOVER'].includes(levelLockString)) {
     await prisma.gameRoom.update({

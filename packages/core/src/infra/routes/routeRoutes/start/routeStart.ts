@@ -1,8 +1,10 @@
+import prisma from '../../../../../../prisma-provider/src'
+import { GameAreaName } from '../../../../../../prisma-provider/src/types'
 import { PlayerNotFoundError, RouteAlreadyRegisteredError } from '../../../../infra/errors/AppErrors'
 import { TRouteParams } from '../../../../infra/routes/router'
-import { IResponse } from '../../../../server/models/IResponse'
+import { RouteResponse } from '../../../../server/models/RouteResponse'
 
-export const routeStart = async (data: TRouteParams): Promise<IResponse> => {
+export const routeStart = async (data: TRouteParams): Promise<RouteResponse> => {
   const player = await prisma.player.findFirst({
     where: {
       phone: data.playerPhone,
@@ -21,7 +23,7 @@ export const routeStart = async (data: TRouteParams): Promise<IResponse> => {
     data: {
       level: 1,
       experience: 0,
-      mode: 'private',
+      gameArea: GameAreaName.PRIVATE,
       phone: data.groupCode,
       incenseCharges: 0,
       players: {
